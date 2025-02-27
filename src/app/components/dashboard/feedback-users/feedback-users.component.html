@@ -1,0 +1,30 @@
+<section class="container my-5">
+  <div class="overflow-x-auto my-2">
+    <table class="table-auto w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Email</th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Name</th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Message</th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Reasons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let feedback of feedbacks" class="hover:bg-gray-100">
+          <td class="border border-gray-300 px-4 py-2 text-nowrap">
+            {{ feedback.email }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            {{ feedback.name }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            {{ feedback.message }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2 text-nowrap">
+            {{ feedback.reasonIds.join(" / ") }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,0 +1,225 @@
+// Variables
+:root {
+  --content-max-width: 1200px;
+  --desktop-margin: 25%;
+  --mobile-margin: 15px;
+}
+
+// Main Container
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px;
+
+  @media (min-width: 1024px) {
+    align-items: center;
+  }
+}
+
+// Header Section
+.faq-header {
+  align-self: center;
+  width: 80%;
+  max-width: var(--content-max-width);
+  box-sizing: border-box;
+
+  @media (min-width: 1024px) {
+    padding: 0 var(--desktop-margin);
+  }
+
+  @media (max-width: 1023px) {
+    padding: 0 var(--mobile-margin);
+  }
+
+  .title {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+// Search Bar
+.search-bar {
+  width: 100%;
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+
+  input {
+    width: 100%;
+    font-family: "Nunito", sans-serif;
+    padding: 10px;
+    border: 1px solid var(--fore-color);
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+}
+
+// FAQ Content Layout
+.faq-content {
+  display: flex;
+  width: 100%;
+  max-width: var(--content-max-width);
+  box-sizing: border-box;
+
+  @media (min-width: 1024px) {
+    padding: 0 var(--desktop-margin);
+  }
+
+  @media (max-width: 1023px) {
+    flex-direction: column;
+    padding: 0 var(--mobile-margin);
+  }
+}
+// Sidebar
+.sidebar {
+  width: 250px;
+  padding: 40px;
+  box-sizing: border-box;
+
+  @media (max-width: 1023px) {
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    @media (max-width: 1023px) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding-bottom: 10px;
+      justify-content: center;
+    }
+
+    li {
+      padding: 10px;
+      cursor: pointer;
+      transition: border-left 0.1s, font-weight 0.1s;
+
+      @media (max-width: 1023px) {
+        flex: 0 1 auto;
+        text-align: center;
+      }
+
+      &.active {
+        font-weight: bold;
+        border-left: 3px solid var(--fore-color) !important;
+      }
+      &.active-dark {
+        font-weight: bold;
+        border-left: 3px solid var(--back-color) !important;
+      }
+      @media (max-width: 1023px) {
+        &.active {
+          border-left: none !important;
+          border-bottom: 3px solid var(--fore-color) !important;
+        }
+        &.active-dark {
+          border-left: none !important;
+          border-bottom: 3px solid var(--back-color) !important;
+        }
+      }
+    }
+  }
+}
+// Main Content
+.main-content {
+  flex: 1;
+  min-width: 0; // Prevents flex item from overflowing
+  margin-right: 100px;
+  margin-left: 100px;
+
+  @media (min-width: 1024px) {
+    margin-left: 100px;
+  }
+}
+
+.content {
+  margin-top: 20px;
+  padding: 20px 0;
+  width: 100%;
+
+  h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  p {
+    width: 100%;
+    max-width: 800px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+}
+
+// Accordion
+.accordion {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 0px;
+  overflow: hidden;
+
+  .accordion-item {
+    border-bottom: 1px solid #ddd;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .accordion-header {
+    padding: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+      background: var(--highlight-color);
+    }
+
+    span {
+      font-size: 12px;
+    }
+  }
+
+  .accordion-content {
+    padding: 15px;
+    p {
+      margin: 0;
+    }
+  }
+}
+
+// Utility Classes
+.spinner {
+  opacity: 1;
+  border: 5px solid var(--fore-color);
+  border-top: 5px solid var(--back-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.load-more {
+  font-weight: bold;
+  cursor: pointer;
+}

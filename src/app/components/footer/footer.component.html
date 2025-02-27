@@ -1,0 +1,169 @@
+<div class="footer-section-a text-center mb-4">
+  <div
+    class="contrast-line position-relative"
+    [ngClass]="darkMode ? 'bg-light' : 'bg-dark'"
+  >
+    <div
+      class="position-absolute top-50 translate-middle-y p-2 rounded"
+      [ngClass]="darkMode ? 'bg-dark text-light' : 'bg-light text-dark'"
+      style="left: 10%"
+    >
+      {{ "APP.EBRAJ" | translate }}
+    </div>
+  </div>
+</div>
+
+<div
+  class="footer container"
+  [ngClass]="darkMode ? 'bg-dark text-white' : 'bg-light text-dark'"
+>
+  <div class="footer-section-b d-flex justify-content-around flex-wrap my-4">
+    <div
+      style="height: 150px"
+      class="d-flex flex-column justify-content-around"
+    >
+      <div class="font-weight-bold">{{ "APP.ABOUT" | translate }}</div>
+      <div class="my3-">
+        <!-- <span class="cursor-pointer">{{ "APP.CARRIER" | translate }}</span> -->
+        <span class="cursor-pointer" [routerLink]="'/white-paper'">
+          White Paper</span
+        >
+      </div>
+      <div>
+        <span class="cursor-pointer">{{ "APP.INVEST" | translate }}</span>
+      </div>
+      <div>
+        <span [routerLink]="'/faqs'" class="cursor-pointer">{{
+          "APP.FAQS" | translate
+        }}</span>
+      </div>
+    </div>
+    <div
+      style="height: 150px"
+      class="d-flex flex-column justify-content-around"
+    >
+      <div class="font-weight-bold">{{ "APP.SERVICES" | translate }}</div>
+      <div>
+        <span class="cursor-pointer">{{ "APP.SUPPORT" | translate }}</span>
+      </div>
+      <div>
+        <span class="cursor-pointer">{{ "APP.HELP-CENTER" | translate }}</span>
+      </div>
+      <div>
+        <span class="cursor-pointer">{{
+          "APP.EMERGENCY-BOX" | translate
+        }}</span>
+      </div>
+    </div>
+    <div
+      style="height: 150px"
+      class="d-flex flex-column justify-content-around"
+    >
+      <div class="font-weight-bold">{{ "APP.SUPPORT" | translate }}</div>
+      <div>
+        <span class="cursor-pointer">{{ "APP.NEWS" | translate }}</span>
+      </div>
+      <div>
+        <span class="cursor-pointer">{{ "APP.EBRAMS-AI" | translate }}</span>
+      </div>
+      <div>
+        <span class="cursor-pointer">{{ "APP.MOBILE APPS" | translate }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer-section-c text-center my-4">
+    <div
+      class="d-flex align-items-center flex-wrap flex-column flex-sm-row"
+      dir="rtl"
+      [ngClass]="darkMode ? 'dark-mode-filter' : ''"
+    >
+      <select
+        id="currency"
+        name="currency"
+        class="rounded-dropdown mx-2 p-2"
+        style="width: 250px"
+      >
+        <option
+          [ngClass]="darkMode ? 'bg-dark text-light' : 'bg-light text-dark'"
+          *ngFor="let option of currencyOptions"
+          [value]="option.value"
+        >
+          {{ option.key }}
+        </option>
+      </select>
+      <select
+        [(ngModel)]="selectedOption"
+        class="rounded-dropdown p-2 mx-2 my-2"
+        (ngModelChange)="changeLanguage()"
+      >
+        <option
+          [ngClass]="darkMode ? 'bg-dark text-light' : 'bg-light text-dark'"
+          *ngFor="let option of options"
+          [value]="option.value"
+        >
+          {{ option.label }}
+        </option>
+      </select>
+      <div>
+        <img class="cursor-pointer" src="facebook.png" class="mx-2" />
+        <img class="cursor-pointer" src="instagram.png" class="mx-2" />
+        <img class="cursor-pointer" src="twitter.png" class="mx-2" />
+        <img class="cursor-pointer" src="youtube.png" class="mx-2" />
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="contrast-line position-relative"
+  [ngClass]="darkMode ? 'bg-secondary' : 'bg-secondary'"
+></div>
+<div
+  style="width: 80%; margin: auto"
+  class="footer-section-d d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap my-4"
+>
+  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+    <span class="cursor-pointer">{{ "APP.TRUST-AND-SAFETY" | translate }}</span>
+  </div>
+  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+    <span class="cursor-pointer">{{ "APP.TERMS-OF-USE" | translate }}</span>
+  </div>
+  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+    <span class="cursor-pointer">{{ "APP.PRIVACY-POLICY" | translate }}</span>
+  </div>
+  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+    <span class="cursor-pointer">{{ "APP.COOKIE-POLICY" | translate }}</span>
+  </div>
+  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+    <span class="cursor-pointer"
+      >{{ "APP.ACCESSABILITY" | translate }}<br />{{
+        "APP.STATEMENT" | translate
+      }}</span
+    >
+  </div>
+  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+    <span class="cursor-pointer"
+      >{{ "APP.MY-PERSONAL" | translate }}<br />{{
+        "APP.INFORMATION" | translate
+      }}</span
+    >
+  </div>
+</div>
+
+<div class="footer-section-e footer-dark p-3">
+  <div class="container-fluid d-flex justify-content-between">
+    <div
+      style="font-family: EB Garamond, serif"
+      class="footer-logo highlight-color"
+    >
+      <span class="fs-costum-footer-Reset mx-1">{{
+        "APP.GREAT-RESET" | translate
+      }}</span>
+      <span class="white-rock fs-costum-footer-Rock">{{
+        "APP.WHITEROCK" | translate
+      }}</span>
+    </div>
+    <div class="mt-2">
+      {{ "APP.EBRAJ-ALL-RIGHTS-RESERVED" | translate }}
+    </div>
+  </div>
+</div>

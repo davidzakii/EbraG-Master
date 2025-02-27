@@ -1,0 +1,421 @@
+<div class="container">
+  <div class="header">
+    <h1>My wallet</h1>
+    <p>Good evening Ebraham!</p>
+  </div>
+  <div class="nav">
+    <a
+      (click)="selectedTab = 'accounts'"
+      class="{{ selectedTab == 'accounts' ? 'active' : '' }}"
+      >Accounts</a
+    >
+    <a
+      (click)="selectedTab = 'statements'"
+      class="{{ selectedTab == 'statements' ? 'active' : '' }}"
+      >Statements</a
+    >
+    <a
+      (click)="selectedTab = 'pay-bills'"
+      class="{{ selectedTab == 'pay-bills' ? 'active' : '' }}"
+      >Pay bills</a
+    >
+    <a
+      (click)="selectedTab = 'my-investments'"
+      class="{{ selectedTab == 'my-investments' ? 'active' : '' }}"
+      >My investments</a
+    >
+  </div>
+
+  <div
+    *ngIf="selectedTab == 'accounts'"
+    style="width: 80%; justify-self: center"
+  >
+    <div class="main-title">eCurrent</div>
+    <div class="subtitle">Value indicator used to indicate business rate</div>
+    <div class="search-bar">
+      <input
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="text"
+        placeholder="Search by (Category, Type, Details)"
+      />
+    </div>
+    <div class="info-section">
+      <p><span class="highlight">1eC = $2</span></p>
+      <p>
+        Price = <span class="highlight">0,002</span> Gram Gold 24 Carats - New
+        York
+      </p>
+      <p>Move - <span class="highlight">0,000002%</span> per 24 hours</p>
+      <p>Not move - <span class="highlight">0,00002%</span> per 24 hours</p>
+      <br />
+      <p><span class="highlight">Available eCurrent</span> 500eC</p>
+      <p><span class="highlight">USD</span> $2,500</p>
+      <p><span class="highlight red">Status</span> Frozen</p>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>%</th>
+            <th>eCurrent</th>
+            <th>Use</th>
+            <th>$</th>
+            <th>Info</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>20%</td>
+            <td>100eC</td>
+            <td>Frozen</td>
+            <td>$500</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>30%</td>
+            <td>150eC</td>
+            <td>Investment</td>
+            <td>$750</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>15%</td>
+            <td>75eC</td>
+            <td>Living</td>
+            <td>$375</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>5%</td>
+            <td>25eC</td>
+            <td>Health</td>
+            <td>$125</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>15%</td>
+            <td>75eC</td>
+            <td>Nutrition</td>
+            <td>$375</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>5%</td>
+            <td>25eC</td>
+            <td>Travel</td>
+            <td>$125</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>10%</td>
+            <td>50eC</td>
+            <td>Choice</td>
+            <td>$250</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="footer">
+      <p>ⓘ Adjust your bills <a href="#">My Profile</a></p>
+    </div>
+  </div>
+
+  <div
+    *ngIf="selectedTab == 'statements'"
+    style="width: 80%; justify-self: center"
+  >
+    <div class="section-row" style="align-items: start; width: 80%">
+      <div class="sidebar">
+        <ul>
+          <li
+            [class.active]="transactionsTab == 'pay'"
+            (click)="selectTransactionsTab('pay')"
+          >
+            {{ "MY-WALLET.PAY" | translate }}
+          </li>
+          <li
+            [class.active]="transactionsTab == 'send'"
+            (click)="selectTransactionsTab('send')"
+          >
+            {{ "MY-WALLET.SEND" | translate }}
+          </li>
+          <li
+            [class.active]="transactionsTab == 'buy'"
+            (click)="selectTransactionsTab('buy')"
+          >
+            {{ "MY-WALLET.BUY" | translate }}
+          </li>
+        </ul>
+      </div>
+      <div class="section-column" style="width: 100%">
+        <div class="content">
+          <div *ngIf="transactionsTab === 'pay'">
+            <h4>{{ "MY-WALLET.PAY" | translate }}</h4>
+            <p>
+              {{ "MY-WALLET.PAY-PARAGRAPH" | translate }}
+            </p>
+            <br />
+            <h4>{{ "MY-WALLET.BALANCE" | translate }} 500eC - USD $1,000</h4>
+            <h5>
+              {{ "MY-WALLET.AVAILABLE-BALANCE" | translate }} 400eC - USD $800
+            </h5>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>%</th>
+                    <th>eCurrent</th>
+                    <th>Use</th>
+                    <th>$</th>
+                    <th>Info</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>20%</td>
+                    <td>100eC</td>
+                    <td>Frozen</td>
+                    <td>$500</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>30%</td>
+                    <td>150eC</td>
+                    <td>Investment</td>
+                    <td>$750</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>15%</td>
+                    <td>75eC</td>
+                    <td>Living</td>
+                    <td>$375</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>5%</td>
+                    <td>25eC</td>
+                    <td>Health</td>
+                    <td>$125</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>15%</td>
+                    <td>75eC</td>
+                    <td>Nutrition</td>
+                    <td>$375</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>5%</td>
+                    <td>25eC</td>
+                    <td>Travel</td>
+                    <td>$125</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>10%</td>
+                    <td>50eC</td>
+                    <td>Choice</td>
+                    <td>$250</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button class="load-more-button">
+              <span *ngIf="!loadingMore" class="load-more">{{
+                "COMPASS-ARMS.LOAD-MORE" | translate
+              }}</span>
+              <div
+                *ngIf="loadingMore"
+                class="spinner"
+                style="height: 20px; width: 20px; justify-self: center"
+              ></div>
+            </button>
+          </div>
+          <div *ngIf="transactionsTab === 'send'">
+            <h4>{{ "MY-WALLET.SEND" | translate }}</h4>
+            <p>
+              {{ "MY-WALLET.SEND-PARAGRAPH" | translate }}
+            </p>
+            <br />
+            <h4>{{ "MY-WALLET.BALANCE" | translate }} 500eC - USD $1,000</h4>
+            <h5>
+              {{ "MY-WALLET.AVAILABLE-BALANCE" | translate }} 400eC - USD $800
+            </h5>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>%</th>
+                    <th>eCurrent</th>
+                    <th>Use</th>
+                    <th>$</th>
+                    <th>Info</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>20%</td>
+                    <td>100eC</td>
+                    <td>Frozen</td>
+                    <td>$500</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>30%</td>
+                    <td>150eC</td>
+                    <td>Investment</td>
+                    <td>$750</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>15%</td>
+                    <td>75eC</td>
+                    <td>Living</td>
+                    <td>$375</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>5%</td>
+                    <td>25eC</td>
+                    <td>Health</td>
+                    <td>$125</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>15%</td>
+                    <td>75eC</td>
+                    <td>Nutrition</td>
+                    <td>$375</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>5%</td>
+                    <td>25eC</td>
+                    <td>Travel</td>
+                    <td>$125</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>10%</td>
+                    <td>50eC</td>
+                    <td>Choice</td>
+                    <td>$250</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <button class="load-more-button">
+              <span *ngIf="!loadingMore" class="load-more">{{
+                "COMPASS-ARMS.LOAD-MORE" | translate
+              }}</span>
+              <div
+                *ngIf="loadingMore"
+                class="spinner"
+                style="height: 20px; width: 20px; justify-self: center"
+              ></div>
+            </button>
+          </div>
+          <div *ngIf="transactionsTab === 'buy'">
+            <h4>{{ "MY-WALLET.BUY" | translate }}</h4>
+            <p>
+              {{ "MY-WALLET.BUY-PARAGRAPH" | translate }}
+            </p>
+            <br />
+            <h4>{{ "MY-WALLET.BALANCE" | translate }} 500eC - USD $1,000</h4>
+            <h5>
+              {{ "MY-WALLET.AVAILABLE-BALANCE" | translate }} 400eC - USD $800
+            </h5>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>%</th>
+                    <th>eCurrent</th>
+                    <th>Use</th>
+                    <th>$</th>
+                    <th>Info</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>20%</td>
+                    <td>100eC</td>
+                    <td>Frozen</td>
+                    <td>$500</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>30%</td>
+                    <td>150eC</td>
+                    <td>Investment</td>
+                    <td>$750</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>15%</td>
+                    <td>75eC</td>
+                    <td>Living</td>
+                    <td>$375</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>5%</td>
+                    <td>25eC</td>
+                    <td>Health</td>
+                    <td>$125</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>15%</td>
+                    <td>75eC</td>
+                    <td>Nutrition</td>
+                    <td>$375</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>5%</td>
+                    <td>25eC</td>
+                    <td>Travel</td>
+                    <td>$125</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>10%</td>
+                    <td>50eC</td>
+                    <td>Choice</td>
+                    <td>$250</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button class="load-more-button">
+              <span *ngIf="!loadingMore" class="load-more">{{
+                "MY-WALLET.LOAD-MORE" | translate
+              }}</span>
+              <div
+                *ngIf="loadingMore"
+                class="spinner"
+                style="height: 20px; width: 20px; justify-self: center"
+              ></div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

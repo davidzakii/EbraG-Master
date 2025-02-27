@@ -1,0 +1,58 @@
+<section class="container my-5">
+  <div class="overflow-x-auto my-2">
+    <table class="table-auto w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">
+            User Name
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Email</th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">
+            Phone Number
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">
+            First Name
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">
+            Last Name
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Address</th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">
+            Birthdate
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users" class="hover:bg-gray-100">
+          <td class="border border-gray-300 px-4 py-2 text-nowrap">
+            {{ user?.userName }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            {{ user?.email }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            {{ user?.phoneNumber }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2 text-nowrap">
+            {{ user?.firstName }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            {{ user?.lastName }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            {{ user?.address }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            {{ user?.birthDate | date : "dd/MM/yyyy" }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            <button class="btn btn-light" (click)="approveUser(user?.id!)">
+              Approve user
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

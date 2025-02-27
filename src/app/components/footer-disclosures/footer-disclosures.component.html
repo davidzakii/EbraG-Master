@@ -1,0 +1,100 @@
+<div class="disclosures-container">
+  <div class="top-content">
+    <h3>{{ "FOOTER-DISCLOSURES.TOP" | translate }}</h3>
+    <p>{{ "FOOTER-DISCLOSURES.TOP-DESCRIPTION" | translate }}</p>
+  </div>
+
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="{{ 'FOOTER-DISCLOSURES.SEARCH-PLACEHOLDER' | translate }}"
+    />
+  </div>
+
+  <div class="main-container">
+    <!-- Left Sidebar -->
+    <div class="sidebar">
+      <ul>
+        <li
+          [class.active]="selectedTab === 'trust-and-safety' && darkMode"
+          [class.active-dark]="selectedTab === 'trust-and-safety' && !darkMode"
+          (click)="selectTab('trust-and-safety')"
+        >
+          {{ "FOOTER-DISCLOSURES.TRUST-AND-SAFETY" | translate }}
+        </li>
+        <li
+          [class.active]="selectedTab === 'terms-of-use' && darkMode"
+          [class.active-dark]="selectedTab === 'terms-of-use' && !darkMode"
+          (click)="selectTab('terms-of-use')"
+        >
+          {{ "FOOTER-DISCLOSURES.TERMS-OF-USE" | translate }}
+        </li>
+        <li
+          [class.active]="selectedTab === 'privacy-policy' && darkMode"
+          [class.active-dark]="selectedTab === 'privacy-policy' && !darkMode"
+          (click)="selectTab('privacy-policy')"
+        >
+          {{ "FOOTER-DISCLOSURES.PRIVACY-POLICY" | translate }}
+        </li>
+        <li
+          [class.active]="selectedTab === 'cookie-policy' && darkMode"
+          [class.active-dark]="selectedTab === 'cookie-policy' && !darkMode"
+          (click)="selectTab('cookie-policy')"
+        >
+          {{ "FOOTER-DISCLOSURES.COOKIE-POLICY" | translate }}
+        </li>
+        <li
+        [class.active]="selectedTab === 'accessability-statement' && darkMode"
+          [class.active-dark]="selectedTab === 'accessability-statement' && !darkMode"
+          (click)="selectTab('accessability-statement')"
+        >
+          {{ "FOOTER-DISCLOSURES.ACCESSABILITY-STATEMENT" | translate }}
+        </li>
+        <li
+        [class.active]="selectedTab === 'my-personal-information' && darkMode"
+          [class.active-dark]="selectedTab === 'my-personal-information' && !darkMode"
+          (click)="selectTab('my-personal-information')"
+        >
+          {{ "FOOTER-DISCLOSURES.MY-PERSONAL-INFORMATION" | translate }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <div *ngIf="selectedTab === 'trust-and-safety'">
+        <h3>{{ "FOOTER-DISCLOSURES.TRUST-AND-SAFETY" | translate }}</h3>
+        <p>{{ "FOOTER-DISCLOSURES.TRUST-AND-SAFETY-PARAGRAPH" | translate }}</p>
+      </div>
+      <div *ngIf="selectedTab === 'terms-of-use'">
+        <h3>{{ "FOOTER-DISCLOSURES.TERMS-OF-USE" | translate }}</h3>
+        <p>{{ "FOOTER-DISCLOSURES.TERMS-OF-USE-PARAGRAPH" | translate }}</p>
+      </div>
+      <div *ngIf="selectedTab === 'privacy-policy'">
+        <h3>{{ "FOOTER-DISCLOSURES.PRIVACY-POLICY" | translate }}</h3>
+        <p>{{ "FOOTER-DISCLOSURES.PRIVACY-POLICY-PARAGRAPH" | translate }}</p>
+      </div>
+      <div *ngIf="selectedTab === 'cookie-policy'">
+        <h3>{{ "FOOTER-DISCLOSURES.COOKIE-POLICY" | translate }}</h3>
+        <p>{{ "FOOTER-DISCLOSURES.COOKIE-POLICY-PARAGRAPH" | translate }}</p>
+      </div>
+      <div *ngIf="selectedTab === 'accessability-statement'">
+        <h3>{{ "FOOTER-DISCLOSURES.ACCESSABILITY-STATEMENT" | translate }}</h3>
+        <p>
+          {{
+            "FOOTER-DISCLOSURES.ACCESSABILITY-STATEMENT-PARAGRAPH" | translate
+          }}
+        </p>
+      </div>
+      <div *ngIf="selectedTab === 'my-personal-information'">
+        <h3>{{ "FOOTER-DISCLOSURES.MY-PERSONAL-INFORMATION" | translate }}</h3>
+        <p>
+          {{
+            "FOOTER-DISCLOSURES.MY-PERSONAL-INFORMATION-PARAGRAPH" | translate
+          }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

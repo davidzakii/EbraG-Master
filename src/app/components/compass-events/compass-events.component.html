@@ -1,0 +1,386 @@
+<div
+  class="section-column"
+  style="margin-top: 30px; width: 100%; align-items: center"
+>
+  <span style="font-weight: 700; align-self: flex-start; margin-left: 25%">{{
+    "COMPASS-EVENTS.COMPASS-EVENTS" | translate
+  }}</span>
+  <span style="align-self: flex-start; margin-left: 25%; margin-right: 25%">{{
+    "COMPASS-EVENTS.COMPASS-EVENTS-DESCRIPTION" | translate
+  }}</span>
+  <div
+    class="mb-1 container d-flex gap-2 justify-content-end justify-content-sm-center align-items-end align-items-sm-center flex-column flex-sm-row"
+  >
+    <div class="col-10">
+      <input
+        type="text"
+        name="user"
+        [(ngModel)]="searchTerm"
+        placeholder="{{ 'COMPASS-EVENTS.SEARCH-PLACEHOLDER' | translate }}"
+        class="form-control"
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+      />
+    </div>
+    <button
+      style="width: 112px"
+      class="col-2 d-block bg-transparent btn"
+      [ngClass]="darkMode ? 'border-white text-white' : 'border-dark'"
+      (click)="openModal()"
+    >
+      <img
+        [ngClass]="{ 'dark-mode-filter': darkMode }"
+        src="filter-slider.png"
+        style="height: 20px"
+      />
+      {{ "FILTER.FILTERS" | translate }}
+    </button>
+  </div>
+  <div class="active-filters-container">
+    <div class="filters-list">
+      <div *ngIf="selectedProviderFields() != ''" class="filter-tag">
+        &#11166; {{ selectedProviderFields() }}
+      </div>
+      <div
+        *ngIf="
+          filters.category != '' || filters.type != '' || filters.details != ''
+        "
+        class="filter-tag"
+      >
+        &#11166;
+        <span *ngIf="filters.category != ''">{{ filters.category }}</span>
+        <span
+          *ngIf="
+            filters.category != '' &&
+            (filters.type != '' || filters.details != '')
+          "
+          >,&nbsp;</span
+        >
+        <span *ngIf="filters.type != ''">{{ filters.type }}</span>
+        <span *ngIf="filters.type != '' && filters.details != ''">,&nbsp;</span>
+        <span *ngIf="filters.details != ''">{{ filters.details }}</span>
+      </div>
+      <div
+        *ngIf="
+          filters.city != '' || filters.state != '' || filters.country != ''
+        "
+        class="filter-tag"
+      >
+        &#11166;
+        <span *ngIf="filters.city != ''">{{ filters.city }}</span>
+        <span
+          *ngIf="
+            filters.city != '' && (filters.state != '' || filters.country != '')
+          "
+          >,&nbsp;</span
+        >
+        <span *ngIf="filters.state != ''">{{ filters.state }}</span>
+        <span *ngIf="filters.state != '' && filters.country != ''"
+          >,&nbsp;</span
+        >
+        <span *ngIf="filters.country != ''">{{ filters.country }}</span>
+      </div>
+      <div
+        *ngIf="filters.costFrom != '' || filters.costTo != ''"
+        class="filter-tag"
+      >
+        &#11166;
+        <span *ngIf="filters.costFrom != '' && filters.costTo == ''"
+          >{{ "FILTER.FROM" | translate }}&nbsp;</span
+        >
+        <span *ngIf="filters.costFrom != ''">${{ filters.costFrom }}</span>
+        <span *ngIf="filters.costFrom != '' && filters.costTo != ''"
+          >&nbsp;-&nbsp;</span
+        >
+        <span *ngIf="filters.costFrom == '' && filters.costTo != ''"
+          >{{ "FILTER.TO" | translate }}&nbsp;</span
+        >
+        <span *ngIf="filters.costTo != ''">${{ filters.costTo }}</span>
+      </div>
+      <div
+        *ngIf="filters.daysFrom != '' || filters.daysTo != ''"
+        class="filter-tag"
+      >
+        &#11166;
+        <span *ngIf="filters.daysFrom != '' && filters.daysTo == ''"
+          >{{ "FILTER.FROM" | translate }}&nbsp;</span
+        >
+        <span *ngIf="filters.daysFrom != ''"
+          >{{ filters.daysFrom }} {{ "FILTER.DAYS" | translate }}</span
+        >
+        <span *ngIf="filters.daysFrom != '' && filters.daysTo != ''"
+          >&nbsp;-&nbsp;</span
+        >
+        <span *ngIf="filters.daysFrom == '' && filters.daysTo != ''"
+          >{{ "FILTER.TO" | translate }}&nbsp;</span
+        >
+        <span *ngIf="filters.daysTo != ''"
+          >{{ filters.daysTo }} {{ "FILTER.DAYS" | translate }}</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div
+    [ngClass]="darkMode ? 'bg-dark' : 'bg-light'"
+    class="filters-modal"
+    *ngIf="isModalOpen"
+  >
+    <div class="filters-header">
+      <h2>{{ "FILTER.FILTERS" | translate }}</h2>
+      <button
+        [ngClass]="darkMode ? 'text-light' : 'text-dark'"
+        class="close-button"
+        (click)="closeModal()"
+      >
+        &#x2715;
+      </button>
+    </div>
+    <div class="filters-body">
+      <div class="filter-section">
+        <h3>{{ "FILTER.PROVIDER-FIELDS" | translate }}</h3>
+        <div class="checkbox-group">
+          <label *ngFor="let option of providerFields">
+            <input
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              type="checkbox"
+              [(ngModel)]="option.selected"
+              (change)="onProviderFieldChange(option)"
+            />
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="dropdown-row">
+          <div class="dropdown-group">
+            <label>{{ "FILTER.CATEGORY" | translate }}</label>
+            <select
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              [(ngModel)]="filters.category"
+            >
+              <option *ngFor="let category of categories" [value]="category">
+                {{ category }}
+              </option>
+            </select>
+          </div>
+
+          <div class="dropdown-group">
+            <label>{{ "FILTER.TYPE" | translate }}</label>
+            <select
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              [(ngModel)]="filters.type"
+            >
+              <option *ngFor="let type of types" [value]="type">
+                {{ type }}
+              </option>
+            </select>
+          </div>
+
+          <div class="dropdown-group">
+            <label>{{ "FILTER.DETAILS" | translate }}</label>
+            <select
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              [(ngModel)]="filters.details"
+            >
+              <option *ngFor="let detail of details" [value]="detail">
+                {{ detail }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="search-row">
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="text"
+            placeholder="{{ 'FILTER.LOCATION-SEARCH-PLACEHOLDER' | translate }}"
+            [(ngModel)]="filters.searchQuery"
+          />
+          <button class="search-button">&#x26B2;</button>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="dropdown-row">
+          <div class="dropdown-group">
+            <label>{{ "FILTER.CITY" | translate }}</label>
+            <select
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              [(ngModel)]="filters.city"
+            >
+              <option *ngFor="let city of cities" [value]="city">
+                {{ city }}
+              </option>
+            </select>
+          </div>
+
+          <div class="dropdown-group">
+            <label>{{ "FILTER.STATE" | translate }}</label>
+            <select
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              [(ngModel)]="filters.state"
+            >
+              <option *ngFor="let state of states" [value]="state">
+                {{ state }}
+              </option>
+            </select>
+          </div>
+
+          <div class="dropdown-group">
+            <label>{{ "FILTER.COUNTRY" | translate }}</label>
+            <select
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              [(ngModel)]="filters.country"
+            >
+              <option *ngFor="let country of countries" [value]="country">
+                {{ country }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="cost-days-row">
+          <Label>{{ "FILTER.COST-FROM" | translate }}</Label>
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="number"
+            placeholder="{{ 'FILTER.MINIMUM-COST' | translate }}"
+            [(ngModel)]="filters.costFrom"
+          />
+          <Label>{{ "FILTER.COST-TO" | translate }}</Label>
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="number"
+            placeholder="{{ 'FILTER.MAXIMUM-COST' | translate }}"
+            [(ngModel)]="filters.costTo"
+          />
+        </div>
+        <div class="cost-days-row" style="margin-top: 20px">
+          <Label>{{ "FILTER.DAYS-FROM" | translate }}</Label>
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="number"
+            placeholder="{{ 'FILTER.MINIMUM-DAYS' | translate }}"
+            [(ngModel)]="filters.daysFrom"
+          />
+          <Label>{{ "FILTER.DAYS-TO" | translate }}</Label>
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="number"
+            placeholder="{{ 'FILTER.MAXIMUM-DAYS' | translate }}"
+            [(ngModel)]="filters.daysTo"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="filters-footer">
+      <button class="clear-button" (click)="clearFilters()">
+        {{ "FILTER.CLEAR-ALL" | translate }}
+      </button>
+      <button class="results-button" (click)="submitFilters()">
+        {{ totalResults }} {{ "FILTER.RESULTS" | translate }}
+      </button>
+    </div>
+  </div>
+
+  <div class="gray-line"></div>
+
+  <div
+    [style.border]="
+      darkMode ? '3px solid var(--fore-color)' : '1px solid var(--back-color)'
+    "
+    *ngFor="let content of allContent"
+    class="content-box"
+  >
+    <div class="content-left">
+      <div class="image-container">
+        <img src="{{ content.mainImg }}" alt="content image" />
+        <button class="e-page-button" (click)="openEPage(content.id)">
+          E-Page
+        </button>
+      </div>
+      <div class="content-info">
+        <div class="content-title">{{ content.name }}</div>
+        <div class="content-description">{{ content.description }}</div>
+      </div>
+    </div>
+    <div class="content-actions">
+      <img class="clickable" src="button-plus.png" alt="add" />
+      <img class="clickable" src="button-thumbs-up.png" alt="like" />
+      <img class="clickable" src="button-thumbs-down.png" alt="dislike" />
+      <img class="clickable" src="button-share.png" alt="share" />
+    </div>
+  </div>
+
+  <button
+    style="border: 0; height: 50px; width: 200px"
+    [ngClass]="darkMode ? 'bg-light my-3' : 'bg-dark text-light my-3'"
+  >
+    <span *ngIf="!loadingMore" class="load-more">{{
+      "COMPASS-EVENTS.LOAD-MORE" | translate
+    }}</span>
+    <div
+      *ngIf="loadingMore"
+      class="spinner"
+      style="height: 20px; width: 20px; justify-self: center"
+    ></div>
+  </button>
+</div>

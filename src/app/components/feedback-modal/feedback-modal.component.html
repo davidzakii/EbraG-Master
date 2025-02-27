@@ -1,0 +1,180 @@
+<div class="modal fade" id="feedback-box" tabindex="-1" role="dialog">
+  <div class="modal-dialog bg-dark" role="document">
+    <div
+      class="modal-content"
+      [ngClass]="darkMode ? 'bg-dark border-white' : 'bg-light'"
+    >
+      <div class="modal-header">
+        <h5 class="modal-title">{{ "APP.FEEDBACK" | translate }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          [ngClass]="darkMode ? 'btn-close-white' : 'btn-close'"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ "APP.FEEDBACK-HOW-CAN-WE-HELP-YOU" | translate }}</p>
+        <form [formGroup]="feedbackForm" (ngSubmit)="sendFeedback()">
+          <div class="form-group" formGroupName="feedbackOptions">
+            <div class="form-check">
+              <input
+                [ngClass]="
+                  darkMode
+                    ? 'bg-dark border-white text-white placeholder-white'
+                    : 'border-dark placeholder-dark'
+                "
+                class="form-check-input"
+                type="checkbox"
+                formControlName="problem"
+              />
+              <label class="form-check-label">
+                {{ "APP.FEEDBACK-I-FOUND-A-PROBLEM" | translate }}
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                [ngClass]="
+                  darkMode
+                    ? 'bg-dark border-white text-white placeholder-white'
+                    : 'border-dark placeholder-dark'
+                "
+                class="form-check-input"
+                type="checkbox"
+                formControlName="service"
+              />
+              <label class="form-check-label">
+                {{ "APP.FEEDBACK-I-NEED-SERVICE" | translate }}
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                [ngClass]="
+                  darkMode
+                    ? 'bg-dark border-white text-white placeholder-white'
+                    : 'border-dark placeholder-dark'
+                "
+                class="form-check-input"
+                type="checkbox"
+                formControlName="suggestion"
+              />
+              <label class="form-check-label">
+                {{ "APP.FEEDBACK-I-HAVE-A-SUGGESTION" | translate }}
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                [ngClass]="
+                  darkMode
+                    ? 'bg-dark border-white text-white placeholder-white'
+                    : 'border-dark placeholder-dark'
+                "
+                class="form-check-input"
+                type="checkbox"
+                formControlName="development"
+              />
+              <label class="form-check-label">
+                {{ "APP.FEEDBACK-I-CAN-DEVELOP-OR-SUPPORT" | translate }}
+              </label>
+            </div>
+            <div class="form-check">
+              <input
+                [ngClass]="
+                  darkMode
+                    ? 'bg-dark border-white text-white placeholder-white'
+                    : 'border-dark placeholder-dark'
+                "
+                class="form-check-input"
+                type="checkbox"
+                formControlName="other"
+              />
+              <label class="form-check-label">
+                {{ "APP.FEEDBACK-OTHER" | translate }}
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <input
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              type="text"
+              class="form-control"
+              placeholder="{{ 'APP.FEEDBACK-PLACEHOLDER-NAME' | translate }}"
+              formControlName="name"
+            />
+            <div
+              class="error-message"
+              *ngIf="name?.invalid && (name?.touched || name?.dirty)"
+            >
+              <small *ngIf="name?.errors?.['required']" class="text-danger">
+                {{ "APP.FEEDBACK-ERROR-NAME-REQUIRED" | translate }}
+              </small>
+            </div>
+          </div>
+          <div class="form-group my-3">
+            <input
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              type="email"
+              class="form-control"
+              placeholder="{{ 'APP.FEEDBACK-PLACEHOLDER-EMAIL' | translate }}"
+              formControlName="email"
+            />
+            <div
+              class="error-message"
+              *ngIf="email?.invalid && (email?.touched || email?.dirty)"
+            >
+              <small *ngIf="email?.errors?.['required']" class="text-danger">
+                {{ "APP.FEEDBACK-ERROR-EMAIL-REQUIRED" | translate }}
+              </small>
+              <small *ngIf="email?.errors?.['email']" class="text-danger">
+                {{ "APP.FEEDBACK-ERROR-EMAIL-INVALID" | translate }}
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              class="form-control"
+              placeholder="{{ 'APP.FEEDBACK-PLACEHOLDER-MESSAGE' | translate }}"
+              formControlName="message"
+            ></textarea>
+            <div
+              class="error-message"
+              *ngIf="message?.invalid && (message?.touched || message?.dirty)"
+            >
+              <small *ngIf="message?.errors?.['required']" class="text-danger">
+                {{ "APP.FEEDBACK-ERROR-MESSAGE-REQUIRED" | translate }}
+              </small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="submit"
+              class="btn"
+              [ngClass]="darkMode ? 'btn-light' : 'btn-dark'"
+            >
+              {{ "APP.FEEDBACK-SEND" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="feedback-box m-0">
+  <div data-bs-toggle="modal" data-bs-target="#feedback-box">
+    {{ "APP.FEEDBACK" | translate }}
+  </div>
+</div>

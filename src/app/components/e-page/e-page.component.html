@@ -1,0 +1,653 @@
+<div class="section-column" style="margin-top: 30px; width: 100%">
+  <span style="font-weight: 700; align-self: flex-start; margin-left: 25%">{{
+    "E-PAGE.TOP" | translate
+  }}</span>
+  <span style="align-self: flex-start; margin-left: 25%; margin-right: 25%">{{
+    "E-PAGE.TOP-DESCRIPTION" | translate
+  }}</span>
+  <div class="filters-modal" *ngIf="isModalOpen"></div>
+
+  <div *ngIf="ePageId != ''" class="work-information-container">
+    <!-- Header -->
+    <div class="header">
+      <div class="icon">
+        <img src="cog.png" class="clickable" alt="Settings" />
+      </div>
+      <div class="header-buttons">
+        <button class="preview-button">
+          <img src="eye.png" height="12px" /> Preview
+        </button>
+        <button class="save-button">Next/Save</button>
+      </div>
+    </div>
+
+    <!-- Title -->
+    <div class="title">{{ workName }}</div>
+
+    <!-- Divider with Work Information and Close -->
+    <div class="divider">
+      <div class="line" style="width: 3%"></div>
+      <span class="section-title">Work Information</span>
+      <div class="line" style="flex: 1"></div>
+      <button
+        (click)="collapseOrOpen('work-info')"
+        *ngIf="openWorkInfo"
+        class="close-button"
+      >
+        Close
+      </button>
+      <button
+        (click)="collapseOrOpen('work-info')"
+        *ngIf="!openWorkInfo"
+        class="close-button"
+      >
+        Open
+      </button>
+      <div class="line" style="width: 8%"></div>
+    </div>
+
+    <p class="description">{{ description }}</p>
+    <!-- Work Information -->
+    <div class="{{ openWorkInfo ? 'work-info' : 'work-info collapsible' }}">
+      <div class="project-info">
+        <h3>Project Information</h3>
+        <ul>
+          <li>
+            Security number ....{{ securityNumber }}
+            <span class="icon"><img src="eye.png" alt="View" /></span>
+          </li>
+          <li>Security</li>
+        </ul>
+      </div>
+      <div class="section-row">
+        <!-- Delete Project Section -->
+        <div class="delete-project">
+          <img src="trash.png" alt="Delete" />
+          <span style="width: 150px">Delete Project</span>
+        </div>
+
+        <!-- Help Icon -->
+        <div class="help-icon">
+          <img src="help.png" alt="Help" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="ePageId != ''" class="rounds-lines-container">
+    <div class="divider">
+      <div class="line" style="width: 3%"></div>
+      <span class="section-title">Rounds & Lines</span>
+      <div class="line" style="flex: 1"></div>
+      <button
+        (click)="collapseOrOpen('rounds-lines')"
+        *ngIf="openRoundsLines"
+        class="close-button"
+      >
+        Close
+      </button>
+      <button
+        (click)="collapseOrOpen('rounds-lines')"
+        *ngIf="!openRoundsLines"
+        class="close-button"
+      >
+        Open
+      </button>
+      <div class="line" style="width: 8%"></div>
+    </div>
+
+    <p style="margin: 0 3%">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+    <div class="status">
+      <button class="active-btn">Active</button>
+      <span class="round-info">Round 1 - Line 1</span>
+    </div>
+
+    <div class="{{ openRoundsLines ? 'no-style' : 'collapsible' }}">
+      <div class="sections">
+        <div class="section">
+          <h4>Rounds</h4>
+          <p>XXXXXXXXXXX</p>
+          <select
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+          >
+            <option>Active Round - 1</option>
+          </select>
+        </div>
+        <div class="info">
+          <button class="add-btn">+ Add Round</button>
+          <h4>Round 1</h4>
+          <p>What is round - 1?</p>
+        </div>
+      </div>
+
+      <div class="sections">
+        <div class="section">
+          <h4>Lines</h4>
+          <p>XXXXXXXXXXX</p>
+          <select
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+          >
+            <option>Active Line - 1</option>
+          </select>
+        </div>
+        <div class="info">
+          <button class="add-btn">+ Add Line</button>
+          <h4>Line 1</h4>
+          <p>What is line - 1?</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="ePageId != ''" class="work-status-container">
+    <div class="divider">
+      <div class="line" style="width: 3%"></div>
+      <span class="section-title">Work Status</span>
+      <div class="line" style="flex: 1"></div>
+      <button
+        (click)="collapseOrOpen('work-status')"
+        *ngIf="openWorkStatus"
+        class="close-button"
+      >
+        Close
+      </button>
+      <button
+        (click)="collapseOrOpen('work-status')"
+        *ngIf="!openWorkStatus"
+        class="close-button"
+      >
+        Open
+      </button>
+      <div class="line" style="width: 8%"></div>
+    </div>
+
+    <p style="margin: 0 3%">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+    <div class="{{ openWorkStatus ? 'no-style' : 'collapsible' }}">
+      <div class="section-row" style="margin: 0 3%">
+        <div class="sidebar">
+          <ul>
+            <li
+              [class.active]="tabWorkStatus === 'preparing'"
+              (click)="selectWorkStatusTab('preparing')"
+            >
+              {{ "E-PAGE.PREPARING" | translate }}
+            </li>
+            <li
+              [class.active]="tabWorkStatus === 'on-stage'"
+              (click)="selectWorkStatusTab('on-stage')"
+            >
+              {{ "E-PAGE.ON-STAGE" | translate }}
+            </li>
+            <li
+              [class.active]="tabWorkStatus === 'blockchain'"
+              (click)="selectWorkStatusTab('blockchain')"
+            >
+              {{ "E-PAGE.BLOCKCHAIN" | translate }}
+            </li>
+            <li
+              [class.active]="tabWorkStatus === 'project-receiving'"
+              (click)="selectWorkStatusTab('project-receiving')"
+            >
+              {{ "E-PAGE.PROJECT-RECEIVING" | translate }}
+            </li>
+            <li
+              [class.active]="tabWorkStatus === 'project-running'"
+              (click)="selectWorkStatusTab('project-running')"
+            >
+              {{ "E-PAGE.PROJECT-RUNNING" | translate }}
+            </li>
+            <li
+              [class.active]="tabWorkStatus === 'project-payback'"
+              (click)="selectWorkStatusTab('project-payback')"
+            >
+              {{ "E-PAGE.PROJECT-PAYBACK" | translate }}
+            </li>
+          </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+          <div *ngIf="tabWorkStatus === 'preparing'">
+            <h3>{{ "E-PAGE.PREPARING" | translate }}</h3>
+            <p>
+              {{ "E-PAGE.PREPARING-PARAGRAPH" | translate }}
+            </p>
+          </div>
+          <div *ngIf="tabWorkStatus === 'on-stage'">
+            <h3>{{ "E-PAGE.ON-STAGE" | translate }}</h3>
+            <p>
+              {{ "E-PAGE.ON-STAGE-PARAGRAPH" | translate }}
+            </p>
+          </div>
+          <div *ngIf="tabWorkStatus === 'blockchain'">
+            <h3>{{ "E-PAGE.BLOCKCHAIN" | translate }}</h3>
+            <p>
+              {{ "E-PAGE.BLOCKCHAIN-PARAGRAPH" | translate }}
+            </p>
+          </div>
+          <div *ngIf="tabWorkStatus === 'project-receiving'">
+            <h3>{{ "E-PAGE.PROJECT-RECEIVING" | translate }}</h3>
+            <p>
+              {{ "E-PAGE.PROJECT-RECEIVING-PARAGRAPH" | translate }}
+            </p>
+          </div>
+          <div *ngIf="tabWorkStatus === 'project-running'">
+            <h3>{{ "E-PAGE.PROJECT-RUNNING" | translate }}</h3>
+            <p>
+              {{ "E-PAGE.PROJECT-RUNNING-PARAGRAPH" | translate }}
+            </p>
+          </div>
+          <div *ngIf="tabWorkStatus === 'project-payback'">
+            <h3>{{ "E-PAGE.PROJECT-PAYBACK" | translate }}</h3>
+            <p>
+              {{ "E-PAGE.PROJECT-PAYBACK-PARAGRAPH" | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="section-row">
+        <div style="flex: 1"></div>
+        <button
+          style="
+            border-radius: 100px;
+            height: 25px;
+            width: 150px;
+            background-color: var(--fore-color);
+            color: var(--back-color);
+            font-weight: bold;
+            margin-right: 5%;
+          "
+        >
+          Launch
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="production-line-container">
+    <div class="divider">
+      <div class="line" style="width: 3%"></div>
+      <span class="section-title">Production Line</span>
+      <div class="line" style="flex: 1"></div>
+    </div>
+
+    <p style="margin: 0 3%">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+    <div class="section-row" style="margin: 0 3%">
+      <div class="sidebar">
+        <ul>
+          <li
+            [class.active]="tabProductionLine === 'document' && darkMode"
+            [class.active-dark]="tabProductionLine === 'document' && !darkMode"
+            (click)="selectProductionLineTab('document')"
+          >
+            {{ "E-PAGE.DOCUMENT" | translate }}
+          </li>
+          <li
+            [class.active]="tabProductionLine === 'input' && darkMode"
+            [class.active-dark]="tabProductionLine === 'input' && !darkMode"
+            (click)="selectProductionLineTab('input')"
+          >
+            {{ "E-PAGE.INPUT" | translate }}
+          </li>
+          <li
+            [class.active]="tabProductionLine === 'progress' && darkMode"
+            [class.active-dark]="tabProductionLine === 'progress' && !darkMode"
+            (click)="selectProductionLineTab('progress')"
+          >
+            {{ "E-PAGE.PROGRESS" | translate }}
+          </li>
+          <li
+            [class.active]="tabProductionLine === 'final-product' && darkMode"
+            [class.active-dark]="
+              tabProductionLine === 'final-product' && !darkMode
+            "
+            (click)="selectProductionLineTab('final-product')"
+          >
+            {{ "E-PAGE.FINAL-PRODUCT" | translate }}
+          </li>
+          <li
+            [class.active]="tabProductionLine === 'return' && darkMode"
+            [class.active-dark]="tabProductionLine === 'return' && !darkMode"
+            (click)="selectProductionLineTab('return')"
+          >
+            {{ "E-PAGE.RETURN" | translate }}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div *ngIf="tabProductionLine == 'document'" class="document-container">
+      <div class="summary-header">
+        <hr style="width: 5%" />
+        <span>Summary</span>
+        <hr style="flex: 1" />
+      </div>
+
+      <div class="summary-content">
+        <h1>Start with the basics</h1>
+        <p>Make it easy for people to learn about your project.</p>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="project-title-section">
+        <div class="project-title-info">
+          <h2>Project title</h2>
+          <p>
+            Write a clear, brief title and subtitle to help people quickly
+            understand your project. Both will appear on your project and
+            pre-launch pages.
+          </p>
+          <p>
+            Potential backers will also see them if your project appears on
+            category pages, search results, or in emails we send to our
+            community.
+          </p>
+        </div>
+        <div class="project-title-inputs">
+          <div>
+            <label for="title">Title</label>
+            <input
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              type="text"
+              id="title"
+              value="The Community Microscope Kit"
+            />
+          </div>
+          <div>
+            <label for="subtitle">Subtitle</label>
+            <input
+              [ngClass]="
+                darkMode
+                  ? 'bg-dark border-white text-white placeholder-white'
+                  : 'border-dark placeholder-dark'
+              "
+              style="height: 80px"
+              type="text"
+              id="subtitle"
+              value="Explore the invisible microscopic world around you with an affordable microscope kit you construct yourself."
+            />
+          </div>
+
+          <div class="project-footer">
+            <span class="footer-text">
+              <i class="icon"></i> Give backers the best first impression of
+              your project with great titles.
+              <a href="#">Learn more...</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="content-wrapper">
+        <div>
+          <span>ℹ️</span>
+          If Ebraj don’t have what your project need
+          <a href="#">Invite Feedback</a>
+        </div>
+        <div>
+          Adjust your bills
+          <a href="#">My Profile</a>
+        </div>
+        <div>
+          If you want to hire more people to work with you temporary just to
+          help your before launch
+          <a href="#">Services - Auxiliary arm AI</a>
+        </div>
+        <div>
+          If you want to hire more people to work with you full time or part
+          time or with conditions
+          <a href="#">Build team</a>
+        </div>
+        <div>
+          Soon E-Company developing tools to make your time easy and fun
+          <a href="#">E.platform</a>
+        </div>
+        <div>
+          You can study the market to see how need
+          <a href="#">Opinion poll</a>
+        </div>
+        <div>
+          If you want to hire more people to work with you temporary just to
+          help your before launch
+          <a href="#">Auxiliary arm - Checking</a>
+        </div>
+        <div>
+          Inflation
+          <a href="#">Live services</a>
+        </div>
+        <div>
+          <a href="#">Event</a>
+        </div>
+        <div>
+          Non disclosure agreement
+          <a href="#">Forms</a>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="tabProductionLine == 'final-product'"
+      class="final-product-container"
+    >
+      <div class="summary-header">
+        <hr style="width: 5%" />
+        <span>Xxxx</span>
+        <hr style="flex: 1" />
+      </div>
+      <div class="project-need">
+        <p><strong>What does the project need?</strong></p>
+        <p>To prepare need list use <a href="#">Provider</a></p>
+        <div class="feedback">
+          <img
+            src="warning.png"
+            style="filter: var(--dark-mode-filter)"
+            alt="Warning Icon"
+          />
+          <span
+            >If Ebraj doesn’t have what your project need you can invite or
+            create invitation <a href="#">Feedback</a></span
+          >
+        </div>
+      </div>
+
+      <div class="accordion">
+        <div
+          class="accordion-item"
+          *ngFor="
+            let item of productionLinesFinalProductAccordionItems;
+            let i = index
+          "
+        >
+          <div class="accordion-header" (click)="toggleAccordion(i)">
+            {{ item.title }}
+            <span>{{ activeIndex === i ? "\u25B2" : "\u25BC" }}</span>
+          </div>
+          <div class="accordion-content" *ngIf="activeIndex === i">
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>In order</th>
+                    <th>Name</th>
+                    <th>By</th>
+                    <th>Cost</th>
+                    <th>Start date</th>
+                    <th>Barcode</th>
+                    <th>Status</th>
+                    <th>&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="7" style="padding: 0px">
+                      <div class="table-search-bar">
+                        <input
+                          [ngClass]="
+                            darkMode
+                              ? 'bg-dark border-white text-white placeholder-white'
+                              : 'border-dark placeholder-dark'
+                          "
+                          type="text"
+                          placeholder="Search by (Type, Name, Cost, ...)"
+                        />
+                      </div>
+                    </td>
+                    <td
+                      style="
+                        font-size: small;
+                        background-color: darkblue;
+                        color: white;
+                      "
+                    >
+                      Sort
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>1</td>
+                    <td>Web developer</td>
+                    <td>UCN</td>
+                    <td>$2,000</td>
+                    <td>Apr 24 - 2024</td>
+                    <td>&nbsp;</td>
+                    <td>Arrived</td>
+                    <td style="font-size: x-large">&#x2715;</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Content maker</td>
+                    <td>Mosan</td>
+                    <td>$700</td>
+                    <td>May 9 - 2024</td>
+                    <td>&nbsp;</td>
+                    <td>Canceled</td>
+                    <td style="font-size: x-large">&#x2715;</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Video maker</td>
+                    <td>Uale</td>
+                    <td>$900</td>
+                    <td>Apr 24 - 2024</td>
+                    <td>&nbsp;</td>
+                    <td>Delayed</td>
+                    <td style="font-size: x-large">&#x2715;</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Translate</td>
+                    <td>Feds</td>
+                    <td>$1,300</td>
+                    <td>May 9 - 2024</td>
+                    <td>&nbsp;</td>
+                    <td>Active</td>
+                    <td style="font-size: x-large">&#x2715;</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Logo</td>
+                    <td>Rox</td>
+                    <td>$500</td>
+                    <td>Apr 24 - 2024</td>
+                    <td>&nbsp;</td>
+                    <td>On time</td>
+                    <td style="font-size: x-large">&#x2715;</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="remaining">
+              Remaining<br />
+              $500 - 20%
+            </div>
+            <div class="done">
+              Done<br />
+              $1,500 - 80%
+            </div>
+          </div>
+          <div
+            style="
+              height: 10px;
+              color: var(--back-color);
+              background-color: var(--back-color);
+            "
+          ></div>
+        </div>
+      </div>
+      <div class="total-cost-section">
+        <div class="buttons">
+          <button class="research">Research</button>
+          <button class="reset">Reset</button>
+        </div>
+        <div style="margin-left: 10%; display: flex; flex-direction: column">
+          <div class="total-cost">Total cost - $10,000</div>
+          <div class="breakdown">
+            <div class="complete">Complete - $5,000</div>
+            <div class="rimman">Rimman - $5,000</div>
+          </div>
+        </div>
+      </div>
+      <div class="slider-section">
+        <div class="section">
+          <h3>Are you going to be?</h3>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="role" value="planner" checked />
+              Planner - 2%
+            </label>
+            <label>
+              <input type="radio" name="role" value="planner-manager" />
+              Planner & Manager - 4%
+            </label>
+            <label>
+              <input type="radio" name="role" value="more" />
+              More
+            </label>
+          </div>
+          <button class="add-button">+ Add</button>
+        </div>
+
+        <div class="section">
+          <label class="checkbox-group">
+            <input type="checkbox" name="invest" checked />
+            Do you want to invest?
+          </label>
+          <p style="margin-left: 10%">Total cost - $10,000</p>
+          <div class="slider-container" style="margin-left: 10%">
+            <span>$0</span>
+            <input type="range" min="0" max="10000" value="5000" step="100" />
+            <span>$5,000</span>
+            <span>50%</span>
+          </div>
+        </div>
+        <div class="section">
+          <label class="checkbox-group">
+            <input type="checkbox" name="invest" checked />
+            Do you want insurance?
+          </label>
+          <p style="margin-left: 10%">Total cost - $10,000</p>
+          <div class="slider-container" style="margin-left: 10%">
+            <span>$0</span>
+            <input type="range" min="0" max="10000" value="5000" step="100" />
+            <span>$5,000</span>
+            <span>50%</span>
+          </div>
+        </div>
+
+        <div class="warning-message">
+          <span>Warning</span> If you choose insurance, this means that Ebraj
+          Company will take a permanent percentage of your work.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

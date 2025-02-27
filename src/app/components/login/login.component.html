@@ -1,0 +1,101 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div>
+      <h1 class="card-title text-center">{{ "APP.WELCOME" | translate }}</h1>
+      <form
+        #loginForm="ngForm"
+        (ngSubmit)="onLogin(loginForm)"
+        class="d-flex flex-column justify-content-around align-items-center h-100"
+      >
+        <div>
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="text"
+            name="email"
+            #email="ngModel"
+            ngModel
+            class="form-control"
+            placeholder="{{ 'LOGIN.USER-FIELD' | translate }}"
+            required
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+          />
+          <div *ngIf="email.touched && email.invalid" class="my-2">
+            <small
+              class="text-danger"
+              *ngIf="email.control.errors?.['required']"
+            >
+              {{ "LOGIN.EMAIL-REQUIRED" | translate }}
+            </small>
+            <small
+              class="text-danger"
+              *ngIf="email.control.errors?.['pattern']"
+            >
+              {{ "LOGIN.EMAIL-PATTERN" | translate }}
+            </small>
+          </div>
+        </div>
+        <div>
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="text"
+            name="password"
+            #password="ngModel"
+            ngModel
+            class="form-control"
+            placeholder="{{ 'LOGIN.PASSWORD-FIELD' | translate }}"
+            required
+          />
+          <div *ngIf="password.touched && password.invalid" class="my-2">
+            <small
+              class="text-danger"
+              *ngIf="password.control.errors?.['required']"
+            >
+              {{ "LOGIN.PASSWORD-REQUIRED" | translate }}
+            </small>
+          </div>
+        </div>
+        <div>
+          <input
+            type="checkbox"
+            name="remember"
+            [(ngModel)]="remember"
+            class="form-check-input mx-2"
+            id="rememberMe"
+          />
+          <label
+            [ngClass]="darkMode ? 'text-light' : 'text-dark'"
+            class="form-check-label"
+            for="rememberMe"
+            >{{ "LOGIN.REMEMBER-BOX" | translate }}</label
+          >
+        </div>
+        <button
+          [disabled]="loginForm.invalid"
+          type="submit"
+          class="d-block bg-transparent btn"
+          [ngClass]="darkMode ? 'border-white text-white' : 'border-dark'"
+        >
+          <span>{{ "LOGIN.LOGIN-BUTTON" | translate }}</span>
+        </button>
+      </form>
+
+      <div class="text-center mt-3">
+        <button
+          style="border: none; background-color: transparent"
+          routerLink="/register"
+          [ngClass]="darkMode ? 'text-light' : 'text-dark'"
+        >
+          {{ "LOGIN.CREATE-ACCOUNT-BUTTON" | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,200 @@
+// Variables for breakpoints
+$mobile: 576px;
+$tablet: 768px;
+$desktop: 1024px;
+
+// Mixins for media queries
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}
+
+.top-content {
+  margin: 3rem 1rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+
+  p {
+    text-align: center;
+    width: min(400px, 90%);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+    @include mobile {
+      width: 95%;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  width: min(80%, 1200px);
+  margin: 0 auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  justify-self: center;
+
+  @include tablet {
+    flex-direction: column;
+    width: 95%;
+  }
+  .sidebar {
+    width: 250px;
+    padding: 2.5rem;
+
+    @include tablet {
+      width: 100%;
+      padding: 1.5rem;
+
+      // Make the ul a row instead of column
+      ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      // Hide the image
+      img {
+        display: none;
+      }
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        padding: 0.625rem;
+        cursor: pointer;
+        transition: border-left 0.1s, font-weight 0.1s;
+
+        &.active {
+          font-weight: bold;
+          border-left: 3px solid var(--fore-color) !important;
+        }
+        &.active-dark {
+          font-weight: bold;
+          border-left: 3px solid var(--back-color) !important;
+        }
+
+        @include tablet {
+          // Modify active state for horizontal layout
+          &.active {
+            border-left: none !important;
+            border-bottom: 3px solid var(--fore-color) !important;
+          }
+          &.active-dark {
+            border-left: none !important;
+            border-bottom: 3px solid var(--back-color) !important;
+          }
+        }
+
+        @include mobile {
+          padding: 0.75rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      max-height: 150px;
+    }
+  }
+
+  .content {
+    margin-top: 1.25rem;
+    flex: 1;
+    padding: 1.25rem;
+    min-width: 0; // Prevents flex item from overflowing
+
+    @include tablet {
+      padding: 1rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.625rem;
+
+      @include mobile {
+        font-size: 1.25rem;
+      }
+    }
+
+    p {
+      width: min(80%, 600px);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      font-size: 1rem;
+      line-height: 1.5;
+
+      @include mobile {
+        width: 95%;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+.spinner {
+  opacity: 1;
+  border: 5px solid var(--fore-color);
+  border-top: 5px solid var(--back-color);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.load-more {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @include mobile {
+    font-size: 0.9rem;
+  }
+}
+
+// Button container styles
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1rem;
+
+  button {
+    border: 0;
+    background-color: var(--fore-color);
+    color: var(--back-color);
+    height: 50px;
+    width: min(200px, 90%);
+
+    @include mobile {
+      height: 40px;
+    }
+  }
+}

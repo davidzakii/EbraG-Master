@@ -1,0 +1,62 @@
+<div class="top-content">
+  <h3>{{ "PUBLIC-LAW.TOP" | translate }}</h3>
+  <p>{{ "PUBLIC-LAW.TOP-DESCRIPTION" | translate }}</p>
+</div>
+<div class="container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <ul>
+      <li
+        [class.active]="selectedTab === 'rules' && darkMode"
+        [class.active-dark]="selectedTab === 'rules' && !darkMode"
+        (click)="selectTab('rules')"
+      >
+        {{ "PUBLIC-LAW.RULES" | translate }}
+      </li>
+      <li
+        [class.active]="selectedTab === 'policy' && darkMode"
+        [class.active-dark]="selectedTab === 'policy' && !darkMode"
+        (click)="selectTab('policy')"
+      >
+        {{ "PUBLIC-LAW.POLICY" | translate }}
+      </li>
+      <li
+        [class.active]="selectedTab === 'conditions' && darkMode"
+        [class.active-dark]="selectedTab === 'conditions' && !darkMode"
+        (click)="selectTab('conditions')"
+      >
+        {{ "PUBLIC-LAW.CONDITIONS" | translate }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div *ngIf="selectedTab === 'rules'">
+      <h3>{{ "PUBLIC-LAW.RULES" | translate }}</h3>
+      <p>
+        {{ "PUBLIC-LAW.RULES-PARAGRAPH" | translate }}
+      </p>
+    </div>
+    <div *ngIf="selectedTab === 'policy'">
+      <h3>{{ "PUBLIC-LAW.POLICY" | translate }}</h3>
+      <p>
+        {{ "PUBLIC-LAW.POLICY-PARAGRAPH" | translate }}
+      </p>
+    </div>
+    <div *ngIf="selectedTab === 'conditions'">
+      <h3>{{ "PUBLIC-LAW.CONDITIONS" | translate }}</h3>
+      <p>
+        {{ "PUBLIC-LAW.CONDITIONS-PARAGRAPH" | translate }}
+      </p>
+    </div>
+  </div>
+</div>
+<div class="button-container">
+  <button [ngClass]="darkMode ? 'bg-light' : 'bg-dark text-light'">
+    <span *ngIf="!loadingMore" class="load-more">{{
+      "PUBLIC-LAW.LOAD-MORE" | translate
+    }}</span>
+    <div *ngIf="loadingMore" class="spinner"></div>
+  </button>
+</div>

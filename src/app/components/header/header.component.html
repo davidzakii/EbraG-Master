@@ -1,0 +1,325 @@
+<nav class="navbar bg-dark navbar-expand-lg sticky-top">
+  <div class="container d-flex">
+    <div
+      class="burger-menu d-lg-none"
+      (click)="toggleMobileMenu()"
+      [class.active]="isMobileMenuOpen"
+      data-bs-toggle="collapse"
+      data-bs-target="#mobileMenu"
+      aria-controls="navbarToggleExternalContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="span-dark"></span>
+      <span class="span-dark"></span>
+      <span class="span-dark"></span>
+    </div>
+    <!-- Brand and Logo -->
+    <a
+      style="font-family: EB Garamond, serif"
+      class="navbar-brand d-flex hover-color text-light justify-content-center align-items-center order-lg-1"
+      [routerLink]="['/home']"
+      routerLinkActive="active"
+    >
+      <img
+        src="EbrajGR Logo.png"
+        alt="EbrajGR Logo"
+        width="40"
+        height="70"
+        class="d-inline-block align-text-top"
+      />
+      <span
+        >{{ "APP.EBRAJ" | translate }}
+        <small>{{ "APP.GR" | translate }}</small></span
+      >
+    </a>
+    <div
+      class="navbar-brand d-flex justify-content-center align-items-center login-dark-mode-icon order-lg-3"
+    >
+      <button
+        class="border-0 bg-transparent mx-2 text-white"
+        (click)="switchDarkMode()"
+      >
+        <!-- Using Bootstrap Icons (e.g., bi-moon, bi-sun) if available -->
+        <i
+          class="bi fs-3"
+          [ngClass]="{
+            'bi-moon': !darkMode,
+            'bi-sun': darkMode
+          }"
+        ></i>
+      </button>
+      <div *ngIf="!showProfileTab">
+        <a
+          [routerLink]="['/login']"
+          class="text-decoration-none text-light"
+          routerLinkActive="active"
+          >{{ "APP.LOGIN" | translate }}</a
+        >
+      </div>
+      <div *ngIf="showProfileTab" class="profile dropdown-toggle text-light">
+        <span class="profile-text">{{ "APP.MY-PROFILE" | translate }}</span>
+        <div class="profile-hover-box">
+          <div class="profile-header">
+            <img
+              src="{{ user?.profileImgUrl || imageBase64 }}"
+              alt="Profile Picture"
+              class="profile-picture"
+            />
+            <div class="profile-info">
+              <h3>{{ user?.firstName }} {{ user?.lastName }}</h3>
+              <div
+                *ngIf="user?.StatusId == '2'"
+                style="display: flex; flex-direction: row; gap: 5px"
+              >
+                <img src="ebrajer.png" style="height: 30px" />
+                <p class="status">Ebrajer</p>
+              </div>
+              <div
+                *ngIf="user?.StatusId != '2'"
+                style="display: flex; flex-direction: row; gap: 5px"
+              >
+                <img src="non-ebrajer.png" style="height: 30px" />
+                <p class="status">Non Ebrajer</p>
+              </div>
+            </div>
+          </div>
+
+          <button routerLink="/my-profile" class="profile-button">
+            {{ "APP.MY-PROFILE" | translate }}
+          </button>
+
+          <ul class="profile-menu">
+            <li *ngIf="isAdmin" [routerLink]="'/dashboard'">
+              <span>{{ "APP.MY-PROFILE-DASHBOARD" | translate }}</span>
+            </li>
+            <li [routerLink]="'/my-profile/my-wallet'">
+              <span>{{ "APP.MY-PROFILE-MY-WALLET" | translate }}</span>
+            </li>
+            <li>
+              <span>{{ "APP.MY-PROFILE-MY-INVESTMENT" | translate }}</span>
+            </li>
+            <li>
+              <span>{{ "APP.MY-PROFILE-MY-EBRAJ" | translate }}</span>
+            </li>
+            <li>
+              <span>{{ "APP.MY-PROFILE-MY-CARDS" | translate }}</span>
+            </li>
+            <li>
+              <span>{{ "APP.MY-PROFILE-MY-SHIELDS" | translate }}</span>
+            </li>
+            <hr />
+            <li (click)="openEPage()">
+              <span>{{ "APP.MY-PROFILE-CREATE-YOUR-WORK" | translate }}</span>
+            </li>
+            <li>
+              <span>{{ "APP.MY-PROFILE-MESSAGING" | translate }}</span>
+            </li>
+            <li>
+              <span>{{ "APP.MY-PROFILE-MEETINGS" | translate }}</span>
+            </li>
+            <li>
+              <span>{{ "APP.MY-PROFILE-TO-DO-LIST" | translate }}</span>
+            </li>
+            <hr />
+            <li (click)="logout()" style="font-weight: 500">
+              <span>{{ "APP.MY-PROFILE-LOGOUT" | translate }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      id="mobileMenu"
+      class="collapse links-dark navbar-collapse p-3 order-lg-2"
+      [style.left]="selectedOption === 'en' ? '0%' : '0%'"
+      [style.right]="selectedOption === 'ar' ? '0%' : '0%'"
+    >
+      <ul
+        class="navbar-nav d-flex justify-content-between w-100 me-auto mb-2 mb-lg-0"
+      >
+        <li class="nav-item">
+          <a
+            class="nav-link hover-color text-light"
+            [routerLink]="['/public-law']"
+            >{{ "APP.PUBLIC-LAW" | translate }}</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link hover-color text-light"
+            [routerLink]="['/stats']"
+            >{{ "APP.STATS" | translate }}</a
+          >
+        </li>
+        <!-- Talk Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-light"
+            href="#"
+            id="talkDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "APP.TALK" | translate }}
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="talkDropdown">
+            <li>
+              <a
+                class="dropdown-item text-light li-hover"
+                [routerLink]="['/talk']"
+                >{{ "APP.TALK" | translate }}</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.TALK-CHAT" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.TALK-SUGGESTIONS" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.TALK-VOTE" | translate
+              }}</a>
+            </li>
+          </ul>
+        </li>
+        <!-- Compass Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-light"
+            href="#"
+            id="compassDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "APP.COMPASS" | translate }}
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="compassDropdown">
+            <li>
+              <a
+                class="dropdown-item text-light li-hover"
+                [routerLink]="['/compass']"
+                >{{ "APP.COMPASS" | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item text-light li-hover"
+                [routerLink]="['/compass/events']"
+                >{{ "APP.COMPASS-EVENTS" | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item text-light li-hover"
+                [routerLink]="['/compass/jobs']"
+                >{{ "APP.COMPASS-JOBS" | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                class="dropdown-item text-light li-hover"
+                [routerLink]="['/compass/arms']"
+                >{{ "APP.COMPASS-ARMS" | translate }}</a
+              >
+            </li>
+          </ul>
+        </li>
+        <!-- Presenters Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-light"
+            href="#"
+            id="presentersDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "APP.PRESENTERS" | translate }}
+          </a>
+          <ul
+            class="dropdown-menu bg-dark"
+            aria-labelledby="presentersDropdown"
+          >
+            <li>
+              <a
+                class="dropdown-item text-light li-hover"
+                [routerLink]="['/presenters']"
+                >{{ "APP.PRESENTERS" | translate }}</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.PRESENTERS-SERVICE" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.PRESENTERS-TOOLS" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.PRESENTERS-PLACES" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.PRESENTERS-VALUES" | translate
+              }}</a>
+            </li>
+          </ul>
+        </li>
+        <!-- Providers Dropdown -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle text-light"
+            href="#"
+            id="providersDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ "APP.PROVIDERS" | translate }}
+          </a>
+          <ul class="dropdown-menu bg-dark" aria-labelledby="providersDropdown">
+            <li>
+              <a
+                class="dropdown-item text-light li-hover"
+                [routerLink]="['/providers']"
+                >{{ "APP.PROVIDERS" | translate }}</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.PROVIDERS-SERVICES" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.PROVIDERS-TOOLS-AND-EQUIPMENT" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.PROVIDERS-PLACES" | translate
+              }}</a>
+            </li>
+            <li>
+              <a class="dropdown-item text-light li-hover" href="#">{{
+                "APP.PROVIDERS-VALUES" | translate
+              }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

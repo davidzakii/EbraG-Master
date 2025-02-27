@@ -1,0 +1,64 @@
+<div class="top-content">
+  <h3>Ebraj</h3>
+  <p>{{ "HOME.TOP-DESCRIPTION" | translate }}</p>
+</div>
+<div class="container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <ul>
+      <li
+        [class.active]="selectedTab === 'community' && darkMode"
+        [class.active-dark]="selectedTab === 'community' && !darkMode"
+        (click)="selectTab('community')"
+      >
+        {{ "HOME.OUR-COMMUNITY" | translate }}
+      </li>
+      <li
+        [class.active]="selectedTab === 'goals' && darkMode"
+        [class.active-dark]="selectedTab === 'goals' && !darkMode"
+        (click)="selectTab('goals')"
+      >
+        {{ "HOME.OUR-GOALS" | translate }}
+      </li>
+      <li
+        [class.active]="selectedTab === 'history' && darkMode"
+        [class.active-dark]="selectedTab === 'history' && !darkMode"
+        (click)="selectTab('history')"
+      >
+        {{ "HOME.OUR-HISTORY" | translate }}
+      </li>
+    </ul>
+    <img
+      src="logo-crash.png"
+      style="height: 150px; filter: var(--dark-mode-filter)"
+    />
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div *ngIf="selectedTab === 'community'">
+      <h3>{{ "HOME.OUR-COMMUNITY" | translate }}</h3>
+      <p>
+        {{ "HOME.OUR-COMMUNITY-PARAGRAPH" | translate }}
+      </p>
+    </div>
+    <div *ngIf="selectedTab === 'goals'">
+      <h3>{{ "HOME.OUR-GOALS" | translate }}</h3>
+      <p>
+        {{ "HOME.OUR-GOALS-PARAGRAPH" | translate }}
+      </p>
+    </div>
+    <div *ngIf="selectedTab === 'history'">
+      <h3>{{ "HOME.OUR-HISTORY" | translate }}</h3>
+      <p>
+        {{ "HOME.OUR-HISTORY-PARAGRAPH" | translate }}
+      </p>
+    </div>
+  </div>
+</div>
+<div class="button-container mb-2">
+  <button [ngClass]="darkMode ? 'bg-light' : 'bg-dark text-light'">
+    <span class="load-more">{{ "HOME.LOAD-MORE" | translate }}</span>
+    <!-- <div class="spinner"></div> -->
+  </button>
+</div>
