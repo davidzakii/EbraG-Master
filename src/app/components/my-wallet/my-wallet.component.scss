@@ -56,14 +56,17 @@
   a {
     cursor: pointer;
     text-decoration: none;
-    color: var(--fore-color);
     padding: 10px 15px;
     font-size: 14px;
     white-space: nowrap;
 
     &.active {
-      border-bottom: 2px solid var(--fore-color);
       font-weight: bold;
+      border-bottom: 3px solid var(--fore-color) !important;
+    }
+    &.active-dark {
+      font-weight: bold;
+      border-bottom: 3px solid var(--back-color) !important;
     }
 
     @media (max-width: 768px) {
@@ -132,6 +135,15 @@
         @media (max-width: 768px) {
           border-left: none;
           border-bottom: 3px solid var(--fore-color);
+        }
+      }
+      &.active-dark {
+        font-weight: bold;
+        border-left: 3px solid var(--back-color) !important;
+
+        @media (max-width: 768px) {
+          border-left: none !important;
+          border-bottom: 3px solid var(--back-color);
         }
       }
     }
@@ -262,6 +274,7 @@ tr:nth-child(even) {
 
 th {
   background-color: var(--back-color);
+  color: var(--fore-color) !important;
 }
 
 // Footer

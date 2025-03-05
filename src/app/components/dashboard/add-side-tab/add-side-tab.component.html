@@ -1,0 +1,183 @@
+<div
+  class="login-container"
+  *ngIf="sideTabId === ''; else updateSideTabTemplate"
+>
+  <h1>Add Sidetab</h1>
+
+  <form
+    class=""
+    #addSideTabForm="ngForm"
+    (ngSubmit)="addSideTab(addSideTabForm)"
+  >
+    <div class="login-form-control">
+      <input
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="text"
+        name="title"
+        #title="ngModel"
+        ngModel
+        class="form-control"
+        placeholder="Side Tab Title Here !"
+        required
+      />
+      <div *ngIf="title.touched && title.invalid" class="my-2">
+        <small class="text-danger" *ngIf="title.control.errors?.['required']">
+          this field is required
+        </small>
+        <small class="text-danger" *ngIf="title.control.errors?.['pattern']">
+        </small>
+      </div>
+    </div>
+    <div class="login-form-control my-2">
+      <textarea
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="text"
+        name="content"
+        #content="ngModel"
+        ngModel
+        class="form-control"
+        placeholder="Side Tab description here !"
+        required
+        style="height: 300px"
+      ></textarea>
+      <div *ngIf="content.touched && content.invalid" class="my-2">
+        <small class="text-danger" *ngIf="content.control.errors?.['required']">
+          this field is required
+        </small>
+      </div>
+    </div>
+    <div class="login-form-control">
+      <input
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="number"
+        name="order"
+        #order="ngModel"
+        ngModel
+        class="form-control"
+        min="0"
+        required
+      />
+      <div *ngIf="title.touched && title.invalid" class="my-2">
+        <small class="text-danger" *ngIf="title.control.errors?.['required']">
+          this field is required
+        </small>
+        <small class="text-danger" *ngIf="title.control.errors?.['pattern']">
+        </small>
+      </div>
+    </div>
+
+    <button
+      [disabled]="addSideTabForm.invalid"
+      [ngClass]="{ 'bg-dark': !darkMode }"
+      type="submit"
+      class="btn btn-light my-2"
+    >
+      <span>Add SideTab</span>
+    </button>
+  </form>
+</div>
+<ng-template #updateSideTabTemplate>
+  <div class="login-container">
+    <h1>Update Sidetab</h1>
+
+    <form
+      class=""
+      #updateSideTabForm="ngForm"
+      (ngSubmit)="updateSideTab(updateSideTabForm)"
+    >
+      <div class="login-form-control">
+        <input
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="text"
+          name="title"
+          #title="ngModel"
+          [(ngModel)]="sideTab.title"
+          class="form-control"
+          placeholder="Side Tab Title Here !"
+          required
+        />
+        <div *ngIf="title.touched && title.invalid" class="my-2">
+          <small class="text-danger" *ngIf="title.control.errors?.['required']">
+            this field is required
+          </small>
+          <small class="text-danger" *ngIf="title.control.errors?.['pattern']">
+          </small>
+        </div>
+      </div>
+      <div class="login-form-control my-2">
+        <textarea
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="text"
+          name="content"
+          #content="ngModel"
+          [(ngModel)]="sideTab.content"
+          class="form-control"
+          placeholder="Side Tab description here !"
+          required
+          style="height: 300px"
+        ></textarea>
+        <div *ngIf="content.touched && content.invalid" class="my-2">
+          <small
+            class="text-danger"
+            *ngIf="content.control.errors?.['required']"
+          >
+            this field is required
+          </small>
+        </div>
+      </div>
+      <div class="login-form-control">
+        <input
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="number"
+          name="order"
+          #order="ngModel"
+          [(ngModel)]="sideTab.order"
+          class="form-control"
+          placeholder="Order !"
+          min="0"
+          required
+        />
+        <div *ngIf="title.touched && title.invalid" class="my-2">
+          <small class="text-danger" *ngIf="title.control.errors?.['required']">
+            this field is required
+          </small>
+          <small class="text-danger" *ngIf="title.control.errors?.['pattern']">
+          </small>
+        </div>
+      </div>
+
+      <button
+        [disabled]="updateSideTabForm.invalid"
+        [ngClass]="{ 'bg-dark': !darkMode }"
+        type="submit"
+        class="btn btn-light my-2"
+      >
+        <span>Update SideTab</span>
+      </button>
+    </form>
+  </div>
+</ng-template>

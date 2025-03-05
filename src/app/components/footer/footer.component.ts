@@ -49,9 +49,8 @@ export class FooterComponent implements OnInit, OnDestroy {
     this.subscription.add(sub);
   }
   changeLanguage() {
+    this.localStorageService.setLanguage(this.selectedOption);
     this.translate.use(this.selectedOption);
-    this.localStorageService.setLanguage(this.selectedOption);
-    this.localStorageService.setLanguage(this.selectedOption);
     if (this.selectedOption === 'ar') {
       this.document.body.setAttribute('dir', 'rtl');
     } else {

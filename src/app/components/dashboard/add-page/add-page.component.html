@@ -1,0 +1,130 @@
+<div *ngIf="pageId === ''; else editPageTemplate">
+  <div class="login-container">
+    <h1>Add Page</h1>
+
+    <form #addPageForm="ngForm" (ngSubmit)="addPage(addPageForm)">
+      <div class="login-form-control">
+        <input
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="text"
+          name="name"
+          #name="ngModel"
+          ngModel
+          class="form-control"
+          placeholder="Page Name"
+          required
+        />
+        <div *ngIf="name.touched && name.invalid" class="my-2">
+          <small class="text-danger" *ngIf="name.control.errors?.['required']">
+            this field is required
+          </small>
+          <small class="text-danger" *ngIf="name.control.errors?.['pattern']">
+          </small>
+        </div>
+      </div>
+      <div class="login-form-control my-2">
+        <textarea
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="text"
+          name="description"
+          #description="ngModel"
+          ngModel
+          class="form-control"
+          placeholder="page description"
+          required
+          style="height: 300px"
+        ></textarea>
+        <div *ngIf="description.touched && description.invalid" class="my-2">
+          <small
+            class="text-danger"
+            *ngIf="description.control.errors?.['required']"
+          >
+            this field is required
+          </small>
+        </div>
+      </div>
+
+      <button
+        [disabled]="addPageForm.invalid"
+        [ngClass]="{ 'bg-dark': !darkMode }"
+        type="submit"
+        class="btn btn-light my-2"
+      >
+        <span>Add Page</span>
+      </button>
+    </form>
+  </div>
+</div>
+<ng-template #editPageTemplate>
+  <div class="login-container">
+    <h1>Edit Page</h1>
+
+    <form #editPageForm="ngForm" (ngSubmit)="editPage(editPageForm)">
+      <div class="login-form-control">
+        <input
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="text"
+          name="name"
+          #name="ngModel"
+          [(ngModel)]="page.name"
+          class="form-control"
+          placeholder="Page Name"
+          required
+        />
+        <div *ngIf="name.touched && name.invalid" class="my-2">
+          <small class="text-danger" *ngIf="name.control.errors?.['required']">
+            this field is required
+          </small>
+          <small class="text-danger" *ngIf="name.control.errors?.['pattern']">
+          </small>
+        </div>
+      </div>
+      <div class="login-form-control my-2">
+        <textarea
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="text"
+          name="description"
+          #description="ngModel"
+          [(ngModel)]="page.description"
+          class="form-control"
+          placeholder="page description"
+          required
+          style="height: 300px"
+        ></textarea>
+        <div *ngIf="description.touched && description.invalid" class="my-2">
+          <small
+            class="text-danger"
+            *ngIf="description.control.errors?.['required']"
+          >
+            this field is required
+          </small>
+        </div>
+      </div>
+
+      <button
+        [disabled]="editPageForm.invalid"
+        [ngClass]="{ 'bg-dark': !darkMode }"
+        type="submit"
+        class="btn btn-light my-2"
+      >
+        <span>Edit Page</span>
+      </button>
+    </form>
+  </div>
+</ng-template>

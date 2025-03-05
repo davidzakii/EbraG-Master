@@ -3,6 +3,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { DarkModeService } from '../../services/dark-mode.service';
+import { PageService } from '../../services/page.service';
+import { ToastrService } from 'ngx-toastr';
+import { PageWithTabs } from '../../ViewModels/page-with-tabs';
+import { SideTab } from '../../models/side-tab';
 
 @Component({
   selector: 'app-public-law',
@@ -14,19 +18,55 @@ import { DarkModeService } from '../../services/dark-mode.service';
 export class PublicLawComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   darkMode: boolean = false;
-  selectedTab: string = 'rules';
   loadingMore: boolean = false;
+  page: PageWithTabs = {
+    description: '',
+    name: '',
+    sideTabs: [{ title: '', order: 0, content: '' }],
+  };
+  selectedTab: string = this.page.sideTabs[0].title;
   selectTab(tap: string) {
     this.selectedTab = tap;
   }
 
-  constructor(private darkModeService: DarkModeService) {}
+  constructor(
+    private darkModeService: DarkModeService,
+    private pageService: PageService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
+    console.log(this.selectedTab);
+    this.getPage();
     const sub = this.darkModeService.darkMode$.subscribe((mode) => {
       this.darkMode = mode;
     });
     this.subscription.add(sub);
+  }
+
+  getPage() {
+    const sub = this.pageService.getPageByName('Public Low').subscribe({
+      next: (response) => {
+        if (response.isPass) {
+          this.page = response.data;
+          const firstTab = this.page.sideTabs.find((tab) => tab.order === 1);
+          this.selectedTab = firstTab
+            ? firstTab.title
+            : this.page.sideTabs[0].title;
+        } else {
+          this.toastr.error(response.message);
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err.message);
+      },
+    });
+  }
+
+  sortPageBySidetabsOrder(
+    sideTabs: Omit<SideTab, 'pageId'>[]
+  ): Omit<SideTab, 'pageId'>[] {
+    return sideTabs.sort((a, b) => a.order - b.order);
   }
 
   ngOnDestroy(): void {

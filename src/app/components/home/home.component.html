@@ -1,32 +1,20 @@
 <div class="top-content">
-  <h3>Ebraj</h3>
-  <p>{{ "HOME.TOP-DESCRIPTION" | translate }}</p>
+  <h3>{{ page.name }}</h3>
+  <p>{{ page.description }}</p>
 </div>
 <div class="container">
   <!-- Left Sidebar -->
   <div class="sidebar">
     <ul>
+      @for (sideTab of sortPageBySidetabsOrder(page.sideTabs) ; track $index) {
       <li
-        [class.active]="selectedTab === 'community' && darkMode"
-        [class.active-dark]="selectedTab === 'community' && !darkMode"
-        (click)="selectTab('community')"
+        [class.active]="selectedTab === sideTab.title"
+        [class.active-dark]="selectedTab === sideTab.title && !darkMode"
+        (click)="selectTab(sideTab.title)"
       >
-        {{ "HOME.OUR-COMMUNITY" | translate }}
+        {{ sideTab.title }}
       </li>
-      <li
-        [class.active]="selectedTab === 'goals' && darkMode"
-        [class.active-dark]="selectedTab === 'goals' && !darkMode"
-        (click)="selectTab('goals')"
-      >
-        {{ "HOME.OUR-GOALS" | translate }}
-      </li>
-      <li
-        [class.active]="selectedTab === 'history' && darkMode"
-        [class.active-dark]="selectedTab === 'history' && !darkMode"
-        (click)="selectTab('history')"
-      >
-        {{ "HOME.OUR-HISTORY" | translate }}
-      </li>
+      }
     </ul>
     <img
       src="logo-crash.png"
@@ -36,24 +24,14 @@
 
   <!-- Main Content -->
   <div class="content">
-    <div *ngIf="selectedTab === 'community'">
-      <h3>{{ "HOME.OUR-COMMUNITY" | translate }}</h3>
+    @for (sideTab of sortPageBySidetabsOrder(page.sideTabs); track $index) {
+    <div *ngIf="selectedTab === sideTab.title">
+      <h3>{{ sideTab.title }}</h3>
       <p>
-        {{ "HOME.OUR-COMMUNITY-PARAGRAPH" | translate }}
+        {{ sideTab.content }}
       </p>
     </div>
-    <div *ngIf="selectedTab === 'goals'">
-      <h3>{{ "HOME.OUR-GOALS" | translate }}</h3>
-      <p>
-        {{ "HOME.OUR-GOALS-PARAGRAPH" | translate }}
-      </p>
-    </div>
-    <div *ngIf="selectedTab === 'history'">
-      <h3>{{ "HOME.OUR-HISTORY" | translate }}</h3>
-      <p>
-        {{ "HOME.OUR-HISTORY-PARAGRAPH" | translate }}
-      </p>
-    </div>
+    }
   </div>
 </div>
 <div class="button-container mb-2">

@@ -368,6 +368,14 @@ $desktop: 1200px;
     zoom: 70%;
   }
 
+  @media (min-width:1025px) and (max-width:1180px) {
+    width: 95%;
+    margin: 0 auto;
+    zoom: 90%;
+    overflow-x: auto; // Enable horizontal scrolling
+    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+  }
+
   table {
     width: 100%;
     border-collapse: collapse;

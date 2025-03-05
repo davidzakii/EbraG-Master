@@ -2,39 +2,49 @@
   class="section-column"
   style="margin-top: 30px; width: 100%; align-items: center"
 >
-  <span style="font-weight: 700; align-self: flex-start; margin-left: 25%">{{
-    "PROVIDERS.PROVIDERS" | translate
-  }}</span>
-  <span style="align-self: flex-start; margin-left: 25%; margin-right: 25%">{{
-    "PROVIDERS.PROVIDERS-DESCRIPTION" | translate
-  }}</span>
-  <div
-    class="mb-3 container d-flex gap-2 justify-content-end justify-content-sm-center align-items-end align-items-sm-center flex-column flex-sm-row"
-  >
-    <div class="col-10">
-      <input
-        type="text"
-        name="user"
-        [(ngModel)]="searchTerm"
-        placeholder="{{ 'PROVIDERS.SEARCH-PLACEHOLDER' | translate }}"
-        class="form-control"
-        [ngClass]="{ 'border-dark': !darkMode }"
-      />
+  <div class="d-flex flex-column align-items-center text-center w-100">
+    <div class="w-75 d-flex flex-column mb-1">
+      <span class="fw-bold align-self-start">{{
+        "PROVIDERS.PROVIDERS" | translate
+      }}</span>
+      <span class="align-self-start">{{
+        "PROVIDERS.PROVIDERS-DESCRIPTION" | translate
+      }}</span>
     </div>
-    <button
-      style="width: 112px"
-      class="col-2 d-block bg-transparent btn"
-      [ngClass]="darkMode ? 'border-white text-white' : 'border-dark'"
-      (click)="openModal()"
+    <div
+      class="my-3 d-flex gap-2 flex-column flex-sm-row justify-content-end justify-content-sm-center align-items-end align-items-sm-center w-75"
     >
-      <img
-        [ngClass]="{ 'dark-mode-filter': darkMode }"
-        src="filter-slider.png"
-        style="height: 20px"
-      />
-      {{ "FILTER.FILTERS" | translate }}
-    </button>
+      <div class="w-100">
+        <input
+          type="text"
+          name="user"
+          [(ngModel)]="searchTerm"
+          placeholder="{{ 'PROVIDERS.SEARCH-PLACEHOLDER' | translate }}"
+          class="form-control w-100"
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+        />
+      </div>
+      <button
+        class="btn bg-transparent border d-flex align-items-center justify-content-center"
+        style="width: 112px; height: 38px"
+        [ngClass]="darkMode ? 'border-white text-white' : 'border-dark'"
+        (click)="openModal()"
+      >
+        <img
+          [ngClass]="{ 'dark-mode-filter': darkMode }"
+          src="filter-slider.png"
+          class="me-1"
+          style="height: 20px"
+        />
+        {{ "FILTER.FILTERS" | translate }}
+      </button>
+    </div>
   </div>
+
   <div
     class="section-row"
     style="align-items: center; justify-content: center; gap: 10px; width: 70%"

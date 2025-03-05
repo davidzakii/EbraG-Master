@@ -25,6 +25,11 @@ import { ManageUsersComponent } from './components/dashboard/manage-users/manage
 import { AppLayoutComponent } from './components/app-layout/app-layout.component';
 import { FeedbackUsersComponent } from './components/dashboard/feedback-users/feedback-users.component';
 import { MainDashboardComponent } from './components/dashboard/main-dashboard/main-dashboard.component';
+import { PagesComponent } from './components/dashboard/pages/pages.component';
+import { AddPageComponent } from './components/dashboard/add-page/add-page.component';
+import { SideTabComponent } from './components/dashboard/side-tab/side-tab.component';
+import { AddSideTabComponent } from './components/dashboard/add-side-tab/add-side-tab.component';
+import { MyEbrajComponent } from './components/my-ebraj/my-ebraj.component';
 
 export const routes: Routes = [
   {
@@ -75,6 +80,11 @@ export const routes: Routes = [
           { path: 'my-wallet', component: MyWalletComponent },
         ],
       },
+      {
+        path: 'my-ebraj',
+        canActivate: [authGuard],
+        component: MyEbrajComponent,
+      },
 
       { path: 'white-paper', component: WhitePaperComponent },
       { path: 'faqs', component: FaqsComponent },
@@ -100,6 +110,15 @@ export const routes: Routes = [
       { path: '', component: MainDashboardComponent },
       { path: 'feedback', component: FeedbackUsersComponent },
       { path: 'manage-user', component: ManageUsersComponent },
+      { path: 'pages', component: PagesComponent },
+      { path: 'add-page', component: AddPageComponent },
+      { path: 'add-page/:id', component: AddPageComponent },
+      { path: 'sidetab/:id', component: SideTabComponent },
+      { path: 'add-sidetab/:id', component: AddSideTabComponent },
+      {
+        path: 'add-sidetab/:pageId/:sideTabId',
+        component: AddSideTabComponent,
+      },
     ],
   },
   { path: '**', redirectTo: '/home', pathMatch: 'full' },

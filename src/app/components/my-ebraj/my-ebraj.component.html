@@ -1,0 +1,53 @@
+<div class="my-4">
+  <div class="container text-center custom-margin-y">
+    <h1>{{ firstName }} {{ " " }} {{ lastName }}</h1>
+    <p>
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo mollitia
+      cupiditate veritatis iste fugit quas adipisci unde provident doloribus
+      facere? Facere autem suscipit exercitationem neque id tempora repudiandae
+      officia sunt.
+    </p>
+  </div>
+  <div>
+    <h3>Your Share in the Company</h3>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Error laboriosam
+      ducimus dolores expedita, deleniti animi veritatis ipsum. Doloremque autem
+      fugiat natus earum! Nemo dolore porro nobis distinctio, consectetur
+      voluptate repudiandae?
+    </p>
+  </div>
+  <div>
+    <h3>Your Share in the Company</h3>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Error laboriosam
+      ducimus dolores expedita, deleniti animi veritatis ipsum. Doloremque autem
+      fugiat natus earum! Nemo dolore porro nobis distinctio, consectetur
+      voluptate repudiandae?
+    </p>
+  </div>
+  <div>
+    <h3>Note</h3>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Error laboriosam
+      ducimus dolores expedita, deleniti animi veritatis ipsum. Doloremque autem
+      fugiat natus earum! Nemo dolore porro nobis distinctio, consectetur
+      voluptate repudiandae?
+    </p>
+    <div
+      class="p-2 d-flex flex-wrap justify-content-center justify-content-lg-between my-3"
+    >
+      <div class="my-4">
+        <h4>Print or Save Options:</h4>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias
+        </p>
+      </div>
+      <div class="d-flex flex-column">
+        <img class="img" [src]="'qrcode1.jpeg'" alt="QR Code" />
+        <img class="img" [src]="qrCodeImgUrl" alt="QR Code" />
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-dark mb-4" (click)="downloadPage()">Download</button>
+</div>

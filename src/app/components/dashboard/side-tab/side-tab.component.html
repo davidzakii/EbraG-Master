@@ -1,0 +1,45 @@
+<section class="container my-5">
+  <div class="overflow-x-auto my-2">
+    <button
+      class="btn btn-light my-5"
+      [routerLink]="['/dashboard/add-sidetab', pageId]"
+    >
+      Add Tab
+    </button>
+    <table class="table-auto w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Name</th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">
+            Description
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sidetab of sideTabs" class="hover:bg-gray-100">
+          <td class="border border-gray-300 px-4 py-2 text-nowrap">
+            {{ sidetab.title }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2 text-nowrap">
+            {{ sidetab?.content }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            <button
+              class="btn btn-light mx-2"
+              [routerLink]="['/dashboard/add-sidetab', pageId, sidetab.id]"
+            >
+              Update Tab
+            </button>
+            <button
+              class="btn btn-danger"
+              (click)="deleteSidetab(sidetab.id || '')"
+            >
+              Delete Tab
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

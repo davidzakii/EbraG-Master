@@ -5,7 +5,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DarkModeService } from '../../services/dark-mode.service';
-import { Subscription, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { LanguageService } from '../../services/language.service';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
@@ -25,6 +25,7 @@ import { UserService } from '../../services/user.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
+  currentRoute: string = '';
   darkMode = false;
   isMobileMenuOpen = false;
   showProfileTab = false;
@@ -46,13 +47,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private languageService: LanguageService,
     private authService: AuthService,
     private userService: UserService
-  ) {}
+  ) {
+    const sub = this.router.events.subscribe(() => {
+      this.currentRoute = this.router.url;
+    });
+    this.subscription.add(sub);
+  }
   ngOnInit() {
     const sub = this.darkModeService.darkMode$.subscribe((value) => {
       this.darkMode = value;
     });
     this.translate.setDefaultLang('en');
     const sub2 = this.languageService.language$.subscribe((value) => {
+      console.log(value);
       this.translate.use(value);
     });
     const sub3 = this.authService.authenticated$.subscribe((isAuth) => {

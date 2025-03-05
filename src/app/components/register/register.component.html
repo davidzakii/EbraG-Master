@@ -7,9 +7,6 @@
     [ngClass]="darkMode ? 'text-light bg-dark' : 'text-dark bg-light'"
   >
     <div class="mb-3">
-      <label for="UserName" class="form-label">{{
-        "LOGIN.USERNAME-FIELD" | translate
-      }}</label>
       <input
         [ngClass]="
           darkMode
@@ -41,39 +38,36 @@
       </div>
     </div>
 
-    <div class="mb-3"></div>
-    <label for="FirstName" class="form-label">{{
-      "LOGIN.FIRST-NAME-FIELD" | translate
-    }}</label>
-    <input
-      [ngClass]="
-        darkMode
-          ? 'bg-dark border-white text-white placeholder-white'
-          : 'border-dark placeholder-dark'
-      "
-      type="text"
-      id="FirstName"
-      formControlName="FirstName"
-      class="form-control"
-      placeholder="{{ 'LOGIN.FIRST-NAME-FIELD' | translate }}"
-    />
-    <div
-      *ngIf="FirstName?.invalid && (FirstName?.dirty || FirstName?.touched)"
-      class="text-danger mt-1"
-    >
-      <div *ngIf="FirstName?.errors?.['required']">First Name is required.</div>
-      <div *ngIf="FirstName?.errors?.['minlength']">
-        First Name must be at least 3 characters long.
-      </div>
-      <div *ngIf="FirstName?.errors?.['maxlength']">
-        First Name cannot be more than 50 characters long.
+    <div class="mb-3">
+      <input
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="text"
+        id="FirstName"
+        formControlName="FirstName"
+        class="form-control"
+        placeholder="{{ 'LOGIN.FIRST-NAME-FIELD' | translate }}"
+      />
+      <div
+        *ngIf="FirstName?.invalid && (FirstName?.dirty || FirstName?.touched)"
+        class="text-danger mt-1"
+      >
+        <div *ngIf="FirstName?.errors?.['required']">
+          First Name is required.
+        </div>
+        <div *ngIf="FirstName?.errors?.['minlength']">
+          First Name must be at least 3 characters long.
+        </div>
+        <div *ngIf="FirstName?.errors?.['maxlength']">
+          First Name cannot be more than 50 characters long.
+        </div>
       </div>
     </div>
 
     <div class="mb-3">
-      <label for="LastName" class="form-label">{{
-        "LOGIN.LAST-NAME-FIELD" | translate
-      }}</label>
       <input
         [ngClass]="
           darkMode
@@ -101,9 +95,6 @@
     </div>
 
     <div class="mb-3">
-      <label for="PhoneNumber" class="form-label">{{
-        "LOGIN.PHONE-FIELD" | translate
-      }}</label>
       <input
         [ngClass]="
           darkMode
@@ -129,9 +120,6 @@
     </div>
 
     <div class="mb-3">
-      <label for="Address" class="form-label">{{
-        "LOGIN.ADDRESS-FIELD" | translate
-      }}</label>
       <input
         [ngClass]="
           darkMode
@@ -153,9 +141,6 @@
     </div>
 
     <div class="mb-3">
-      <label for="BirthDate" class="form-label">{{
-        "LOGIN.BIRTHDATE-FIELD" | translate
-      }}</label>
       <input
         [ngClass]="
           darkMode
@@ -178,9 +163,6 @@
     </div>
 
     <div class="mb-3">
-      <label for="Email" class="form-label">{{
-        "LOGIN.USER-FIELD" | translate
-      }}</label>
       <input
         [ngClass]="
           darkMode
@@ -207,9 +189,6 @@
     </div>
 
     <div class="mb-3">
-      <label for="Password" class="form-label"
-        >{{ "LOGIN.PASSWORD-FIELD" | translate }}
-      </label>
       <input
         [ngClass]="
           darkMode

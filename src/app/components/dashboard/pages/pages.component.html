@@ -1,0 +1,51 @@
+<section class="container my-5">
+  <div class="overflow-x-auto my-2">
+    <button class="btn btn-light my-5" routerLink="/dashboard/add-page">
+      Add Page
+    </button>
+    <table class="table-auto w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Name</th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">
+            Description
+          </th>
+          <th class="border border-gray-300 px-4 py-2 text-nowrap">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let page of pages" class="hover:bg-gray-100">
+          <td class="border border-gray-300 px-4 py-2 text-nowrap">
+            {{ page?.name }}
+          </td>
+          <td class="border border-gray-300 px-4 py-2 text-nowrap">
+            {{ page?.description }}
+          </td>
+          <td class="text-nowrap border border-gray-300 px-4 py-2">
+            <button
+              class="btn btn-light mx-1"
+              [routerLink]="['/dashboard/add-page', page.id]"
+            >
+              Update
+            </button>
+            <button
+              class="btn btn-light mx-1"
+              [routerLink]="['/dashboard/add-sidetab', page.id]"
+            >
+              Add SideTabs
+            </button>
+            <button
+              class="btn btn-light mx-1"
+              [routerLink]="['/dashboard/sidetab', page.id]"
+            >
+              Show SideTabs
+            </button>
+            <button class="btn btn-danger" (click)="deletePage(page.id || '')">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

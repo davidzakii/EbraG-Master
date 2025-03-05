@@ -5,23 +5,31 @@
   </div>
   <div class="nav">
     <a
+      [ngClass]="darkMode ? 'text-white' : 'text-dark'"
+      [class.active]="selectedTab === 'accounts' && darkMode"
+      [class.active-dark]="selectedTab === 'accounts' && !darkMode"
       (click)="selectedTab = 'accounts'"
-      class="{{ selectedTab == 'accounts' ? 'active' : '' }}"
       >Accounts</a
     >
     <a
       (click)="selectedTab = 'statements'"
-      class="{{ selectedTab == 'statements' ? 'active' : '' }}"
+      [ngClass]="darkMode ? 'text-white' : 'text-dark'"
+      [class.active]="selectedTab === 'statements' && darkMode"
+      [class.active-dark]="selectedTab === 'statements' && !darkMode"
       >Statements</a
     >
     <a
       (click)="selectedTab = 'pay-bills'"
-      class="{{ selectedTab == 'pay-bills' ? 'active' : '' }}"
+      [ngClass]="darkMode ? 'text-white' : 'text-dark'"
+      [class.active]="selectedTab === 'pay-bills' && darkMode"
+      [class.active-dark]="selectedTab === 'pay-bills' && !darkMode"
       >Pay bills</a
     >
     <a
       (click)="selectedTab = 'my-investments'"
-      class="{{ selectedTab == 'my-investments' ? 'active' : '' }}"
+      [ngClass]="darkMode ? 'text-white' : 'text-dark'"
+      [class.active]="selectedTab === 'my-investments' && darkMode"
+      [class.active-dark]="selectedTab === 'my-investments' && !darkMode"
       >My investments</a
     >
   </div>
@@ -133,19 +141,22 @@
       <div class="sidebar">
         <ul>
           <li
-            [class.active]="transactionsTab == 'pay'"
+            [class.active]="transactionsTab === 'pay' && darkMode"
+            [class.active-dark]="transactionsTab === 'pay' && !darkMode"
             (click)="selectTransactionsTab('pay')"
           >
             {{ "MY-WALLET.PAY" | translate }}
           </li>
           <li
-            [class.active]="transactionsTab == 'send'"
+            [class.active]="transactionsTab === 'send' && darkMode"
+            [class.active-dark]="transactionsTab === 'send' && !darkMode"
             (click)="selectTransactionsTab('send')"
           >
             {{ "MY-WALLET.SEND" | translate }}
           </li>
           <li
-            [class.active]="transactionsTab == 'buy'"
+            [class.active]="transactionsTab === 'buy' && darkMode"
+            [class.active-dark]="transactionsTab === 'buy' && !darkMode"
             (click)="selectTransactionsTab('buy')"
           >
             {{ "MY-WALLET.BUY" | translate }}

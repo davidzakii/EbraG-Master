@@ -1,5 +1,6 @@
 export interface User {
   id?: string;
+  qrCodeImgUrl?: '';
   email: string;
   password: string;
   userName: string;

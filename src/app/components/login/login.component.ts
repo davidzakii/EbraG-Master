@@ -58,6 +58,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.darkMode = mode;
     });
   }
+  isValid(){
+    
+  }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

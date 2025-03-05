@@ -1,0 +1,25 @@
+.custom-margin-y {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+.img {
+  width: 400px;
+  height: 250px;
+  border-radius: 50%;
+}
+
+.img-absolute {
+  top: 20px;
+  right: 55px;
+}
+.custom-height {
+  height: 250px;
+}
+
+@media screen and (max-width: 420px) {
+  .img {
+    width: 200px;
+    height: 150px;
+    border-radius: 50%;
+  }
+}

@@ -1,4 +1,4 @@
-<nav class="navbar bg-dark navbar-expand-lg sticky-top">
+<nav class="navbar bg-dark navbar-expand-lg sticky-top p-2">
   <div class="container d-flex">
     <div
       class="burger-menu d-lg-none"
@@ -49,13 +49,23 @@
           }"
         ></i>
       </button>
-      <div *ngIf="!showProfileTab">
+      <div *ngIf="!showProfileTab && currentRoute !== '/register'">
         <a
           [routerLink]="['/login']"
-          class="text-decoration-none text-light"
+          class="text-decoration-none text-light hover-color"
           routerLinkActive="active"
-          >{{ "APP.LOGIN" | translate }}</a
         >
+          {{ "APP.LOGIN" | translate }}
+        </a>
+      </div>
+      <div *ngIf="!showProfileTab && currentRoute === '/register'">
+        <a
+          [routerLink]="['/register']"
+          class="text-decoration-none text-light hover-color"
+          routerLinkActive="active"
+        >
+          {{ "APP.REGISTER" | translate }}
+        </a>
       </div>
       <div *ngIf="showProfileTab" class="profile dropdown-toggle text-light">
         <span class="profile-text">{{ "APP.MY-PROFILE" | translate }}</span>
@@ -99,7 +109,7 @@
             <li>
               <span>{{ "APP.MY-PROFILE-MY-INVESTMENT" | translate }}</span>
             </li>
-            <li>
+            <li routerLink="/my-ebraj">
               <span>{{ "APP.MY-PROFILE-MY-EBRAJ" | translate }}</span>
             </li>
             <li>
