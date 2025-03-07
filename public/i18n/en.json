@@ -92,7 +92,8 @@
     "CONFIRM-PASSWORD-FIELD": "Confirm Password",
     "PASSWORD-REQUIRED": "Password is required",
     "EMAIL-REQUIRED": "Email is required",
-    "EMAIL-PATTERN": "Email is not valid"
+    "EMAIL-PATTERN": "Email is not valid",
+    "PASSWORD-MISMATCH": "Passwords do not match"
   },
   "HOME": {
     "TOP-DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.",

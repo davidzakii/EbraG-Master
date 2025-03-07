@@ -1,8 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -16,7 +20,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule, FormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -31,49 +35,52 @@ export class RegisterComponent implements OnDestroy {
     private darkModeService: DarkModeService,
     private toastr: ToastrService
   ) {
-    this.registerForm = this.fb.group({
-      UserName: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50),
-          // Validators.pattern(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/),
+    this.registerForm = this.fb.group(
+      {
+        UserName: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(50),
+          ],
         ],
-      ],
-      FirstName: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50),
-          // Validators.pattern(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/),
+        FirstName: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(50),
+          ],
         ],
-      ],
-      LastName: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3),
-          Validators.maxLength(50),
-          // Validators.pattern(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/),
+        LastName: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(50),
+          ],
         ],
-      ],
-      PhoneNumber: ['', [Validators.required]],
-      Address: ['', [Validators.required]],
-      BirthDate: ['', [Validators.required]],
-      Email: ['', [Validators.required, Validators.email]],
-      Password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(8),
-          Validators.pattern(
-            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[.@_+'"?`#!\\/{}\[\]<>$%^&*()]).*$/
-          ),
+        PhoneNumber: ['', [Validators.required]],
+        Address: ['', [Validators.required]],
+        BirthDate: ['', [Validators.required]],
+        Email: ['', [Validators.required, Validators.email]],
+        Password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(
+              /^(?=.*[a-z])(?=.*[A-z])(?=.*\d)(?=.*[@$!%*?&"])[a-zA-Z0-9@$!%*?&"]{8,}$/
+            ),
+          ],
         ],
-      ],
-    });
+        ConfirmPassword: ['', Validators.required],
+      },
+      {
+        validators: this.passwordMatchValidator(),
+      }
+    );
     const sub = this.darkModeService.darkMode$.subscribe((mode) => {
       this.darkMode = mode;
     });
@@ -95,6 +102,9 @@ export class RegisterComponent implements OnDestroy {
   get Password() {
     return this.registerForm.get('Password');
   }
+  get ConfirmPassword() {
+    return this.registerForm.get('ConfirmPassword');
+  }
   get PhoneNumber() {
     return this.registerForm.get('PhoneNumber');
   }
@@ -104,6 +114,18 @@ export class RegisterComponent implements OnDestroy {
   get BirthDate() {
     return this.registerForm.get('BirthDate');
   }
+  passwordMatchValidator(): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const password = formGroup.get('Password')?.value;
+      const confirmPassword = formGroup.get('ConfirmPassword')?.value;
+      console.log(password);
+      console.log(confirmPassword);
+      return password && confirmPassword && password !== confirmPassword
+        ? { passwordsDoNotMatch: true }
+        : null;
+    };
+  }
+
   register() {
     const user = this.registerForm.value;
     const sub = this.authService.register(user).subscribe({
