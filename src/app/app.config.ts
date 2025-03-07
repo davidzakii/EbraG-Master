@@ -3,14 +3,20 @@ import {
   importProvidersFrom,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withPreloading, PreloadAllModules } from '@angular/router';
 import { routes } from './app.routes';
-import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import {
+  HttpClient,
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { loaderInterceptor } from './interceptors/loader.interceptor';
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
 ) => new TranslateHttpLoader(http, './i18n/', '.json');
@@ -20,8 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideToastr(),
     provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
-    provideHttpClient(withFetch()),
+    provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideHttpClient(withFetch(), withInterceptors([loaderInterceptor])),
     importProvidersFrom([
       TranslateModule.forRoot({
         loader: {
@@ -30,6 +36,7 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient],
         },
       }),
-    ]), provideAnimationsAsync(),
+    ]),
+    provideAnimationsAsync(),
   ],
 };

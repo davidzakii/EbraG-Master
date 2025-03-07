@@ -252,3 +252,11 @@
     </button>
   </form>
 </div>
+<div class="helper-links">
+  <a [ngClass]="darkMode ? 'text-light' : 'text-dark'">{{
+    "LOGIN.REGISTER-TROUBLE" | translate
+  }}</a>
+  <a [ngClass]="darkMode ? 'text-light' : 'text-dark'" routerLink="/login">{{
+    "LOGIN.LOGIN-BUTTON" | translate
+  }}</a>
+</div>

@@ -1,102 +1,156 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { PublicLawComponent } from './components/public-law/public-law.component';
-import { StatsComponent } from './components/stats/stats.component';
-import { TalkComponent } from './components/talk/talk.component';
-import { RegisterComponent } from './components/register/register.component';
-import { CompassEventsComponent } from './components/compass-events/compass-events.component';
-import { CompassJobsComponent } from './components/compass-jobs/compass-jobs.component';
-import { CompassArmsComponent } from './components/compass-arms/compass-arms.component';
 import { noAuthGuard } from './guards/no-auth.guard';
 import { authGuard } from './guards/auth.guard';
-import { MyProfileComponent } from './components/my-profile/my-profile.component';
-import { MyWalletComponent } from './components/my-wallet/my-wallet.component';
-import { PresentersComponent } from './components/presenters/presenters.component';
-import { ProvidersComponent } from './components/providers/providers.component';
-import { FooterDisclosuresComponent } from './components/footer-disclosures/footer-disclosures.component';
-import { FaqsComponent } from './components/faqs/faqs.component';
-import { EPageComponent } from './components/e-page/e-page.component';
-import { WhitePaperComponent } from './components/white-paper/white-paper.component';
 import { adminGuard } from './guards/admin.guard';
-import { DashboardLayoutComponent } from './components/dashboard/dashboard-layout/dashboard-layout.component';
-import { FeedbackModalComponent } from './components/feedback-modal/feedback-modal.component';
-import { ManageUsersComponent } from './components/dashboard/manage-users/manage-users.component';
-import { AppLayoutComponent } from './components/app-layout/app-layout.component';
-import { FeedbackUsersComponent } from './components/dashboard/feedback-users/feedback-users.component';
-import { MainDashboardComponent } from './components/dashboard/main-dashboard/main-dashboard.component';
-import { PagesComponent } from './components/dashboard/pages/pages.component';
-import { AddPageComponent } from './components/dashboard/add-page/add-page.component';
-import { SideTabComponent } from './components/dashboard/side-tab/side-tab.component';
-import { AddSideTabComponent } from './components/dashboard/add-side-tab/add-side-tab.component';
-import { MyEbrajComponent } from './components/my-ebraj/my-ebraj.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: AppLayoutComponent,
+    loadComponent: () =>
+      import('./components/app-layout/app-layout.component').then(
+        (m) => m.AppLayoutComponent
+      ),
     children: [
       { path: '', redirectTo: '/home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./components/home/home.component').then(
+            (m) => m.HomeComponent
+          ),
+      },
       {
         path: 'public-law',
-        component: PublicLawComponent,
+        loadComponent: () =>
+          import('./components/public-law/public-law.component').then(
+            (m) => m.PublicLawComponent
+          ),
       },
-      { path: 'stats', component: StatsComponent },
+      {
+        path: 'stats',
+        loadComponent: () =>
+          import('./components/stats/stats.component').then(
+            (m) => m.StatsComponent
+          ),
+      },
       {
         path: 'talk',
-        component: TalkComponent,
-        children: [
-          {
-            path: '',
-            component: TalkComponent,
-          },
-        ],
+        loadComponent: () =>
+          import('./components/talk/talk.component').then(
+            (m) => m.TalkComponent
+          ),
       },
       {
         path: 'compass',
         children: [
           { path: '', redirectTo: 'events', pathMatch: 'full' },
-          { path: 'events', component: CompassEventsComponent },
-          { path: 'jobs', component: CompassJobsComponent },
-          { path: 'arms', component: CompassArmsComponent },
+          {
+            path: 'events',
+            loadComponent: () =>
+              import(
+                './components/compass-events/compass-events.component'
+              ).then((m) => m.CompassEventsComponent),
+          },
+          {
+            path: 'jobs',
+            loadComponent: () =>
+              import('./components/compass-jobs/compass-jobs.component').then(
+                (m) => m.CompassJobsComponent
+              ),
+          },
+          {
+            path: 'arms',
+            loadComponent: () =>
+              import('./components/compass-arms/compass-arms.component').then(
+                (m) => m.CompassArmsComponent
+              ),
+          },
         ],
       },
       {
         path: 'presenters',
-        component: PresentersComponent,
-        children: [],
+        loadComponent: () =>
+          import('./components/presenters/presenters.component').then(
+            (m) => m.PresentersComponent
+          ),
       },
       {
         path: 'providers',
-        component: ProvidersComponent,
-        children: [],
+        loadComponent: () =>
+          import('./components/providers/providers.component').then(
+            (m) => m.ProvidersComponent
+          ),
       },
       {
         path: 'my-profile',
         canActivate: [authGuard],
         children: [
-          { path: '', component: MyProfileComponent },
-          { path: 'my-wallet', component: MyWalletComponent },
+          {
+            path: '',
+            loadComponent: () =>
+              import('./components/my-profile/my-profile.component').then(
+                (m) => m.MyProfileComponent
+              ),
+          },
+          {
+            path: 'my-wallet',
+            loadComponent: () =>
+              import('./components/my-wallet/my-wallet.component').then(
+                (m) => m.MyWalletComponent
+              ),
+          },
         ],
       },
       {
         path: 'my-ebraj',
         canActivate: [authGuard],
-        component: MyEbrajComponent,
+        loadComponent: () =>
+          import('./components/my-ebraj/my-ebraj.component').then(
+            (m) => m.MyEbrajComponent
+          ),
       },
-
-      { path: 'white-paper', component: WhitePaperComponent },
-      { path: 'faqs', component: FaqsComponent },
-      { path: 'e-page', component: EPageComponent },
+      {
+        path: 'white-paper',
+        loadComponent: () =>
+          import('./components/white-paper/white-paper.component').then(
+            (m) => m.WhitePaperComponent
+          ),
+      },
+      {
+        path: 'faqs',
+        loadComponent: () =>
+          import('./components/faqs/faqs.component').then(
+            (m) => m.FaqsComponent
+          ),
+      },
+      {
+        path: 'e-page',
+        loadComponent: () =>
+          import('./components/e-page/e-page.component').then(
+            (m) => m.EPageComponent
+          ),
+      },
       {
         path: 'disclosures',
-        component: FooterDisclosuresComponent,
+        loadComponent: () =>
+          import(
+            './components/footer-disclosures/footer-disclosures.component'
+          ).then((m) => m.FooterDisclosuresComponent),
       },
-      { path: 'login', component: LoginComponent, canActivate: [noAuthGuard] },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./components/login/login.component').then(
+            (m) => m.LoginComponent
+          ),
+        canActivate: [noAuthGuard],
+      },
       {
         path: 'register',
-        component: RegisterComponent,
+        loadComponent: () =>
+          import('./components/register/register.component').then(
+            (m) => m.RegisterComponent
+          ),
         canActivate: [noAuthGuard],
       },
     ],
@@ -104,20 +158,67 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [adminGuard],
-    component: DashboardLayoutComponent,
+    loadComponent: () =>
+      import(
+        './components/dashboard/dashboard-layout/dashboard-layout.component'
+      ).then((m) => m.DashboardLayoutComponent),
     children: [
       { path: '', redirectTo: 'manage-user', pathMatch: 'full' },
-      { path: '', component: MainDashboardComponent },
-      { path: 'feedback', component: FeedbackUsersComponent },
-      { path: 'manage-user', component: ManageUsersComponent },
-      { path: 'pages', component: PagesComponent },
-      { path: 'add-page', component: AddPageComponent },
-      { path: 'add-page/:id', component: AddPageComponent },
-      { path: 'sidetab/:id', component: SideTabComponent },
-      { path: 'add-sidetab/:id', component: AddSideTabComponent },
+      {
+        path: 'feedback',
+        loadComponent: () =>
+          import(
+            './components/dashboard/feedback-users/feedback-users.component'
+          ).then((m) => m.FeedbackUsersComponent),
+      },
+      {
+        path: 'manage-user',
+        loadComponent: () =>
+          import(
+            './components/dashboard/manage-users/manage-users.component'
+          ).then((m) => m.ManageUsersComponent),
+      },
+      {
+        path: 'pages',
+        loadComponent: () =>
+          import('./components/dashboard/pages/pages.component').then(
+            (m) => m.PagesComponent
+          ),
+      },
+      {
+        path: 'add-page',
+        loadComponent: () =>
+          import('./components/dashboard/add-page/add-page.component').then(
+            (m) => m.AddPageComponent
+          ),
+      },
+      {
+        path: 'add-page/:id',
+        loadComponent: () =>
+          import('./components/dashboard/add-page/add-page.component').then(
+            (m) => m.AddPageComponent
+          ),
+      },
+      {
+        path: 'sidetab/:id',
+        loadComponent: () =>
+          import('./components/dashboard/side-tab/side-tab.component').then(
+            (m) => m.SideTabComponent
+          ),
+      },
+      {
+        path: 'add-sidetab/:id',
+        loadComponent: () =>
+          import(
+            './components/dashboard/add-side-tab/add-side-tab.component'
+          ).then((m) => m.AddSideTabComponent),
+      },
       {
         path: 'add-sidetab/:pageId/:sideTabId',
-        component: AddSideTabComponent,
+        loadComponent: () =>
+          import(
+            './components/dashboard/add-side-tab/add-side-tab.component'
+          ).then((m) => m.AddSideTabComponent),
       },
     ],
   },

@@ -23,18 +23,28 @@
     @for (sideTab of sortPageBySidetabsOrder(page.sideTabs); track $index) {
     <div *ngIf="selectedTab === sideTab.title">
       <h3>{{ sideTab.title }}</h3>
-      <p>
-        {{ sideTab.content }}
-      </p>
+      <p
+      *ngIf="!showAllContentMap[selectedTab] && sideTab.content.length > 500"
+    >
+      {{ sideTab.content | slice : 0 : 500 }}...
+    </p>
+    <p
+      *ngIf="showAllContentMap[selectedTab] || sideTab.content.length <= 500"
+    >
+      {{ sideTab.content }}
+    </p>
     </div>
     }
   </div>
 </div>
 <div class="button-container">
-  <button [ngClass]="darkMode ? 'bg-light' : 'bg-dark text-light'">
-    <span *ngIf="!loadingMore" class="load-more">{{
+  <button
+    [ngClass]="darkMode ? 'bg-light' : 'bg-dark text-light'"
+    (click)="toggleShowAllContent()"
+  >
+    <span *ngIf="!(loading$ | async)" class="load-more">{{
       "PUBLIC-LAW.LOAD-MORE" | translate
     }}</span>
-    <div *ngIf="loadingMore" class="spinner"></div>
+    <div *ngIf="loading$ | async" class="spinner"></div>
   </button>
 </div>

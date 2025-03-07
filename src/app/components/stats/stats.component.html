@@ -4,12 +4,8 @@
 >
   <div class="d-flex flex-column align-items-center text-center w-100">
     <div class="w-75 d-flex flex-column mb-1">
-      <span class="fw-bold align-self-start">{{
-        page.name
-      }}</span>
-      <span class="align-self-start">{{
-        page.description
-      }}</span>
+      <span class="fw-bold align-self-start">{{ page.name }}</span>
+      <span class="align-self-start">{{ page.description }}</span>
     </div>
     <div
       class="my-3 d-flex gap-2 flex-column flex-sm-row justify-content-end justify-content-sm-center align-items-end align-items-sm-center w-75"
@@ -353,7 +349,18 @@
         @for (sideTab of sortPageBySidetabsOrder(page.sideTabs); track $index) {
         <div *ngIf="selectedTab === sideTab.title">
           <h3>{{ sideTab.title }}</h3>
-          <p>
+          <p
+            *ngIf="
+              !showAllContentMap[selectedTab] && sideTab.content.length > 500
+            "
+          >
+            {{ sideTab.content | slice : 0 : 500 }}...
+          </p>
+          <p
+            *ngIf="
+              showAllContentMap[selectedTab] || sideTab.content.length <= 500
+            "
+          >
             {{ sideTab.content }}
           </p>
         </div>
@@ -413,12 +420,13 @@
   <button
     style="border: 0; height: 50px; width: 200px"
     [ngClass]="darkMode ? 'bg-light my-3' : 'bg-dark text-light my-3'"
+    (click)="toggleShowAllContent()"
   >
-    <span *ngIf="!loadingMore" class="load-more">{{
+    <span *ngIf="!(loading$ | async)" class="load-more">{{
       "STATS.LOAD-MORE" | translate
     }}</span>
     <div
-      *ngIf="loadingMore"
+      *ngIf="loading$ | async"
       class="spinner"
       style="height: 20px; width: 20px; justify-self: center"
     ></div>

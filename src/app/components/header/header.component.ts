@@ -38,6 +38,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { value: 'en', label: 'English' },
     { value: 'ar', label: 'Arabic' },
   ];
+
   constructor(
     private router: Router,
     @Inject(DOCUMENT) private document: Document,
@@ -53,6 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(sub);
   }
+
   ngOnInit() {
     const sub = this.darkModeService.darkMode$.subscribe((value) => {
       this.darkMode = value;

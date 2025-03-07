@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DarkModeService } from '../../services/dark-mode.service';
 import { PageService } from '../../services/page.service';
 import { ToastrService } from 'ngx-toastr';
 import { PageWithTabs } from '../../ViewModels/page-with-tabs';
 import { SideTab } from '../../models/side-tab';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-public-law',
@@ -18,7 +19,8 @@ import { SideTab } from '../../models/side-tab';
 export class PublicLawComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   darkMode: boolean = false;
-  loadingMore: boolean = false;
+  loading$!: Observable<boolean>;
+  showAllContentMap: { [key: string]: boolean } = {}
   page: PageWithTabs = {
     description: '',
     name: '',
@@ -32,10 +34,12 @@ export class PublicLawComponent implements OnInit, OnDestroy {
   constructor(
     private darkModeService: DarkModeService,
     private pageService: PageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
+    this.loading$ = this.loaderService.loading$;
     this.getPage();
     const sub = this.darkModeService.darkMode$.subscribe((mode) => {
       this.darkMode = mode;
@@ -66,6 +70,9 @@ export class PublicLawComponent implements OnInit, OnDestroy {
     sideTabs: Omit<SideTab, 'pageId'>[]
   ): Omit<SideTab, 'pageId'>[] {
     return sideTabs.sort((a, b) => a.order - b.order);
+  }
+  toggleShowAllContent() {
+    this.showAllContentMap[this.selectedTab] = !this.showAllContentMap[this.selectedTab];
   }
 
   ngOnDestroy(): void {

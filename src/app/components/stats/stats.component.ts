@@ -3,12 +3,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TableCell } from '../../models/table-cell';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DarkModeService } from '../../services/dark-mode.service';
 import { PageWithTabs } from '../../ViewModels/page-with-tabs';
 import { PageService } from '../../services/page.service';
 import { ToastrService } from 'ngx-toastr';
 import { SideTab } from '../../models/side-tab';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'app-stats',
@@ -20,6 +21,8 @@ import { SideTab } from '../../models/side-tab';
 export class StatsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   darkMode: boolean = false;
+  showAllContentMap: { [key: string]: boolean } = {}
+  loading$!: Observable<boolean>;
   page: PageWithTabs = {
     description: '',
     name: '',
@@ -106,15 +109,15 @@ export class StatsComponent implements OnInit, OnDestroy {
   };
   totalResults: number = 493;
 
-  loadingMore = false;
-
   constructor(
     private darkModeService: DarkModeService,
     private pageService: PageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private loaderSrvice: LoaderService
   ) {}
 
   ngOnInit(): void {
+    this.loading$ = this.loaderSrvice.loading$;
     const sub = this.darkModeService.darkMode$.subscribe((mode) => {
       this.darkMode = mode;
     });
@@ -195,6 +198,10 @@ export class StatsComponent implements OnInit, OnDestroy {
       );
       if (allOption) allOption.selected = false;
     }
+  }
+
+  toggleShowAllContent() {
+    this.showAllContentMap[this.selectedTab] = !this.showAllContentMap[this.selectedTab];
   }
 
   ngOnDestroy() {

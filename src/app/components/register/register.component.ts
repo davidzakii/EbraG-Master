@@ -15,12 +15,18 @@ import { CommonModule } from '@angular/common';
 import { DarkModeService } from '../../services/dark-mode.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TranslateModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    FormsModule,
+    RouterLink,
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
@@ -118,8 +124,6 @@ export class RegisterComponent implements OnDestroy {
     return (formGroup: AbstractControl): ValidationErrors | null => {
       const password = formGroup.get('Password')?.value;
       const confirmPassword = formGroup.get('ConfirmPassword')?.value;
-      console.log(password);
-      console.log(confirmPassword);
       return password && confirmPassword && password !== confirmPassword
         ? { passwordsDoNotMatch: true }
         : null;
