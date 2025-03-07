@@ -59,7 +59,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     this.translate.setDefaultLang('en');
     const sub2 = this.languageService.language$.subscribe((value) => {
-      console.log(value);
       this.translate.use(value);
     });
     const sub3 = this.authService.authenticated$.subscribe((isAuth) => {

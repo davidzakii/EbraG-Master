@@ -20,7 +20,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit(): void {
     const sub = this.languageService.language$.subscribe((value) => {
-      console.log(value);
       this.translate.use(value);
     });
   }
