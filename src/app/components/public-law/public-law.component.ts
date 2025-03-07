@@ -36,7 +36,6 @@ export class PublicLawComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.selectedTab);
     this.getPage();
     const sub = this.darkModeService.darkMode$.subscribe((mode) => {
       this.darkMode = mode;
@@ -45,7 +44,7 @@ export class PublicLawComponent implements OnInit, OnDestroy {
   }
 
   getPage() {
-    const sub = this.pageService.getPageByName('Public Low').subscribe({
+    const sub = this.pageService.getPageByName('Public Law').subscribe({
       next: (response) => {
         if (response.isPass) {
           this.page = response.data;

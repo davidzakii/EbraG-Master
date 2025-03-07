@@ -119,6 +119,7 @@ export class StatsComponent implements OnInit, OnDestroy {
       this.darkMode = mode;
     });
     this.subscription.add(sub);
+    this.getPage();
   }
   getPage() {
     const sub = this.pageService.getPageByName('Stats').subscribe({

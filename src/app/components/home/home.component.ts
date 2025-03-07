@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.darkMode = mode;
     });
     this.subscription.add(sub);
+    this.getPage();
   }
   getPage() {
     const sub = this.pageService.getPageByName('Ebraj').subscribe({
