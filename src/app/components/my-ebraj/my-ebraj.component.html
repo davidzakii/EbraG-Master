@@ -1,4 +1,4 @@
-<div class="my-4">
+<div class="my-4 h-full">
   <div class="container text-center custom-margin-y">
     <h1>{{ firstName }} {{ " " }} {{ lastName }}</h1>
     <p>
@@ -44,10 +44,10 @@
         </p>
       </div>
       <div class="d-flex flex-column">
-        <img class="img" [src]="'qrcode1.jpeg'" alt="QR Code" />
+        <img class="img" [src]="'qrcode1.jpeg'" alt="Logo" />
         <img class="img" [src]="qrCodeImgUrl" alt="QR Code" />
       </div>
     </div>
   </div>
-  <button class="btn btn-dark mb-4" (click)="downloadPage()">Download</button>
+  <button class="btn btn-dark mb-4" (click)="generatePDF()">Download</button>
 </div>

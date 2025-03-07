@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-my-ebraj',
@@ -25,53 +27,45 @@ export class MyEbrajComponent implements OnInit {
     ).lastName;
   }
 
-  downloadImage() {
-    const imgElement = document.querySelector('img');
-    if (!imgElement) {
-      console.error('No image found on the page.');
-      return;
+  generatePDF(): void {
+    const content = document.body;
+    if (content) {
+      // التأكد من تحميل جميع الصور
+      const images = content.getElementsByTagName('img');
+      const promises = Array.from(images).map((img) => {
+        return new Promise<void>((resolve) => {
+          if (img.complete) {
+            resolve();
+          } else {
+            img.onload = () => resolve();
+            img.onerror = () => resolve();
+          }
+        });
+      });
+
+      // تحميل صورة QR code بشكل صريح
+      const qrCodeImg = new Image();
+      qrCodeImg.src = this.qrCodeImgUrl;
+      const qrCodePromise = new Promise<void>((resolve) => {
+        qrCodeImg.onload = () => resolve();
+        qrCodeImg.onerror = () => resolve();
+      });
+
+      // إضافة صورة QR code إلى الصفحة
+      content.appendChild(qrCodeImg);
+
+      // بعد تحميل جميع الصور، أخذ لقطة الشاشة وتوليد ملف PDF
+      Promise.all([...promises, qrCodePromise]).then(() => {
+        html2canvas(content).then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const doc = new jsPDF();
+          doc.addImage(imgData, 'PNG', 10, 10, 180, 160);
+          doc.save('page.pdf');
+
+          // إزالة صورة QR code من الصفحة بعد توليد ملف PDF
+          content.removeChild(qrCodeImg);
+        });
+      });
     }
-    const imgUrl = imgElement.getAttribute('src');
-    if (!imgUrl) {
-      console.error('Image source not found.');
-      return;
-    }
-    const element = document.createElement('a');
-    element.setAttribute('href', imgUrl);
-    element.setAttribute('download', 'image.png');
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-  }
-  downloadPage() {
-    const element = document.createElement('a');
-    const htmlContent = document.documentElement.outerHTML;
-    const cssContent = Array.from(document.styleSheets)
-      .map((styleSheet) => {
-        try {
-          return Array.from(styleSheet.cssRules)
-            .map((rule) => rule.cssText)
-            .join('\n');
-        } catch (e) {
-          console.warn(
-            'Access to stylesheet %s is denied. Ignoring...',
-            styleSheet.href
-          );
-          return '';
-        }
-      })
-      .join('\n');
-    const fullContent = `<style>${cssContent}</style>${htmlContent}`;
-    element.setAttribute(
-      'href',
-      'data:text/html;charset=utf-8,' + encodeURIComponent(fullContent)
-    );
-    element.setAttribute('download', 'page.html');
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    this.downloadImage();
-    element.click();
-    document.body.removeChild(element);
   }
 }
