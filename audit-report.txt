@@ -1,0 +1,55 @@
+# npm audit report
+
+@babel/helpers  <7.26.10
+Severity: moderate
+Babel has inefficient RexExp complexity in generated code with .replace when transpiling named capturing groups - https://github.com/advisories/GHSA-968p-4wvh-cqc8
+fix available via `npm audit fix`
+node_modules/@babel/helpers
+
+@babel/runtime  <7.26.10
+Severity: moderate
+Babel has inefficient RexExp complexity in generated code with .replace when transpiling named capturing groups - https://github.com/advisories/GHSA-968p-4wvh-cqc8
+fix available via `npm audit fix`
+node_modules/@babel/runtime
+node_modules/jspdf/node_modules/@babel/runtime
+  @angular-devkit/build-angular  0.1000.0-next.0 - 19.2.2 || 20.0.0-next.0
+  Depends on vulnerable versions of @angular/build
+  Depends on vulnerable versions of @babel/runtime
+  Depends on vulnerable versions of @vitejs/plugin-basic-ssl
+  Depends on vulnerable versions of esbuild
+  node_modules/@angular-devkit/build-angular
+
+canvg  <3.0.11
+Severity: high
+canvg Prototype Pollution vulnerability - https://github.com/advisories/GHSA-v2mw-5mch-w8c5
+fix available via `npm audit fix`
+node_modules/canvg
+
+esbuild  <=0.24.2
+Severity: moderate
+esbuild enables any website to send any requests to the development server and read the response - https://github.com/advisories/GHSA-67mh-4wv8-2f99
+fix available via `npm audit fix`
+node_modules/esbuild
+node_modules/vite/node_modules/esbuild
+  @angular/build  <=19.2.0
+  Depends on vulnerable versions of @vitejs/plugin-basic-ssl
+  Depends on vulnerable versions of esbuild
+  Depends on vulnerable versions of vite
+  node_modules/@angular/build
+  vite  0.11.0 - 6.1.1
+  Depends on vulnerable versions of esbuild
+  node_modules/vite
+    @vitejs/plugin-basic-ssl  <=1.1.0
+    Depends on vulnerable versions of vite
+    node_modules/@vitejs/plugin-basic-ssl
+
+jspdf  <3.0.1
+Severity: high
+jsPDF Bypass Regular Expression Denial of Service (ReDoS) - https://github.com/advisories/GHSA-w532-jxjh-hjhj
+fix available via `npm audit fix`
+node_modules/jspdf
+
+9 vulnerabilities (7 moderate, 2 high)
+
+To address all issues, run:
+  npm audit fix

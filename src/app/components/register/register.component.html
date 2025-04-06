@@ -2,11 +2,10 @@
   <form
     [formGroup]="registerForm"
     (ngSubmit)="register()"
-    style="width: 60%"
-    class="my-5 p-4"
+    class="p-4 d-flex justify-content-center align-items-center flex-column"
     [ngClass]="darkMode ? 'text-light bg-dark' : 'text-dark bg-light'"
   >
-    <div class="mb-3">
+    <div class="mb-3 w-100">
       <input
         [ngClass]="
           darkMode
@@ -38,7 +37,7 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 w-100">
       <input
         [ngClass]="
           darkMode
@@ -67,7 +66,7 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 w-100">
       <input
         [ngClass]="
           darkMode
@@ -94,7 +93,7 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 w-100">
       <input
         [ngClass]="
           darkMode
@@ -119,7 +118,7 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 w-100">
       <input
         [ngClass]="
           darkMode
@@ -140,7 +139,7 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 w-100">
       <input
         [ngClass]="
           darkMode
@@ -162,7 +161,7 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 w-100">
       <input
         [ngClass]="
           darkMode
@@ -188,20 +187,29 @@
       </div>
     </div>
 
-    <div class="mb-3">
-      <input
-        [ngClass]="
-          darkMode
-            ? 'bg-dark border-white text-white placeholder-white'
-            : 'border-dark placeholder-dark'
-        "
-        type="password"
-        id="Password"
-        formControlName="Password"
-        class="form-control"
-        placeholder="{{ 'LOGIN.PASSWORD-FIELD' | translate }}"
-        name="password"
-      />
+    <div class="mb-3 w-100">
+      <div class="position-relative">
+        <input
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="password"
+          id="Password"
+          formControlName="Password"
+          class="form-control"
+          placeholder="{{ 'LOGIN.PASSWORD-FIELD' | translate }}"
+          name="password"
+          #passwordInput
+        />
+        <i
+          [ngClass]="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"
+          (click)="togglePasswordVisibility(passwordInput)"
+          class="toggle-icon cursor-pointer position-absolute top-50 end-0 translate-middle-y me-2"
+        ></i>
+      </div>
+
       <div
         *ngIf="Password?.invalid && (Password?.dirty || Password?.touched)"
         class="text-danger mt-1"
@@ -215,20 +223,29 @@
         </small>
       </div>
     </div>
-    <div class="mb-3">
-      <input
-        [ngClass]="
-          darkMode
-            ? 'bg-dark border-white text-white placeholder-white'
-            : 'border-dark placeholder-dark'
-        "
-        type="password"
-        id="ConfirmPassword"
-        name="ConfirmPassword"
-        formControlName="ConfirmPassword"
-        class="form-control"
-        placeholder="{{ 'LOGIN.CONFIRM-PASSWORD-FIELD' | translate }}"
-      />
+    <div class="mb-3 w-100">
+      <div class="position-relative">
+        <input
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="password"
+          id="ConfirmPassword"
+          name="ConfirmPassword"
+          formControlName="ConfirmPassword"
+          class="form-control"
+          placeholder="{{ 'LOGIN.CONFIRM-PASSWORD-FIELD' | translate }}"
+          #confirmPasswordInput
+        />
+        <i
+          [ngClass]="showConfirmPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"
+          (click)="togglePasswordVisibility(confirmPasswordInput)"
+          class="toggle-icon cursor-pointer position-absolute top-50 end-0 translate-middle-y me-2"
+        ></i>
+      </div>
+
       <div
         *ngIf="ConfirmPassword?.touched && (ConfirmPassword?.invalid || registerForm.errors?.['passwordsDoNotMatch'])"
         class="text-danger mt-1"
@@ -244,8 +261,8 @@
 
     <button
       type="submit"
-      class="d-block bg-transparent btn"
-      [ngClass]="darkMode ? 'border-white text-white' : 'border-dark'"
+      class="login-button"
+      [ngClass]="{ 'bg-dark': !darkMode }"
       [disabled]="registerForm.invalid"
     >
       {{ "LOGIN.CREATE-ACCOUNT-BUTTON" | translate }}
@@ -253,10 +270,14 @@
   </form>
 </div>
 <div class="helper-links">
-  <a [ngClass]="darkMode ? 'text-light' : 'text-dark'">{{
-    "LOGIN.REGISTER-TROUBLE" | translate
-  }}</a>
   <a [ngClass]="darkMode ? 'text-light' : 'text-dark'" routerLink="/login">{{
     "LOGIN.LOGIN-BUTTON" | translate
   }}</a>
+</div>
+<div class="my-5 d-flex justify-content-center align-items-center flex-column">
+  <h5 class="text-center">{{ "APP.SIGN-IN" | translate }}</h5>
+  <button (click)="onGoogleLogin()" class="google-login-button my-3">
+    <img src="google-icon-logo.svg" alt="Google" />
+    <span>Sign in with Google</span>
+  </button>
 </div>

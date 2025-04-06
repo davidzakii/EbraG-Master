@@ -33,6 +33,8 @@ import { Router, RouterLink } from '@angular/router';
 export class RegisterComponent implements OnDestroy {
   private subscribtion: Subscription = new Subscription();
   darkMode: boolean = false;
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   registerForm: FormGroup;
   constructor(
     private fb: FormBuilder,
@@ -93,6 +95,16 @@ export class RegisterComponent implements OnDestroy {
     this.subscribtion.add(sub);
   }
 
+  togglePasswordVisibility(passwordInput: HTMLInputElement) {
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+    } else {
+      passwordInput.type = 'password';
+    }
+    if (passwordInput.id === 'Password') this.showPassword = !this.showPassword;
+    else this.showConfirmPassword = !this.showConfirmPassword;
+  }
+
   get FirstName() {
     return this.registerForm.get('FirstName');
   }
@@ -146,6 +158,17 @@ export class RegisterComponent implements OnDestroy {
       },
     });
     this.subscribtion.add(sub);
+  }
+  onGoogleLogin() {
+    this.authService.loginWithGoogle();
+    // this.authService.signInWithGoogl().subscribe({
+    //   next: () => {},
+    // });
+  }
+  ngOnInit(): void {
+    const sub = this.darkModeService.darkMode$.subscribe((mode) => {
+      this.darkMode = mode;
+    });
   }
   ngOnDestroy(): void {
     this.subscribtion.unsubscribe();

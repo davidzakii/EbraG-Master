@@ -3,6 +3,7 @@ import { environment } from '../../env/environment.pro';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SideTab } from '../models/side-tab';
+import { FAQ } from '../models/faq';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,14 @@ export class SideTabService {
     return this.http.delete(`${this.apiUrl}/SideTab/Delete`, {
       params: { id },
     });
+  }
+  addFAQSideTab(sideTab: Omit<SideTab, 'pageId'>): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/FAQSideTab/Add`, sideTab);
+  }
+  addFAQ(faq: FAQ): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/FAQ/Add`, faq);
+  }
+  getFAQsSideTabAll(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/FAQSideTab/All`);
   }
 }

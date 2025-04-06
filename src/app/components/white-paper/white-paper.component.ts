@@ -19,8 +19,9 @@ import { LoaderService } from '../../services/loader.service';
 export class WhitePaperComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   darkMode: boolean = false;
+  isModalOpen: boolean = false;
   loading$!: Observable<boolean>;
-  showAllContentMap: { [key: string]: boolean } = {}
+  showAllContentMap: { [key: string]: boolean } = {};
   page: PageWithTabs = {
     description: '',
     name: '',
@@ -64,6 +65,7 @@ export class WhitePaperComponent implements OnInit, OnDestroy {
         this.toastr.error(err.message);
       },
     });
+    this.subscription.add(sub);
   }
   sortPageBySidetabsOrder(
     sideTabs: Omit<SideTab, 'pageId'>[]
@@ -72,7 +74,14 @@ export class WhitePaperComponent implements OnInit, OnDestroy {
   }
 
   toggleShowAllContent() {
-    this.showAllContentMap[this.selectedTab] = !this.showAllContentMap[this.selectedTab];
+    this.showAllContentMap[this.selectedTab] =
+      !this.showAllContentMap[this.selectedTab];
+  }
+  closeModal() {
+    this.isModalOpen = false;
+  }
+  openModal() {
+    this.isModalOpen = true;
   }
 
   ngOnDestroy(): void {

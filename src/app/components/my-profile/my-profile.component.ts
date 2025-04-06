@@ -22,8 +22,12 @@ export class MyProfileComponent {
   userMain: any | null = null;
   userData: any = {};
   userId: string = '';
-  selectedTab: string = 'rules';
-
+  countryOptions: { key: string; value: string }[] = [
+    { key: 'Country/Region', value: 'us' },
+    { key: 'Canada', value: 'ca' },
+    { key: 'United Kingdom', value: 'uk' },
+    { key: 'Australia', value: 'in' },
+  ];
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
@@ -34,8 +38,8 @@ export class MyProfileComponent {
   ngOnInit() {
     const userDataString = this.localStorageService.getItem('user');
     if (userDataString) {
-      const userData: any = JSON.parse(userDataString);
-      this.userId = userData.id ?? '';
+      this.userData = JSON.parse(userDataString);
+      this.userId = this.userData.id ?? '';
       if (this.userId) {
         this.fetchUserData();
       }
@@ -44,12 +48,15 @@ export class MyProfileComponent {
       this.darkMode = mode;
     });
     this.subscription.add(sub);
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear; year >= 1900; year--) {
+      this.years.push(year);
+    }
   }
 
   fetchUserData() {
     const sub = this.userService.getUserById(this.userId).subscribe({
       next: (response) => {
-        console.log(response?.data);
         this.userData = response?.data ?? {};
       },
       error: (err) => console.error('Error fetching user data:', err),
@@ -91,6 +98,49 @@ export class MyProfileComponent {
     });
     this.subscription.add(sub);
   }
+
+  greetUser(): string {
+    const userName =
+      this.userData?.firstName + ' ' + this.userData?.lastName || '';
+    const currentHour = new Date().getHours();
+    let greeting = 'Good Evening';
+
+    if (currentHour >= 5 && currentHour < 12) {
+      greeting = 'Good Morning';
+    } else if (currentHour >= 12 && currentHour < 17) {
+      greeting = 'Good Afternoon';
+    }
+
+    return `${greeting}, ${userName}`;
+  }
+
+  triggerFileInput(): void {
+    const fileInput = document.getElementById(
+      'fileInput'
+    ) as HTMLInputElement | null;
+    if (fileInput) {
+      fileInput.click();
+    } else {
+      console.error('File input element not found');
+    }
+  }
+
+  months: string[] = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  days: number[] = Array.from({ length: 31 }, (_, i) => i + 1);
+  years: number[] = [];
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

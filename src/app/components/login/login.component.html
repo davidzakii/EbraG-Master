@@ -28,21 +28,29 @@
       </div>
     </div>
     <div class="login-form-control">
-      <input
-        [ngClass]="
-          darkMode
-            ? 'bg-dark border-white text-white placeholder-white'
-            : 'border-dark placeholder-dark'
-        "
-        type="text"
-        name="password"
-        #password="ngModel"
-        ngModel
-        class="form-control"
-        placeholder="{{ 'LOGIN.PASSWORD-FIELD' | translate }}"
-        required
-        type="password"
-      />
+      <div class="position-relative">
+        <input
+          [ngClass]="
+            darkMode
+              ? 'bg-dark border-white text-white placeholder-white'
+              : 'border-dark placeholder-dark'
+          "
+          type="text"
+          name="password"
+          #password="ngModel"
+          #passwordInput
+          ngModel
+          class="form-control pr-5"
+          placeholder="{{ 'LOGIN.PASSWORD-FIELD' | translate }}"
+          required
+          type="password"
+        />
+        <i
+          [ngClass]="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"
+          (click)="togglePasswordVisibility(passwordInput)"
+          class="toggle-icon cursor-pointer position-absolute top-50 end-0 translate-middle-y me-2"
+        ></i>
+      </div>
       <div *ngIf="password.touched && password.invalid" class="my-2">
         <small
           class="text-danger"
@@ -60,11 +68,13 @@
         [(ngModel)]="remember"
         id="rememberMe"
       />
-      <label for="rememberMe">{{ "LOGIN.REMEMBER-BOX" | translate }}</label>
+      <label for="rememberMe" [ngClass]="{ 'text-dark': !darkMode }">{{
+        "LOGIN.REMEMBER-BOX" | translate
+      }}</label>
     </div>
 
     <button
-    [disabled]="loginForm.invalid"
+      [disabled]="loginForm.invalid"
       [ngClass]="{ 'bg-dark': !darkMode }"
       type="submit"
       class="login-button"
@@ -74,13 +84,109 @@
   </form>
 
   <div class="helper-links">
-    <a [ngClass]="darkMode ? 'text-light' : 'text-dark'" href="#">{{
-      "LOGIN.LOGIN-TROUBLE" | translate
-    }}</a>
+    <a
+      [ngClass]="darkMode ? 'text-light' : 'text-dark'"
+      (click)="openPopup('forgotPassword')"
+      >{{ "LOGIN.FORGOT-PASSWORD" | translate }}</a
+    >
     <a
       [ngClass]="darkMode ? 'text-light' : 'text-dark'"
       routerLink="/register"
       >{{ "LOGIN.CREATE-ACCOUNT-BUTTON" | translate }}</a
     >
+  </div>
+</div>
+
+<div
+  class="start-app-popup"
+  [ngClass]="darkMode ? 'bg-dark' : 'bg-light'"
+  *ngIf="isModalOpen"
+>
+  <div class="start-app-popup-header">
+    <h2 class="border-1 border-bottom w-100">
+      {{ "LOGIN.FORGOT-PASSWORD" | translate }}
+    </h2>
+    <button
+      [ngClass]="darkMode ? 'text-light' : 'text-dark'"
+      class="close-button"
+      (click)="closeModal('forgotPassword')"
+    >
+      &#x2715;
+    </button>
+  </div>
+  <div class="start-app-popup-body">
+    <p>
+      Enter the email address you used to sign up and we'll send a link to reset
+      your password
+    </p>
+    <div class="login-form-control">
+      <input
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="email"
+        name="email"
+        #emailToReset="ngModel"
+        ngModel
+        class="form-control"
+        placeholder="{{ 'LOGIN.USER-FIELD' | translate }}"
+        required
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+      />
+      <div *ngIf="emailToReset.touched && emailToReset.invalid" class="my-2">
+        <small
+          class="text-danger"
+          *ngIf="emailToReset.control.errors?.['required']"
+        >
+          {{ "LOGIN.EMAIL-REQUIRED" | translate }}
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="emailToReset.control.errors?.['pattern']"
+        >
+          {{ "LOGIN.EMAIL-PATTERN" | translate }}
+        </small>
+      </div>
+    </div>
+    <button
+      [disabled]="emailToReset.invalid"
+      [ngClass]="{ 'opacity-50': emailToReset.invalid, 'bg-dark': !darkMode }"
+      (click)="openPopup('resetPassword', emailToReset.viewModel)"
+    >
+      Reset
+    </button>
+  </div>
+</div>
+<div
+  class="start-app-popup"
+  [ngClass]="darkMode ? 'bg-dark' : 'bg-light'"
+  *ngIf="isResetClicke"
+>
+  <div class="start-app-popup-header">
+    <h2 class="border-1 border-bottom w-100">
+      {{ "LOGIN.FORGOT-PASSWORD" | translate }}
+    </h2>
+    <button
+      [ngClass]="darkMode ? 'text-light' : 'text-dark'"
+      class="close-button"
+      (click)="closeModal('resetPassword')"
+    >
+      &#x2715;
+    </button>
+  </div>
+  <div class="start-app-popup-body">
+    <p>
+      Okay, we sent an email to <b>{{ emailToResetValue }}</b> with a link to
+      reset your password.
+    </p>
+    <p>If you don't receive the email Within a few minutes,Please</p>
+    <button
+      [ngClass]="{ 'bg-dark': !darkMode }"
+      (click)="openPopup('resetPassword', emailToResetValue)"
+    >
+      Send Again
+    </button>
   </div>
 </div>

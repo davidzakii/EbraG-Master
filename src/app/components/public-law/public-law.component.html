@@ -24,15 +24,17 @@
     <div *ngIf="selectedTab === sideTab.title">
       <h3>{{ sideTab.title }}</h3>
       <p
-      *ngIf="!showAllContentMap[selectedTab] && sideTab.content.length > 500"
-    >
-      {{ sideTab.content | slice : 0 : 500 }}...
-    </p>
-    <p
-      *ngIf="showAllContentMap[selectedTab] || sideTab.content.length <= 500"
-    >
-      {{ sideTab.content }}
-    </p>
+        *ngIf="!showAllContentMap[selectedTab] && sideTab.content.length > 1000"
+      >
+        {{ sideTab.content | slice : 0 : 1000 }}
+        <!-- <a (click)="openModal()" class="btn fs-5 btn-link">Read More</a> -->
+        ...
+      </p>
+      <p
+        *ngIf="showAllContentMap[selectedTab] || sideTab.content.length <= 1000"
+      >
+        {{ sideTab.content }}
+      </p>
     </div>
     }
   </div>
@@ -47,4 +49,31 @@
     }}</span>
     <div *ngIf="loading$ | async" class="spinner"></div>
   </button>
+</div>
+<div
+  class="start-app-popup"
+  [ngClass]="darkMode ? 'bg-dark' : 'bg-light'"
+  *ngIf="isModalOpen"
+>
+  <div class="start-app-popup-header">
+    <h2>Full Description</h2>
+    <button
+      [ngClass]="darkMode ? 'text-light' : 'text-dark'"
+      class="close-button"
+      (click)="closeModal()"
+    >
+      &#x2715;
+    </button>
+  </div>
+  <div class="start-app-popup-body">
+    @for (sideTab of sortPageBySidetabsOrder(page.sideTabs); track $index) {
+    <div *ngIf="selectedTab === sideTab.title">
+      <h3>{{ sideTab.title }}</h3>
+      <p>
+        {{ sideTab.content }}
+      </p>
+    </div>
+    }
+  </div>
+  <div class="start-app-popup-footer"></div>
 </div>

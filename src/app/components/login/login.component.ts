@@ -19,9 +19,14 @@ import { LocalStorageService } from '../../services/local-storage.service';
 export class LoginComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   darkMode: boolean = false;
+  isModalOpen: boolean = false;
+  isResetClicke: boolean = false;
+  emailToResetValue: string = '';
   email: string = '';
   password: string = '';
   remember: boolean = false;
+  showPassword: boolean = false;
+
   constructor(
     private darkModeService: DarkModeService,
     private router: Router,
@@ -29,6 +34,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private localStorageService: LocalStorageService
   ) {}
+
+  togglePasswordVisibility(passwordInput: HTMLInputElement) {
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+    } else {
+      passwordInput.type = 'password';
+    }
+    this.showPassword = !this.showPassword;
+  }
   onLogin(form: any) {
     this.authService
       .login({ email: form.value.email, password: form.value.password })
@@ -53,14 +67,38 @@ export class LoginComponent implements OnInit, OnDestroy {
         },
       });
   }
+
   ngOnInit(): void {
     const sub = this.darkModeService.darkMode$.subscribe((mode) => {
       this.darkMode = mode;
     });
   }
-  isValid(){
-    
+  closeModal(name: string) {
+    if (name === 'forgotPassword') this.isModalOpen = false;
+    if (name === 'resetPassword') {
+      this.isModalOpen = false;
+      this.isResetClicke = false;
+    }
   }
+  openPopup(name: string, email: string = '') {
+    this.emailToResetValue = email;
+    if (name === 'forgotPassword') this.isModalOpen = true;
+    if (name === 'resetPassword') {
+      this.isModalOpen = false;
+      this.isResetClicke = true;
+      const sub = this.authService.forgetPassword(email).subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error('forget password failed');
+        },
+      });
+      this.subscription.add(sub);
+    }
+  }
+  isValid() {}
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

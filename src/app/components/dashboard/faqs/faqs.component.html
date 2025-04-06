@@ -1,0 +1,23 @@
+<button
+  class="btn btn-light my-5"
+  [routerLink]="['/dashboard/add-faq-sidetab']"
+>
+  Add FAQ Side Tab
+</button>
+@for (faqSideTab of faqs; track $index) {
+<div class="faq-item">
+  <h3>{{ faqSideTab.title }}</h3>
+  <p>{{ faqSideTab.content }}</p>
+  @for (faq of faqSideTab.faQs; track $index) {
+  <div class="faq-question">
+    <h4>{{ faq.order }} - {{ faq.question }}</h4>
+    <p>{{ faq.answer }}</p>
+  </div>
+  <div class="faq-actions">
+    <button [routerLink]="['/dashboard/add-faq-sidetab', faq.id]">
+      Add FAQs
+    </button>
+  </div>
+  }
+</div>
+}

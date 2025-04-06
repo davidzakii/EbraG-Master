@@ -211,3 +211,67 @@ $desktop: 1024px;
     font-size: 0.9rem;
   }
 }
+
+$tablet: 1024px;
+@mixin tablet {
+  @media (max-width: $tablet) {
+    @content;
+  }
+}
+
+.start-app-popup {
+  overflow-y: scroll;
+  height: 500px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1051;
+  font-family: inherit;
+
+  @include tablet {
+    width: 95%;
+  }
+
+  .start-app-popup-header {
+    position: static;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .start-app-popup-header h2 {
+    font-size: 20px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .start-app-popup-body {
+    overflow: hidden;
+    width: 90%;
+    margin: 0 auto;
+  }
+  .start-app-popup-footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 16px;
+    width: 94%;
+  }
+  .start-app-popup-footer button {
+    border: none;
+    background-color: transparent;
+  }
+}

@@ -157,7 +157,7 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    canActivate: [adminGuard],
+    // canActivate: [adminGuard],
     loadComponent: () =>
       import(
         './components/dashboard/dashboard-layout/dashboard-layout.component'
@@ -219,6 +219,20 @@ export const routes: Routes = [
           import(
             './components/dashboard/add-side-tab/add-side-tab.component'
           ).then((m) => m.AddSideTabComponent),
+      },
+      {
+        path: 'add-faq-sidetab',
+        loadComponent: () =>
+          import(
+            './components/dashboard/faqside-tab/faqside-tab.component'
+          ).then((m) => m.FAQSideTabComponent),
+      },
+      {
+        path: 'faqs',
+        loadComponent: () =>
+          import('./components/dashboard/faqs/faqs.component').then(
+            (m) => m.FaqsComponent
+          ),
       },
     ],
   },

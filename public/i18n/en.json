@@ -25,6 +25,7 @@
     "PROVIDERS-PLACES": "Places",
     "PROVIDERS-VALUES": "Values",
     "LOGIN": "Login",
+    "SIGN-IN": "Sign in to Your Account",
     "REGISTER": "Register",
     "MY-PROFILE": "My Profile",
     "MY-PROFILE-DASHBOARD": "Dashboard",
@@ -82,6 +83,7 @@
     "REMEMBER-BOX": "Remember Me",
     "LOGIN-BUTTON": "Login",
     "LOGIN-TROUBLE": "Trouble logging in?",
+    "FORGOT-PASSWORD": "Forgot Your Password?",
     "REGISTER-TROUBLE": "Trouble registering?",
     "CREATE-ACCOUNT-BUTTON": "Create Account",
     "USERNAME-FIELD": "Username",
@@ -226,7 +228,7 @@
     "LOAD-MORE": "Load More"
   },
   "PROVIDERS": {
-    "PROVIDERS": "Presenters",
+    "PROVIDERS": "Providers",
     "PROVIDERS-DESCRIPTION": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.",
     "SEARCH-PLACEHOLDER": "Search",
     "E-PAGE": "E-Page",

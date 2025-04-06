@@ -57,6 +57,18 @@ export class FooterComponent implements OnInit, OnDestroy {
       this.document.body.setAttribute('dir', 'ltr');
     }
   }
+  scrollToMainContainer() {
+    setTimeout(() => {
+      const element = document.getElementById('mainContainer');
+      const offset = 96; // Height of the fixed nav
+      if (element) {
+        const elementPosition =
+          element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - offset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      }
+    }, 0);
+  }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

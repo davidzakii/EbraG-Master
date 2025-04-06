@@ -12,9 +12,9 @@
     />
   </div>
 
-  <div class="main-container">
+  <div class="main-container" id="mainContainer">
     <!-- Left Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" >
       <ul>
         <li
           [class.active]="selectedTab === 'trust-and-safety' && darkMode"
@@ -45,15 +45,19 @@
           {{ "FOOTER-DISCLOSURES.COOKIE-POLICY" | translate }}
         </li>
         <li
-        [class.active]="selectedTab === 'accessability-statement' && darkMode"
-          [class.active-dark]="selectedTab === 'accessability-statement' && !darkMode"
+          [class.active]="selectedTab === 'accessability-statement' && darkMode"
+          [class.active-dark]="
+            selectedTab === 'accessability-statement' && !darkMode
+          "
           (click)="selectTab('accessability-statement')"
         >
           {{ "FOOTER-DISCLOSURES.ACCESSABILITY-STATEMENT" | translate }}
         </li>
         <li
-        [class.active]="selectedTab === 'my-personal-information' && darkMode"
-          [class.active-dark]="selectedTab === 'my-personal-information' && !darkMode"
+          [class.active]="selectedTab === 'my-personal-information' && darkMode"
+          [class.active-dark]="
+            selectedTab === 'my-personal-information' && !darkMode
+          "
           (click)="selectTab('my-personal-information')"
         >
           {{ "FOOTER-DISCLOSURES.MY-PERSONAL-INFORMATION" | translate }}

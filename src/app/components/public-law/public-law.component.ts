@@ -20,7 +20,8 @@ export class PublicLawComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   darkMode: boolean = false;
   loading$!: Observable<boolean>;
-  showAllContentMap: { [key: string]: boolean } = {}
+  isModalOpen: boolean = false;
+  showAllContentMap: { [key: string]: boolean } = {};
   page: PageWithTabs = {
     description: '',
     name: '',
@@ -72,7 +73,14 @@ export class PublicLawComponent implements OnInit, OnDestroy {
     return sideTabs.sort((a, b) => a.order - b.order);
   }
   toggleShowAllContent() {
-    this.showAllContentMap[this.selectedTab] = !this.showAllContentMap[this.selectedTab];
+    this.showAllContentMap[this.selectedTab] =
+      !this.showAllContentMap[this.selectedTab];
+  }
+  closeModal() {
+    this.isModalOpen = false;
+  }
+  openModal() {
+    this.isModalOpen = true;
   }
 
   ngOnDestroy(): void {

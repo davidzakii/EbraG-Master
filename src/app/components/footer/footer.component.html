@@ -87,6 +87,7 @@
           [ngClass]="darkMode ? 'bg-dark text-light' : 'bg-light text-dark'"
           *ngFor="let option of currencyOptions"
           [value]="option.value"
+          [selected]="option.value == ''"
         >
           {{ option.key }}
         </option>
@@ -121,26 +122,56 @@
   style="width: 80%; margin: auto"
   class="footer-section-d d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap my-4"
 >
-  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+  <div
+    [routerLink]="'/disclosures'"
+    [queryParams]="{ tab: 'trust-and-safety' }"
+    class="d-inline-block my-1 mx-2"
+    (click)="scrollToMainContainer()"
+  >
     <span class="cursor-pointer">{{ "APP.TRUST-AND-SAFETY" | translate }}</span>
   </div>
-  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+  <div
+    [routerLink]="'/disclosures'"
+    [queryParams]="{ tab: 'terms-of-use' }"
+    class="d-inline-block my-1 mx-2"
+    (click)="scrollToMainContainer()"
+  >
     <span class="cursor-pointer">{{ "APP.TERMS-OF-USE" | translate }}</span>
   </div>
-  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+  <div
+    [routerLink]="'/disclosures'"
+    [queryParams]="{ tab: 'privacy-policy' }"
+    class="d-inline-block my-1 mx-2"
+    (click)="scrollToMainContainer()"
+  >
     <span class="cursor-pointer">{{ "APP.PRIVACY-POLICY" | translate }}</span>
   </div>
-  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+  <div
+    [routerLink]="'/disclosures'"
+    [queryParams]="{ tab: 'cookie-policy' }"
+    class="d-inline-block my-1 mx-2"
+    (click)="scrollToMainContainer()"
+  >
     <span class="cursor-pointer">{{ "APP.COOKIE-POLICY" | translate }}</span>
   </div>
-  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+  <div
+    [routerLink]="'/disclosures'"
+    [queryParams]="{ tab: 'accessability-statement' }"
+    class="d-inline-block my-1 mx-2"
+    (click)="scrollToMainContainer()"
+  >
     <span class="cursor-pointer"
       >{{ "APP.ACCESSABILITY" | translate }}<br />{{
         "APP.STATEMENT" | translate
       }}</span
     >
   </div>
-  <div [routerLink]="'/disclosures'" class="d-inline-block my-1 mx-2">
+  <div
+    [routerLink]="'/disclosures'"
+    [queryParams]="{ tab: 'my-personal-information' }"
+    class="d-inline-block my-1 mx-2"
+    (click)="scrollToMainContainer()"
+  >
     <span class="cursor-pointer"
       >{{ "APP.MY-PERSONAL" | translate }}<br />{{
         "APP.INFORMATION" | translate

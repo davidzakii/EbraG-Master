@@ -19,6 +19,7 @@ import { LoaderService } from '../../services/loader.service';
 export class HomeComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   darkMode: boolean = false;
+  isModalOpen: boolean = false;
   showAllContentMap: { [key: string]: boolean } = {};
   page: PageWithTabs = {
     description: '',
@@ -71,6 +72,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   toggleShowAllContent() {
     this.showAllContentMap[this.selectedTab] =
       !this.showAllContentMap[this.selectedTab];
+  }
+  closeModal() {
+    this.isModalOpen = false;
+  }
+  openModal() {
+    this.isModalOpen = true;
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
