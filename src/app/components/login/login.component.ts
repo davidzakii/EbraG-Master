@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { DarkModeService } from '../../services/dark-mode.service';
 import { Subscription } from 'rxjs';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { AgreementService } from '../../services/agreement.service';
 
 @Component({
   selector: 'app-login',
@@ -18,30 +19,49 @@ import { LocalStorageService } from '../../services/local-storage.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
+  private token: string = '';
   darkMode: boolean = false;
   isModalOpen: boolean = false;
+  isModalOpenLogin: boolean = false;
   isResetClicke: boolean = false;
+  isSetPassword: boolean = false;
   emailToResetValue: string = '';
   email: string = '';
   password: string = '';
   remember: boolean = false;
   showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   constructor(
     private darkModeService: DarkModeService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private toastr: ToastrService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private agreementService: AgreementService
   ) {}
 
+  ngOnInit(): void {
+    this.getDarkMode();
+    this.getToken();
+  }
+  getDarkMode() {
+    const sub = this.darkModeService.darkMode$.subscribe((mode) => {
+      this.darkMode = mode;
+    });
+    this.subscription.add(sub);
+  }
   togglePasswordVisibility(passwordInput: HTMLInputElement) {
     if (passwordInput.type === 'password') {
       passwordInput.type = 'text';
     } else {
       passwordInput.type = 'password';
     }
-    this.showPassword = !this.showPassword;
+    if (passwordInput.id === 'Password') this.showPassword = !this.showPassword;
+    else this.showConfirmPassword = !this.showConfirmPassword;
+    if (passwordInput.id === 'PasswordMain')
+      this.showPassword = !this.showPassword;
   }
   onLogin(form: any) {
     this.authService
@@ -56,7 +76,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.localStorageService.setItem('token', response.data.token);
             this.authService.setAuthenticated(true);
             this.toastr.success(response.message);
-            this.router.navigate(['/home']);
+            this.isModalOpenLogin = true;
           } else {
             this.toastr.error(response.message);
           }
@@ -67,38 +87,89 @@ export class LoginComponent implements OnInit, OnDestroy {
         },
       });
   }
-
-  ngOnInit(): void {
-    const sub = this.darkModeService.darkMode$.subscribe((mode) => {
-      this.darkMode = mode;
-    });
-  }
   closeModal(name: string) {
     if (name === 'forgotPassword') this.isModalOpen = false;
     if (name === 'resetPassword') {
       this.isModalOpen = false;
       this.isResetClicke = false;
     }
+    if (name === 'setPassword') {
+      this.isSetPassword = false;
+    }
   }
   openPopup(name: string, email: string = '') {
-    this.emailToResetValue = email;
     if (name === 'forgotPassword') this.isModalOpen = true;
     if (name === 'resetPassword') {
       this.isModalOpen = false;
       this.isResetClicke = true;
-      const sub = this.authService.forgetPassword(email).subscribe({
+      const sub = this.authService.forgetPassword({ email }).subscribe({
         next: (response) => {
           console.log(response);
+          if (response.isPass === true) {
+            this.toastr.success(response.message);
+          } else {
+            this.isModalOpen = false;
+            this.isResetClicke = false;
+            this.toastr.error(response.message);
+          }
         },
         error: (err) => {
           console.log(err);
-          this.toastr.error('forget password failed');
+          this.isModalOpen = false;
+          this.isResetClicke = false;
+          this.toastr.error(err.message);
         },
       });
       this.subscription.add(sub);
     }
   }
-  isValid() {}
+  closeModalLogin() {
+    this.isModalOpenLogin = false;
+    const sub = this.agreementService.userAgreement$.subscribe((value) => {
+      this.agreementService.setUserAgreement(true);
+    });
+    this.subscription.add(sub);
+    this.router.navigate(['/home']);
+  }
+  isUserDisagree() {
+    const sub = this.agreementService.userAgreement$.subscribe((value) => {
+      this.agreementService.setUserAgreement(false);
+      this.authService.logout();
+    });
+    this.subscription.add(sub);
+  }
+  setPassword(form: any) {
+    console.log(form);
+    const sub = this.authService
+      .resetPassword({
+        email: this.emailToResetValue,
+        token: this.token,
+        newPassword: form.value.password,
+      })
+      .subscribe({
+        next: (res) => {
+          if (res.isPass) {
+            this.toastr.success(res.message);
+            this.router.navigate(['/login']);
+          } else {
+            this.toastr.error(res.message);
+          }
+        },
+        error: (err) => {
+          this.toastr.error(err.message);
+        },
+      });
+  }
+  getToken() {
+    const sub = this.activatedRoute.queryParams.subscribe((params) => {
+      this.token = params['token'] || '';
+      this.emailToResetValue = params['email'] || '';
+      if (this.token !== '') {
+        this.isSetPassword = true;
+        this.isResetClicke = false;
+      }
+    });
+  }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

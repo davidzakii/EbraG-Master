@@ -94,6 +94,8 @@
     "BIRTHDATE-FIELD": "Birthdate",
     "CONFIRM-PASSWORD-FIELD": "Confirm Password",
     "PASSWORD-REQUIRED": "Password is required",
+    "CONFIRM-PASSWORD-REQUIRED": "Confirm Password is required",
+    "PASSWORD-PATTERN": "Password must contain at least 8 characters, including uppercase, lowercase letters, numbers, and special characters.",
     "EMAIL-REQUIRED": "Email is required",
     "EMAIL-PATTERN": "Email is not valid",
     "PASSWORD-MISMATCH": "Passwords do not match"

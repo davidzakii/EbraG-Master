@@ -1,12 +1,8 @@
-@if (faqSideTabId === '') {
+@if (faqId === '') {
 <div class="login-container">
-  <h1 class="p-3">Add FAQ Sidetab</h1>
+  <h1 class="p-3">Add FAQs</h1>
 
-  <form
-    class=""
-    #addFaqSideTabForm="ngForm"
-    (ngSubmit)="addFaqSideTab(addFaqSideTabForm)"
-  >
+  <form class="" #addFaqForm="ngForm" (ngSubmit)="addFaq(addFaqForm)">
     <div class="login-form-control">
       <input
         [ngClass]="
@@ -15,18 +11,21 @@
             : 'border-dark placeholder-dark'
         "
         type="text"
-        name="title"
-        #title="ngModel"
+        name="question"
+        #question="ngModel"
         ngModel
         class="form-control"
-        placeholder="Side Tab Title Here !"
+        placeholder="Question Here !"
         required
       />
-      <div *ngIf="title.touched && title.invalid" class="my-2">
-        <small class="text-danger" *ngIf="title.control.errors?.['required']">
+      <div *ngIf="question.touched && question.invalid" class="my-2">
+        <small
+          class="text-danger"
+          *ngIf="question.control.errors?.['required']"
+        >
           this field is required
         </small>
-        <small class="text-danger" *ngIf="title.control.errors?.['pattern']">
+        <small class="text-danger" *ngIf="question.control.errors?.['pattern']">
         </small>
       </div>
     </div>
@@ -38,16 +37,16 @@
             : 'border-dark placeholder-dark'
         "
         type="text"
-        name="content"
-        #content="ngModel"
+        name="answer"
+        #answer="ngModel"
         ngModel
         class="form-control"
-        placeholder="Side Tab description here !"
+        placeholder="Answer here !"
         required
         style="height: 300px"
       ></textarea>
-      <div *ngIf="content.touched && content.invalid" class="my-2">
-        <small class="text-danger" *ngIf="content.control.errors?.['required']">
+      <div *ngIf="answer.touched && answer.invalid" class="my-2">
+        <small class="text-danger" *ngIf="answer.control.errors?.['required']">
           this field is required
         </small>
       </div>
@@ -77,25 +76,20 @@
     </div>
 
     <button
-      [disabled]="addFaqSideTabForm.invalid"
+      [disabled]="addFaqForm.invalid"
       [ngClass]="{ 'bg-dark': !darkMode }"
       type="submit"
       class="btn btn-light my-2"
     >
-      <span>Add SideTab</span>
+      <span>Add Faqs</span>
     </button>
   </form>
 </div>
-
 }@else {
 <div class="login-container">
-  <h1 class="p-3">Edit FAQs SideTab</h1>
+  <h1 class="p-3">Update FAQ</h1>
 
-  <form
-    class=""
-    #updateFaqSideTabForm="ngForm"
-    (ngSubmit)="updateFaqSideTab(updateFaqSideTabForm)"
-  >
+  <form class="" #updateFaqForm="ngForm" (ngSubmit)="updateFaq(updateFaqForm)">
     <div class="login-form-control">
       <input
         [ngClass]="
@@ -104,18 +98,21 @@
             : 'border-dark placeholder-dark'
         "
         type="text"
-        name="title"
-        #title="ngModel"
-        [(ngModel)]="faqSideTab.title"
+        name="question"
+        #question="ngModel"
+        [(ngModel)]="faq.question"
         class="form-control"
-        placeholder="Side Tab Title Here !"
+        placeholder="Question Here !"
         required
       />
-      <div *ngIf="title.touched && title.invalid" class="my-2">
-        <small class="text-danger" *ngIf="title.control.errors?.['required']">
+      <div *ngIf="question.touched && question.invalid" class="my-2">
+        <small
+          class="text-danger"
+          *ngIf="question.control.errors?.['required']"
+        >
           this field is required
         </small>
-        <small class="text-danger" *ngIf="title.control.errors?.['pattern']">
+        <small class="text-danger" *ngIf="question.control.errors?.['pattern']">
         </small>
       </div>
     </div>
@@ -127,16 +124,16 @@
             : 'border-dark placeholder-dark'
         "
         type="text"
-        name="content"
-        #content="ngModel"
-        [(ngModel)]="faqSideTab.content"
+        name="answer"
+        #answer="ngModel"
+        [(ngModel)]="faq.answer"
         class="form-control"
-        placeholder="Side Tab description here !"
+        placeholder="Answer here !"
         required
         style="height: 300px"
       ></textarea>
-      <div *ngIf="content.touched && content.invalid" class="my-2">
-        <small class="text-danger" *ngIf="content.control.errors?.['required']">
+      <div *ngIf="answer.touched && answer.invalid" class="my-2">
+        <small class="text-danger" *ngIf="answer.control.errors?.['required']">
           this field is required
         </small>
       </div>
@@ -151,7 +148,7 @@
         type="number"
         name="order"
         #order="ngModel"
-        [(ngModel)]="faqSideTab.order"
+        [(ngModel)]="faq.order"
         class="form-control"
         min="0"
         required
@@ -166,12 +163,12 @@
     </div>
 
     <button
-      [disabled]="updateFaqSideTabForm.invalid"
+      [disabled]="updateFaqForm.invalid"
       [ngClass]="{ 'bg-dark': !darkMode }"
       type="submit"
       class="btn btn-light my-2"
     >
-      <span>Edit FAQ SideTab</span>
+      <span>Update Faqs</span>
     </button>
   </form>
 </div>

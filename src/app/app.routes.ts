@@ -2,8 +2,17 @@ import { Routes } from '@angular/router';
 import { noAuthGuard } from './guards/no-auth.guard';
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
+import { thanksGuard } from './guards/thanks.guard';
 
 export const routes: Routes = [
+  {
+    path: 'thanks',
+    canActivate: [thanksGuard],
+    loadComponent: () =>
+      import('./components/thanks/thanks.component').then(
+        (m) => m.ThanksComponent
+      ),
+  },
   {
     path: '',
     loadComponent: () =>
@@ -146,6 +155,14 @@ export const routes: Routes = [
         canActivate: [noAuthGuard],
       },
       {
+        path: 'forget-password',
+        loadComponent: () =>
+          import('./components/login/login.component').then(
+            (m) => m.LoginComponent
+          ),
+        canActivate: [noAuthGuard],
+      },
+      {
         path: 'register',
         loadComponent: () =>
           import('./components/register/register.component').then(
@@ -157,7 +174,7 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    // canActivate: [adminGuard],
+    canActivate: [adminGuard],
     loadComponent: () =>
       import(
         './components/dashboard/dashboard-layout/dashboard-layout.component'
@@ -226,6 +243,27 @@ export const routes: Routes = [
           import(
             './components/dashboard/faqside-tab/faqside-tab.component'
           ).then((m) => m.FAQSideTabComponent),
+      },
+      {
+        path: 'edit-faq-sidetab/:id',
+        loadComponent: () =>
+          import(
+            './components/dashboard/faqside-tab/faqside-tab.component'
+          ).then((m) => m.FAQSideTabComponent),
+      },
+      {
+        path: 'add-faq/:faqSideTabId',
+        loadComponent: () =>
+          import('./components/dashboard/add-faqs/add-faqs.component').then(
+            (m) => m.AddFaqsComponent
+          ),
+      },
+      {
+        path: 'edit-faq/:faqId/:faqSideTabId',
+        loadComponent: () =>
+          import('./components/dashboard/add-faqs/add-faqs.component').then(
+            (m) => m.AddFaqsComponent
+          ),
       },
       {
         path: 'faqs',

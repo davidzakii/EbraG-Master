@@ -41,7 +41,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   }
 
   deletePage(id: string) {
-    this.toastr
+    const sub = this.toastr
       .warning(
         'Are you sure you want to delete this side tab?',
         'Confirm Delete',
@@ -68,6 +68,7 @@ export class PagesComponent implements OnInit, OnDestroy {
         });
         this.subscription.add(sub);
       });
+    this.subscription.add(sub);
   }
 
   ngOnDestroy(): void {

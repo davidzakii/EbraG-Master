@@ -161,9 +161,6 @@ export class RegisterComponent implements OnDestroy {
   }
   onGoogleLogin() {
     this.authService.loginWithGoogle();
-    // this.authService.signInWithGoogl().subscribe({
-    //   next: () => {},
-    // });
   }
   ngOnInit(): void {
     const sub = this.darkModeService.darkMode$.subscribe((mode) => {

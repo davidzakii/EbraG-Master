@@ -11,19 +11,13 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   creatFeedback(UserFeedback: any): Observable<any> {
-    return this.http.post(
-      `${this.apiUrl}/Feedback/SubmitFeedback`,
-      UserFeedback
-    );
+    return this.http.post(`api/Feedback/SubmitFeedback`, UserFeedback);
   }
   updateProfile(newProfileData: FormData): Observable<any> {
-    return this.http.put(
-      `${this.apiUrl}/Account/UpdateProfile`,
-      newProfileData
-    );
+    return this.http.put(`api/Account/UpdateProfile`, newProfileData);
   }
   getUserById(userId: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/Account/GetById`, {
+    return this.http.get(`api/Account/GetById`, {
       params: { userId },
     });
   }

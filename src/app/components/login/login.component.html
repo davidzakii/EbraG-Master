@@ -39,6 +39,7 @@
           name="password"
           #password="ngModel"
           #passwordInput
+          id="PasswordMain"
           ngModel
           class="form-control pr-5"
           placeholder="{{ 'LOGIN.PASSWORD-FIELD' | translate }}"
@@ -187,6 +188,156 @@
       (click)="openPopup('resetPassword', emailToResetValue)"
     >
       Send Again
+    </button>
+  </div>
+</div>
+
+<div
+  class="start-app-popup"
+  [ngClass]="darkMode ? 'bg-dark' : 'bg-light'"
+  *ngIf="isSetPassword"
+>
+  <div class="start-app-popup-header">
+    <h2 class="border-1 border-bottom w-100">Set a password</h2>
+    <button
+      [ngClass]="darkMode ? 'text-light' : 'text-dark'"
+      class="close-button"
+      (click)="closeModal('setPassword')"
+    >
+      &#x2715;
+    </button>
+  </div>
+  <div class="start-app-popup-body">
+    <p>Please enter a password tha is at least 6 charaecter long.</p>
+    <form #setPasswordForm="ngForm" (ngSubmit)="setPassword(setPasswordForm)">
+      <div class="login-form-control">
+        <div class="position-relative">
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="password"
+            name="password"
+            #password="ngModel"
+            #passwordInput
+            id="Password"
+            ngModel
+            class="form-control pr-5"
+            placeholder="{{ 'LOGIN.PASSWORD-FIELD' | translate }}"
+            required
+          />
+          <i
+            [ngClass]="showPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"
+            (click)="togglePasswordVisibility(passwordInput)"
+            class="toggle-icon cursor-pointer position-absolute top-50 end-0 translate-middle-y me-2"
+          ></i>
+        </div>
+        <div *ngIf="password.touched && password.invalid" class="my-2">
+          <small
+            class="text-danger"
+            *ngIf="password.control.errors?.['required']"
+          >
+            {{ "LOGIN.PASSWORD-REQUIRED" | translate }}
+          </small>
+        </div>
+      </div>
+
+      <div class="login-form-control">
+        <div class="position-relative">
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="password"
+            name="confirmPassword"
+            #confirmPassword="ngModel"
+            #confirmPasswordInput
+            ngModel
+            class="form-control pr-5"
+            placeholder="New {{ 'LOGIN.CONFIRM-PASSWORD-FIELD' | translate }}"
+            required
+          />
+          <i
+            [ngClass]="showConfirmPassword ? 'bi bi-eye' : 'bi bi-eye-slash'"
+            (click)="togglePasswordVisibility(confirmPasswordInput)"
+            class="toggle-icon cursor-pointer position-absolute top-50 end-0 translate-middle-y me-2"
+          ></i>
+        </div>
+        <div
+          *ngIf="confirmPassword.touched && confirmPassword.invalid"
+          class="my-2"
+        >
+          <small
+            class="text-danger"
+            *ngIf="confirmPassword.control.errors?.['required']"
+          >
+            {{ "LOGIN.CONFIRM-PASSWORD-REQUIRED" | translate }}
+          </small>
+        </div>
+        <div
+          *ngIf="
+            password.value !== confirmPassword.value && confirmPassword.touched
+          "
+          class="my-2"
+        >
+          <small class="text-danger">
+            {{ "LOGIN.PASSWORD-MISMATCH" | translate }}
+          </small>
+        </div>
+      </div>
+      <button [ngClass]="{ 'bg-dark': !darkMode }" type="submit">save</button>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="isModalOpenLogin" class="start-app-overlay"></div>
+<div
+  class="start-app-popup"
+  [ngClass]="darkMode ? 'bg-dark' : 'bg-light'"
+  *ngIf="isModalOpenLogin"
+>
+  <div class="start-app-popup-header">
+    <h2>Warning</h2>
+  </div>
+  <div class="start-app-popup-body">
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque iste
+      voluptas praesentium beatae? Quas veniam recusandae, laborum voluptatem
+      adipisci distinctio sequi, deserunt temporibus quibusdam quis dignissimos
+      inventore minima totam quo fugit porro aliquam fugiat, aliquid similique.
+      Nostrum in voluptatem quasi praesentium labore fugit expedita voluptas ut
+      incidunt eius. Inventore aperiam porro praesentium minima omnis a eligendi
+      accusamus at aliquam? Ratione aspernatur perspiciatis similique voluptatem
+      sunt at quia alias facere deleniti, dicta tenetur, possimus voluptates
+      atque sint. Laborum perspiciatis molestias earum corrupti impedit, nulla,
+      in consectetur laudantium quibusdam illum fugiat provident! Illo odit
+      architecto temporibus doloribus porro alias corrupti labore sapiente
+      doloremque, cupiditate, dolore libero, nihil placeat. Eaque nulla dolores,
+      corrupti ipsum cumque ipsa quis dolore qui esse blanditiis soluta nemo
+    </p>
+  </div>
+  <div class="start-app-popup-footer">
+    <button
+      class="border-1 border-bottom"
+      [ngClass]="
+        darkMode ? 'text-light border-white' : 'text-dark border-black'
+      "
+      (click)="closeModalLogin()"
+    >
+      Agree
+    </button>
+    <button
+      class="border-1 border-bottom"
+      [ngClass]="
+        darkMode ? 'text-light border-white' : 'text-dark border-black'
+      "
+      (click)="isUserDisagree()"
+    >
+      Disagree
     </button>
   </div>
 </div>

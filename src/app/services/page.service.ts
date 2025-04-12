@@ -12,20 +12,20 @@ export class PageService {
   constructor(private http: HttpClient) {}
 
   addPage(page: Page): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/Page/Add`, page);
+    return this.http.post<any>(`api/Page/Add`, page);
   }
   editPage(page: Page): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/Page/Update`, page);
+    return this.http.put<any>(`api/Page/Update`, page);
   }
   getPages(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/Page/All`);
+    return this.http.get(`api/Page/All`);
   }
   getPageByName(name: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/Page/PageByName`, {
+    return this.http.get(`api/Page/PageByName`, {
       params: { name },
     });
   }
   deletePage(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/Page/Delete`, { params: { id } });
+    return this.http.delete(`api/Page/Delete`, { params: { id } });
   }
 }

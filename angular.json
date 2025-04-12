@@ -65,12 +65,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "EbrajGR-master:build:production"
             },
             "development": {
-              "buildTarget": "EbrajGR-master:build:development"
+              "buildTarget": "EbrajGR-master:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

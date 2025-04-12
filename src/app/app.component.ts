@@ -19,11 +19,21 @@ import { Observable, Subscription } from 'rxjs';
 import { LoaderService } from './services/loader.service';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 import { DarkModeService } from './services/dark-mode.service';
+import { ThanksComponent } from './components/thanks/thanks.component';
+import { AgreementService } from './services/agreement.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TranslateModule, NgIf, AsyncPipe, NgClass],
+  imports: [
+    RouterOutlet,
+    TranslateModule,
+    NgIf,
+    AsyncPipe,
+    NgClass,
+    ThanksComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,7 +51,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private loaderService: LoaderService,
     private cdr: ChangeDetectorRef,
-    private darkModeService: DarkModeService
+    private darkModeService: DarkModeService,
+    private agreementService: AgreementService,
+    private authService: AuthService
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
@@ -56,6 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+    this.getUserAgreement();
     this.loading$ = this.loaderService.loading$;
     this.cdr.markForCheck();
     const sub = this.languageService.language$.subscribe((value) => {
@@ -70,11 +83,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
   closeModal() {
     this.isModalOpen = false;
-    this.router.navigate(['/home']);
+    this.agreementService.setUserAgreement(true);
   }
   isUserDisagree() {
     this.userAgree = false;
-    this.isModalOpen= false;
+    this.isModalOpen = false;
+    this.agreementService.setUserAgreement(false);
+    this.authService.logout();
+  }
+  getUserAgreement() {
+    const sub = this.agreementService.userAgreement$.subscribe((value) => {
+      this.userAgree = value;
+    });
+    this.subscription.add(sub);
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

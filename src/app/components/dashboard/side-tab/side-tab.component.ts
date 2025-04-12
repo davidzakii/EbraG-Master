@@ -63,7 +63,7 @@ export class SideTabComponent {
     //   });
     //   this.subscription.add(sub);
     // }
-    this.toastr
+    const sub = this.toastr
       .warning(
         'Are you sure you want to delete this side tab?',
         'Confirm Delete',
@@ -90,6 +90,7 @@ export class SideTabComponent {
         });
         this.subscription.add(sub);
       });
+    this.subscription.add(sub);
   }
 
   ngOnDestroy(): void {

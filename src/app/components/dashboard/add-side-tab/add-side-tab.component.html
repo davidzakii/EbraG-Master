@@ -69,11 +69,11 @@
         min="0"
         required
       />
-      <div *ngIf="title.touched && title.invalid" class="my-2">
-        <small class="text-danger" *ngIf="title.control.errors?.['required']">
+      <div *ngIf="order.touched && order.invalid" class="my-2">
+        <small class="text-danger" *ngIf="order.control.errors?.['required']">
           this field is required
         </small>
-        <small class="text-danger" *ngIf="title.control.errors?.['pattern']">
+        <small class="text-danger" *ngIf="order.control.errors?.['pattern']">
         </small>
       </div>
     </div>
@@ -161,11 +161,11 @@
           min="0"
           required
         />
-        <div *ngIf="title.touched && title.invalid" class="my-2">
-          <small class="text-danger" *ngIf="title.control.errors?.['required']">
+        <div *ngIf="order.touched && order.invalid" class="my-2">
+          <small class="text-danger" *ngIf="order.control.errors?.['required']">
             this field is required
           </small>
-          <small class="text-danger" *ngIf="title.control.errors?.['pattern']">
+          <small class="text-danger" *ngIf="order.control.errors?.['pattern']">
           </small>
         </div>
       </div>

@@ -1,29 +1,31 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SideTabService } from '../../../services/side-tab.service';
 import { ToastrService } from 'ngx-toastr';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { DarkModeService } from '../../../services/dark-mode.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SideTab } from '../../../models/side-tab';
+import { FAQ } from '../../../models/faq';
 
 @Component({
-  selector: 'app-faqside-tab',
+  selector: 'app-add-faqs',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './faqside-tab.component.html',
-  styleUrl: './faqside-tab.component.scss',
+  templateUrl: './add-faqs.component.html',
+  styleUrl: './add-faqs.component.scss',
 })
-export class FAQSideTabComponent implements OnInit, OnDestroy {
+export class AddFaqsComponent {
   private subscription: Subscription = new Subscription();
   darkMode: boolean = false;
   faqSideTabId: string = '';
-  faqSideTab: Omit<SideTab, 'pageId'> = {
+  faqId: string = '';
+  faq: FAQ = {
     id: '',
-    title: '',
-    content: '',
+    question: '',
+    answer: '',
     order: 0,
+    faqSideTabId: '',
   };
   constructor(
     private faqService: SideTabService,
@@ -35,7 +37,23 @@ export class FAQSideTabComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getDarkMode();
     this.getActivatedRoute();
-    this.getFaqSideTab();
+    this.getFAQ();
+  }
+  getFAQ() {
+    const sub = this.faqService.getFAQsSideTabAll().subscribe({
+      next: (res) => {
+        if (res.isPass) {
+          const faqs = res.data.flatMap((sidetab) => sidetab.faQs);
+          const faq = faqs.find((f) => f.id === this.faqId);
+          if (faq) this.faq = faq;
+        } else {
+          this.toastr.error(res.message);
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err.message);
+      },
+    });
   }
   getDarkMode() {
     const sub = this.darkModeService.darkMode$.subscribe((mode) => {
@@ -46,7 +64,8 @@ export class FAQSideTabComponent implements OnInit, OnDestroy {
   getActivatedRoute() {
     const sub = this.activateRouted.paramMap.subscribe({
       next: (param) => {
-        this.faqSideTabId = param.get('id') || '';
+        this.faqSideTabId = param.get('faqSideTabId') || '';
+        this.faqId = param.get('faqId') || '';
       },
       error: (err) => {
         this.toastr.error(JSON.stringify(err));
@@ -54,31 +73,13 @@ export class FAQSideTabComponent implements OnInit, OnDestroy {
     });
     this.subscription.add(sub);
   }
-  getFaqSideTab() {
-    const sub = this.faqService.getFAQsSideTabAll().subscribe({
-      next: (res) => {
-        if (res.isPass) {
-          const faqSideTab = res.data.find(
-            (faq) => faq.id === this.faqSideTabId
-          );
-          if (faqSideTab) {
-            this.faqSideTab = faqSideTab;
-          }
-        } else {
-          this.toastr.error(res.message);
-        }
-      },
-      error: (err) => {
-        this.toastr.error(err.message);
-      },
-    });
-  }
-  addFaqSideTab(form: any) {
+  addFaq(form: any) {
     const sub = this.faqService
-      .addFAQSideTab({
-        title: form.value.title,
-        content: form.value.content,
+      .addFAQ({
+        question: form.value.question,
+        answer: form.value.answer,
         order: form.value.order,
+        faqSideTabId: this.faqSideTabId,
       })
       .subscribe({
         next: (response) => {
@@ -90,19 +91,18 @@ export class FAQSideTabComponent implements OnInit, OnDestroy {
           }
         },
         error: (err) => {
-          console.log(err);
           this.toastr.error(err.message);
         },
       });
     this.subscription.add(sub);
   }
-  updateFaqSideTab(updateFaqSideTabForm: any) {
+  updateFaq(form: any) {
     const sub = this.faqService
-      .updateFAQSideTab({
-        id: this.faqSideTabId,
-        title: updateFaqSideTabForm.value.title,
-        content: updateFaqSideTabForm.value.content,
-        order: updateFaqSideTabForm.value.order,
+      .updateFAQ({
+        question: form.value.question,
+        answer: form.value.answer,
+        order: form.value.order,
+        id: this.faqId,
       })
       .subscribe({
         next: (response) => {

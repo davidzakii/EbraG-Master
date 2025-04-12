@@ -4,6 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { DarkModeService } from '../../services/dark-mode.service';
 import { Subscription } from 'rxjs';
+import { SideTabService } from '../../services/side-tab.service';
+import { FAQ } from '../../models/faq';
+import { ToastrService } from 'ngx-toastr';
+import { content } from 'html2canvas/dist/types/css/property-descriptors/content';
+import { FaqSideTabWithFaqs } from '../../ViewModels/faq-side-tab-with-faqs';
 
 @Component({
   selector: 'app-faqs',
@@ -14,83 +19,23 @@ import { Subscription } from 'rxjs';
 })
 export class FaqsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-  selectedTab = 'about';
+  faqSideTabWithFaqs: FaqSideTabWithFaqs[] = [];
+  selectedTab = '';
   searchTerm = '';
   darkMode: boolean = false;
-  aboutAccordionItems = [
-    {
-      title: 'Lorem ipsum 1',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-    {
-      title: 'Lorem ipsum 2',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-    {
-      title: 'Lorem ipsum 3',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-    {
-      title: 'Lorem ipsum 4',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-  ];
-
-  eCurrentAccordionItems = [
-    {
-      title: 'Lorem ipsum 5',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-    {
-      title: 'Lorem ipsum 6',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-    {
-      title: 'Lorem ipsum 7',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-    {
-      title: 'Lorem ipsum 8',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-  ];
-
-  howToAccordionItems = [
-    {
-      title: 'Lorem ipsum 9',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-    {
-      title: 'Lorem ipsum 10',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-    {
-      title: 'Lorem ipsum 11',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-    {
-      title: 'Lorem ipsum 12',
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a urna quam. Ut eget ultrices sapien. Nam dictum pellentesque est quis elementum.',
-    },
-  ];
+  isModalOpen: boolean = false;
+  showAllContentMap: { [key: string]: boolean } = {};
 
   activeIndex: number | null = null;
 
-  constructor(private darkModeService: DarkModeService) {}
+  constructor(
+    private darkModeService: DarkModeService,
+    private faqService: SideTabService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
+    this.getFAQsSideTabAll();
     const sub = this.darkModeService.darkMode$.subscribe((mode) => {
       this.darkMode = mode;
     });
@@ -103,6 +48,41 @@ export class FaqsComponent implements OnInit, OnDestroy {
 
   toggleAccordion(index: number): void {
     this.activeIndex = this.activeIndex === index ? null : index;
+  }
+  getFAQsSideTabAll() {
+    const sub = this.faqService.getFAQsSideTabAll().subscribe({
+      next: (res) => {
+        if (res.isPass) {
+          this.faqSideTabWithFaqs = res.data;
+          const firstOrderTab = res.data.find((tab) => tab.order === 1);
+          this.selectedTab = firstOrderTab
+            ? firstOrderTab.title
+            : res.data[0].title;
+        } else {
+          this.toastr.error(res.message);
+        }
+      },
+      error: (err) => {
+        this.toastr.error(err.message);
+      },
+    });
+    this.subscription.add(sub);
+  }
+  sortFaqsOrder(faqs: FAQ[]): FAQ[] {
+    return faqs.sort((a, b) => a.order - b.order);
+  }
+  sortFaqSideTabsOrder(sideTab: FaqSideTabWithFaqs[]): FaqSideTabWithFaqs[] {
+    return sideTab.sort((a, b) => a.order - b.order);
+  }
+  toggleShowAllContent() {
+    this.showAllContentMap[this.selectedTab] =
+      !this.showAllContentMap[this.selectedTab];
+  }
+  openModal() {
+    this.isModalOpen = true;
+  }
+  closeModal() {
+    this.isModalOpen = false;
   }
 
   ngOnDestroy() {

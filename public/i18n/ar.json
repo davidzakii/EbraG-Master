@@ -94,6 +94,8 @@
     "BIRTHDATE-FIELD": "تاريخ الميلاد",
     "CONFIRM-PASSWORD-FIELD": "تأكيد كلمة المرور",
     "PASSWORD-REQUIRED": "كلمة المرور مطلوبة",
+    "CONFIRM-PASSWORD-REQUIRED": "تاكيد كلمة المرور مطلوب",
+    "PASSWORD-PATTERN": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل، بما في ذلك حرف كبير وحرف صغير ورقم ورمز خاص",
     "EMAIL-REQUIRED": "البريد الإلكتروني مطلوب",
     "EMAIL-PATTERN": "البريد الإلكتروني غير صالح",
     "PASSWORD-MISMATCH": "كلمات المرور غير متطابقة"

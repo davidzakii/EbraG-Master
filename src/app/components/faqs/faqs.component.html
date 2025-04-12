@@ -20,39 +20,45 @@
   <div class="faq-content">
     <div class="sidebar">
       <ul>
+        @for (sideTab of sortFaqSideTabsOrder(faqSideTabWithFaqs); track $index)
+        {
         <li
-          [class.active]="selectedTab === 'about' && darkMode"
-          [class.active-dark]="selectedTab === 'about' && !darkMode"
-          (click)="selectTab('about')"
+          [class.active]="selectedTab === sideTab.title"
+          [class.active-dark]="selectedTab === sideTab.title && !darkMode"
+          (click)="selectTab(sideTab.title)"
         >
-          {{ "FAQS.ABOUT" | translate }}
+          {{ sideTab.title }}
         </li>
-        <li
-          [class.active]="selectedTab === 'ecurrent' && darkMode"
-          [class.active-dark]="selectedTab === 'ecurrent' && !darkMode"
-          (click)="selectTab('ecurrent')"
-        >
-          {{ "FAQS.ECURRENT" | translate }}
-        </li>
-        <li
-          [class.active]="selectedTab === 'how-to' && darkMode"
-          [class.active-dark]="selectedTab === 'how-to' && !darkMode"
-          (click)="selectTab('how-to')"
-        >
-          {{ "FAQS.HOW-TO" | translate }}
-        </li>
+        }
       </ul>
     </div>
 
     <div class="main-content">
       <div class="content">
-        <div *ngIf="selectedTab === 'about'">
-          <h3>{{ "FAQS.ABOUT" | translate }}</h3>
-          <p>{{ "FAQS.ABOUT-PARAGRAPH" | translate }}</p>
+        @for (sideTab of sortFaqSideTabsOrder(faqSideTabWithFaqs); track $index)
+        {
+        <div *ngIf="selectedTab === sideTab.title">
+          <h3>{{ sideTab.title }}</h3>
+          <p
+            *ngIf="
+              !showAllContentMap[selectedTab] && sideTab.content.length > 1000
+            "
+          >
+            {{ sideTab.content | slice : 0 : 1000 }}
+            <a (click)="openModal()" class="btn btn-link">Read More</a>
+            ...
+          </p>
+          <p
+            *ngIf="
+              showAllContentMap[selectedTab] || sideTab.content.length <= 1000
+            "
+          >
+            {{ sideTab.content }}
+          </p>
           <div class="accordion">
             <div
               class="accordion-item"
-              *ngFor="let item of aboutAccordionItems; let i = index"
+              *ngFor="let faq of sortFaqsOrder(sideTab.faQs); let i = index"
             >
               <div
                 [ngClass]="
@@ -61,7 +67,7 @@
                 class="accordion-header"
                 (click)="toggleAccordion(i)"
               >
-                {{ item.title }}
+                {{ faq.question }}
                 <span>{{ activeIndex === i ? "\u25B2" : "\u25BC" }}</span>
               </div>
               <div
@@ -71,74 +77,40 @@
                 "
                 *ngIf="activeIndex === i"
               >
-                <p>{{ item.content }}</p>
+                <p>{{ faq.answer }}</p>
               </div>
             </div>
           </div>
         </div>
-
-        <div *ngIf="selectedTab === 'ecurrent'">
-          <h3>{{ "FAQS.ECURRENT" | translate }}</h3>
-          <p>{{ "FAQS.ECURRENT-PARAGRAPH" | translate }}</p>
-          <div class="accordion">
-            <div
-              class="accordion-item"
-              *ngFor="let item of eCurrentAccordionItems; let i = index"
-            >
-              <div
-                [ngClass]="
-                  darkMode ? 'bg-dark text-light' : 'bg-light text-dark'
-                "
-                class="accordion-header"
-                (click)="toggleAccordion(i)"
-              >
-                {{ item.title }}
-                <span>{{ activeIndex === i ? "\u25B2" : "\u25BC" }}</span>
-              </div>
-              <div
-                [ngClass]="
-                  darkMode ? 'bg-dark text-light' : 'bg-light text-dark'
-                "
-                class="accordion-content"
-                *ngIf="activeIndex === i"
-              >
-                <p>{{ item.content }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="selectedTab === 'how-to'">
-          <h3>{{ "FAQS.HOW-TO" | translate }}</h3>
-          <p>{{ "FAQS.HOW-TO-PARAGRAPH" | translate }}</p>
-          <div class="accordion">
-            <div
-              class="accordion-item"
-              *ngFor="let item of howToAccordionItems; let i = index"
-            >
-              <div
-                [ngClass]="
-                  darkMode ? 'bg-dark text-light' : 'bg-light text-dark'
-                "
-                class="accordion-header"
-                (click)="toggleAccordion(i)"
-              >
-                {{ item.title }}
-                <span>{{ activeIndex === i ? "\u25B2" : "\u25BC" }}</span>
-              </div>
-              <div
-                [ngClass]="
-                  darkMode ? 'bg-dark text-light' : 'bg-light text-dark'
-                "
-                class="accordion-content"
-                *ngIf="activeIndex === i"
-              >
-                <p>{{ item.content }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        }
       </div>
     </div>
   </div>
+</div>
+<div
+  class="start-app-popup"
+  [ngClass]="darkMode ? 'bg-dark' : 'bg-light'"
+  *ngIf="isModalOpen"
+>
+  <div class="start-app-popup-header">
+    <h2>Full Description</h2>
+    <button
+      [ngClass]="darkMode ? 'text-light' : 'text-dark'"
+      class="close-button"
+      (click)="closeModal()"
+    >
+      &#x2715;
+    </button>
+  </div>
+  <div class="start-app-popup-body">
+    @for (sideTab of sortFaqSideTabsOrder(faqSideTabWithFaqs); track $index) {
+    <div *ngIf="selectedTab === sideTab.title">
+      <h3>{{ sideTab.title }}</h3>
+      <p>
+        {{ sideTab.content }}
+      </p>
+    </div>
+    }
+  </div>
+  <div class="start-app-popup-footer"></div>
 </div>
