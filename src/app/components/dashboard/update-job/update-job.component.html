@@ -1,0 +1,81 @@
+<div class="login-container my-5">
+  <h1>Update Job</h1>
+
+  <form #addJobForm="ngForm" (ngSubmit)="updateJob(addJobForm)">
+    <div class="login-form-control">
+      <input
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="text"
+        name="name"
+        #name="ngModel"
+        [(ngModel)]="job.name"
+        class="form-control"
+        placeholder="Job name here!"
+        required
+      />
+      <div *ngIf="name.touched && name.invalid" class="my-2">
+        <small class="text-danger" *ngIf="name.control.errors?.['required']">
+          this field is required
+        </small>
+      </div>
+    </div>
+    <div class="login-form-control my-2">
+      <textarea
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="text"
+        name="description"
+        #description="ngModel"
+        [(ngModel)]="job.description"
+        class="form-control"
+        placeholder="Job description here !"
+        required
+        style="height: 300px"
+      ></textarea>
+      <div *ngIf="description.touched && description.invalid" class="my-2">
+        <small
+          class="text-danger"
+          *ngIf="description.control.errors?.['required']"
+        >
+          this field is required
+        </small>
+      </div>
+    </div>
+    <div class="login-form-control">
+      <input
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="number"
+        min="0"
+        name="type"
+        #type="ngModel"
+        [(ngModel)]="job.type"
+        class="form-control"
+        placeholder="Job type here!"
+        required
+      />
+      <div *ngIf="type.touched && type.invalid" class="my-2">
+        <small class="text-danger" *ngIf="type.control.errors?.['required']">
+          this field is required
+        </small>
+      </div>
+    </div>
+    <button
+      [ngClass]="{ 'bg-dark': !darkMode }"
+      type="submit"
+      class="btn btn-light my-2"
+    >
+      <span>Update Job</span>
+    </button>
+  </form>
+</div>

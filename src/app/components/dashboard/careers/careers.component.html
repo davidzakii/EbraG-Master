@@ -1,0 +1,135 @@
+<div class="container my-5">
+  <button class="btn btn-success mb-4" routerLink="/dashboard/add-job-category">
+    ➕ Add Job Category
+  </button>
+
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Category Name</th>
+        <th>Category Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (jobCategories.length === 0) {
+      <tr>
+        <td colspan="3" class="text-center">No Job Categories Available</td>
+      </tr>
+      } @else { @for (jobCategory of jobCategories; track $index) {
+      <tr>
+        <td>{{ jobCategory?.name }}</td>
+        <td>{{ jobCategory?.description }}</td>
+        <td>
+          <button
+            class="btn btn-primary btn-sm me-2"
+            [routerLink]="['/dashboard/update-job-category', jobCategory.id]"
+          >
+            ✏️ Update
+          </button>
+          <button
+            class="btn btn-danger btn-sm me-2"
+            (click)="deleteJobCategory(jobCategory.id || '')"
+          >
+            🗑️ Delete
+          </button>
+          <button
+            class="btn btn-secondary btn-sm"
+            [routerLink]="['/dashboard/add-job', jobCategory.id]"
+          >
+            ➕ Add Job
+          </button>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+</div>
+
+<div class="container my-5">
+  <h4>Jobs</h4>
+
+  @for (jobCategory of jobCategories; track $index) {
+  <div class="mb-4 border p-3 rounded shadow-sm">
+    <h5 class="mb-3">{{ jobCategory.name }}</h5>
+    <button
+      class="btn btn-outline-primary mb-3"
+      (click)="getJobs(jobCategory.id || '')"
+    >
+      🔍 Show Jobs
+    </button>
+
+    @if (jobs.length === 0) {
+    <p class="text-muted">No jobs available in this category.</p>
+    } @else { @for (job of jobs; track $index) { @if (job.categoryId ===
+    jobCategory.id) {
+    <div class="border p-3 rounded mb-3">
+      <h6 class="fw-bold">{{ job.name }}</h6>
+      <p>{{ job.description }}</p>
+
+      <div class="mb-2">
+        <button
+          class="btn btn-sm btn-primary me-2"
+          [routerLink]="['/dashboard/update-job', job.id, jobCategory.id]"
+        >
+          ✏️ Update Job
+        </button>
+        <button class="btn btn-sm btn-danger" (click)="deleteJob(job.id || '')">
+          🗑️ Delete Job
+        </button>
+      </div>
+
+      <div>
+        <h6 class="mt-3">Requirements:</h6>
+
+        @if (job.requirments.length === 0) {
+        <p class="text-muted">No requirements added yet.</p>
+        } @else {
+        <table class="table table-sm table-bordered mt-2">
+          <thead class="table-light">
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (requirment of job.requirments; track $index) {
+            <tr>
+              <td>{{ requirment.name }}</td>
+              <td>{{ requirment.description }}</td>
+              <td>
+                <button
+                  class="btn btn-sm btn-primary me-2"
+                  [routerLink]="[
+                    '/dashboard/update-requirement',
+                    requirment.id
+                  ]"
+                >
+                  ✏️ Update
+                </button>
+                <button
+                  class="btn btn-sm btn-danger"
+                  (click)="deleteRequirment(requirment.id || '')"
+                >
+                  🗑️ Delete
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+        }
+
+        <button
+          class="btn btn-sm btn-secondary mt-2"
+          [routerLink]="['/dashboard/add-requirement', job.id]"
+        >
+          ➕ Add Requirement
+        </button>
+      </div>
+    </div>
+    } } }
+  </div>
+  }
+</div>

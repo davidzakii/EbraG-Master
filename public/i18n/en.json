@@ -78,6 +78,7 @@
     "EBRAJ-ALL-RIGHTS-RESERVED": "©2024 Ebraj, LLC. All rights reserved."
   },
   "LOGIN": {
+    "FIELD": "This field is required",
     "USER-FIELD": "Email Address",
     "PASSWORD-FIELD": "Password",
     "REMEMBER-BOX": "Remember Me",

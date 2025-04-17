@@ -3,6 +3,11 @@ import { noAuthGuard } from './guards/no-auth.guard';
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
 import { thanksGuard } from './guards/thanks.guard';
+import { UpdateJobComponent } from './components/dashboard/update-job/update-job.component';
+import { AddJobCategoryComponent } from './components/dashboard/add-job-category/add-job-category.component';
+import { UpdateJobCategoryComponent } from './components/dashboard/update-job-category/update-job-category.component';
+import { AddRequirementComponent } from './components/dashboard/add-requirement/add-requirement.component';
+import { UpdateRequirementComponent } from './components/dashboard/update-requirement/update-requirement.component';
 
 export const routes: Routes = [
   {
@@ -170,6 +175,20 @@ export const routes: Routes = [
           ),
         canActivate: [noAuthGuard],
       },
+      {
+        path: 'career',
+        loadComponent: () =>
+          import('./components/career/career.component').then(
+            (m) => m.CareerComponent
+          ),
+      },
+      {
+        path: 'add-career',
+        loadComponent: () =>
+          import('./components/add-career/add-career.component').then(
+            (m) => m.AddCareerComponent
+          ),
+      },
     ],
   },
   {
@@ -271,6 +290,55 @@ export const routes: Routes = [
           import('./components/dashboard/faqs/faqs.component').then(
             (m) => m.FaqsComponent
           ),
+      },
+      {
+        path: 'careers',
+        loadComponent: () =>
+          import('./components/dashboard/careers/careers.component').then(
+            (m) => m.CareersComponent
+          ),
+      },
+      {
+        path: 'add-job/:id',
+        loadComponent: () =>
+          import('./components/dashboard/add-job/add-job.component').then(
+            (m) => m.AddJobComponent
+          ),
+      },
+      {
+        path: 'update-job/:id/:categoryId',
+        loadComponent: () =>
+          import('./components/dashboard/update-job/update-job.component').then(
+            (m) => UpdateJobComponent
+          ),
+      },
+      {
+        path: 'add-job-category',
+        loadComponent: () =>
+          import(
+            './components/dashboard/add-job-category/add-job-category.component'
+          ).then((m) => AddJobCategoryComponent),
+      },
+      {
+        path: 'update-job-category/:id',
+        loadComponent: () =>
+          import(
+            './components/dashboard/update-job-category/update-job-category.component'
+          ).then((m) => UpdateJobCategoryComponent),
+      },
+      {
+        path: 'add-requirement/:id',
+        loadComponent: () =>
+          import(
+            './components/dashboard/add-requirement/add-requirement.component'
+          ).then((m) => AddRequirementComponent),
+      },
+      {
+        path: 'update-requirement/:id',
+        loadComponent: () =>
+          import(
+            './components/dashboard/update-requirement/update-requirement.component'
+          ).then((m) => UpdateRequirementComponent),
       },
     ],
   },

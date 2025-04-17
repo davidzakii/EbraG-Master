@@ -44,16 +44,38 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "20kb",
+                  "maximumError": "25kb"
+                },
+                {
+                  "type": "bundle",
+                  "name": "styles",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "bundle",
+                  "name": "polyfills",
+                  "maximumWarning": "150kb",
+                  "maximumError": "250kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "sourceMap": false,
+              "aot": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "allowedCommonJsDependencies": [
+                "canvg",
+                "html2canvas",
+                "rgbcolor",
+                "raf"
+              ]
             },
             "development": {
               "optimization": false,

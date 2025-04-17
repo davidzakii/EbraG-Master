@@ -1,0 +1,143 @@
+<div class="login-container my-5">
+  <h1>Add Job</h1>
+  <!-- {{ jobForm | json }} -->
+  <form [formGroup]="jobForm" (ngSubmit)="addJob(jobForm)">
+    <div class="login-form-control">
+      <input
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="text"
+        name="name"
+        formControlName="name"
+        class="form-control"
+        placeholder="Job name here!"
+      />
+      <div *ngIf="name?.touched && name?.invalid" class="my-2">
+        <small class="text-danger" *ngIf="name?.errors?.['required']">
+          this field is required
+        </small>
+      </div>
+    </div>
+    <div class="login-form-control my-2">
+      <textarea
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="text"
+        name="description"
+        formControlName="description"
+        class="form-control"
+        placeholder="Job description here !"
+        required
+        style="height: 300px"
+      ></textarea>
+      <div *ngIf="description?.touched && description?.invalid" class="my-2">
+        <small class="text-danger" *ngIf="description?.errors?.['required']">
+          this field is required
+        </small>
+      </div>
+    </div>
+    <div class="login-form-control">
+      <input
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        type="number"
+        min="0"
+        name="type"
+        formControlName="type"
+        class="form-control"
+        placeholder="Job type here!"
+      />
+      <div *ngIf="type?.touched && type?.invalid" class="my-2">
+        <small class="text-danger" *ngIf="type?.errors?.['required']">
+          this field is required
+        </small>
+      </div>
+    </div>
+    <div formArrayName="requirments">
+      <div class="my-3">
+        <button class="btn btn-light" (click)="addRequirment()">
+          Add Requirment
+        </button>
+        <button class="btn btn-danger mx-3" (click)="deleteRequirment()">
+          Delete Requirment
+        </button>
+      </div>
+      @for (require of requirment.controls;let i= $index;track $index) {
+      <div [formGroupName]="i">
+        <div class="login-form-control">
+          <input
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="text"
+            name="name"
+            formControlName="name"
+            class="form-control"
+            placeholder="Requirment name here!"
+            required
+          />
+          <div
+            *ngIf="require.get('name')?.touched && require.get('name')?.invalid"
+            class="my-2"
+          >
+            <small
+              class="text-danger"
+              *ngIf="require.get('name')?.errors?.['required']"
+            >
+              this field is required
+            </small>
+          </div>
+        </div>
+        <div class="login-form-control">
+          <textarea
+            [ngClass]="
+              darkMode
+                ? 'bg-dark border-white text-white placeholder-white'
+                : 'border-dark placeholder-dark'
+            "
+            type="text"
+            name="description"
+            formControlName="description"
+            class="form-control"
+            placeholder="Job description here !"
+            style="height: 300px"
+          ></textarea>
+          <div
+            *ngIf="
+              require.get('description')?.touched &&
+              require.get('description')?.invalid
+            "
+            class="my-2"
+          >
+            <small
+              class="text-danger"
+              *ngIf="require.get('description')?.errors?.['required']"
+            >
+              this field is required
+            </small>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <button
+      type="submit"
+      [ngClass]="{ 'bg-dark': !darkMode }"
+      type="submit"
+      class="btn btn-light my-2"
+    >
+      <span>Add Job</span>
+    </button>
+  </form>
+</div>

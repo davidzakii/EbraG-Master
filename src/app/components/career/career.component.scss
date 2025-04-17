@@ -1,0 +1,12 @@
+input {
+  border-radius: 2px !important;
+  outline: none !important;
+  width: 60%;
+  margin: auto;
+  display: block;
+}
+
+.break-word {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}

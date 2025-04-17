@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="my-5">
+    <h4 class="text-center m-0">Careers</h4>
+    <p class="text-center my-3 break-word">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+    <div>
+      <input
+        type="text"
+        [ngClass]="
+          darkMode
+            ? 'bg-dark border-white text-white placeholder-white'
+            : 'border-dark placeholder-dark'
+        "
+        [(ngModel)]="searchTerm"
+        placeholder="Serach By Category Type "
+      />
+    </div>
+  </div>
+  <div class="d-flex justify-content-between flex-wrap">
+    <div class="col-3">
+      @for (jobCategory of jobCategories; track $index) {
+      <button
+        style="
+          border: 0;
+          width: 200px;
+          border-radius: 20px;
+          padding: 2px 0px;
+          margin: auto;
+        "
+        [ngClass]="
+          darkMode ? 'bg-light text-dark my-3' : 'bg-dark text-light my-3'
+        "
+        type="button"
+        (click)="showJobs(jobCategory.id || '')"
+      >
+        {{ jobCategory.name }}
+      </button>
+      }
+    </div>
+    <div class="col-9" style="height: fit-content">
+      @for (job of jobs; track $index) {
+      <div class="border border-1 p-1">
+        <div class="position-relative">
+          <p class="text-center m-0">{{ job.name }}</p>
+          <button
+            class="position-absolute top-0 end-0 border-0 bg-transparent"
+            (click)="selectJob(job.id || '')"
+          >
+            <i class="bi bi-plus fs-2" *ngIf="selectedJob !== job.id"></i>
+            <i class="bi bi-dash fs-2" *ngIf="selectedJob === job.id"></i>
+          </button>
+        </div>
+        <div class="border-top" *ngIf="selectedJob === job.id">
+          <ul class="my-3">
+            <li>
+              <h6 class="text-primary">Job Description</h6>
+              <p>
+                {{ job.description }}
+              </p>
+            </li>
+            <li>
+              <h6 class="text-primary">Job Requirements</h6>
+              <ol>
+                @for (requirment of job.requirments; track $index) {
+                <li>{{ requirment.name }} {{ requirment.description }}</li>
+                }
+              </ol>
+            </li>
+          </ul>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>

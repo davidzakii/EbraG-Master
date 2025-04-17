@@ -1,0 +1,10 @@
+.contrast-line {
+  width: calc(100vw - 8px);
+  height: 2px;
+  margin-left: calc(-50vw + 50%);
+  overflow: hidden;
+}
+.break-word {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}

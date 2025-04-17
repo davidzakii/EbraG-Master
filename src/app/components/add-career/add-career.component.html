@@ -1,0 +1,137 @@
+<div class="container">
+  <div class="my-5">
+    <h4 class="text-center m-0">Careers</h4>
+    <p class="text-center my-3 break-word">XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+  </div>
+  <div class="mt-5">
+    <h6>Join IT - Team</h6>
+    <div>
+      <div class="jobCategory">
+        <input type="radio" id="teamLeader" name="job" />
+        <label class="mx-2" for="teamLeader">Team Leader</label>
+      </div>
+      <div class="jobCategory">
+        <input type="radio" id="frontEnd" name="job" />
+        <label class="mx-2" for="frontEnd">Front End</label>
+      </div>
+      <div class="radio">
+        <input type="radio" id="backEnd" name="job" />
+        <label class="mx-2" for="backEnd">Back End</label>
+      </div>
+    </div>
+    <div class="mt-5">
+      <h6>Time</h6>
+      <div>
+        <div class="time">
+          <input type="radio" id="fullTime" name="time" />
+          <label class="mx-2" for="fullTime">Full Time</label>
+        </div>
+        <div class="time">
+          <input type="radio" id="partTime" name="time" />
+          <label class="mx-2" for="partTime">Part Time</label>
+        </div>
+        <div class="time">
+          <input type="radio" id="onCall" name="time" />
+          <label class="mx-2" for="obCall">On Call</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="contrast-line my-3" [ngClass]="darkMode ? 'bg-light' : 'bg-dark'" />
+
+<div class="d-flex flex-column justify-content-center gap-2 align-items-center">
+  <input
+    [ngClass]="
+      darkMode
+        ? 'bg-dark border-white text-white placeholder-white'
+        : 'border-dark placeholder-dark'
+    "
+    type="text"
+    name="firstName"
+    id="firstName"
+    class="w-50"
+    placeholder="First Name"
+  />
+  <input
+    [ngClass]="
+      darkMode
+        ? 'bg-dark border-white text-white placeholder-white'
+        : 'border-dark placeholder-dark'
+    "
+    type="text"
+    name="lastName"
+    id="lastName"
+    class="w-50"
+    placeholder="Last Name"
+  />
+  <input
+    [ngClass]="
+      darkMode
+        ? 'bg-dark border-white text-white placeholder-white'
+        : 'border-dark placeholder-dark'
+    "
+    type="text"
+    name="email"
+    id="email"
+    class="w-50"
+    placeholder="Email"
+  />
+  <input
+    [ngClass]="
+      darkMode
+        ? 'bg-dark border-white text-white placeholder-white'
+        : 'border-dark placeholder-dark'
+    "
+    type="text"
+    name="phoneNumber"
+    id="phoneNumber"
+    class="w-50"
+    placeholder="Phone Number"
+  />
+</div>
+
+<hr class="contrast-line my-3" [ngClass]="darkMode ? 'bg-light' : 'bg-dark'" />
+
+<div class="w-50 m-auto border border-1 p-1 my-3">
+  <form enctype="multipart/form-data">
+    <input
+      multiple
+      (change)="onFileSelected($event)"
+      style="display: none"
+      type="file"
+      id="fileInput"
+    />
+    <button
+      type="button"
+      (click)="triggerFileInput()"
+      class="border-0 bg-transparent d-flex justify-content-center align-items-center"
+      style="width: fit-content"
+    >
+      <i class="bi bi-file-earmark-arrow-up fs-2"></i>
+      <label for="fileInput" class="border-bottom mx-3 cursor-pointer"
+        >Upload Document</label
+      >
+    </button>
+  </form>
+  <ul class="mt-3">
+    <li *ngFor="let file of selectedFiles">
+      {{ file.name }} ({{ file.size / 1000 | number : "1.0-2" }} KB)
+    </li>
+  </ul>
+</div>
+<button
+  style="
+    border: 0;
+    width: 200px;
+    border-radius: 20px;
+    padding: 2px 0px;
+    margin: auto;
+    display: block;
+  "
+  [ngClass]="darkMode ? 'bg-light text-dark my-3' : 'bg-dark text-light my-3'"
+  type="button"
+>
+  Join IT - Team
+</button>
