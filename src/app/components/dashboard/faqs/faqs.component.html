@@ -1,52 +1,61 @@
 <div class="container">
-  <button
-    class="btn btn-light my-5"
-    [routerLink]="['/dashboard/add-faq-sidetab']"
-  >
-    Add FAQ Side Tab
-  </button>
+  <div class="d-flex justify-content-end my-4">
+    <button
+      class="btn btn-primary"
+      [routerLink]="['/dashboard/add-faq-sidetab']"
+    >
+      + Add FAQ Side Tab
+    </button>
+  </div>
+
   @for (faqSideTab of sortFaqSidetabsOrder(faqs); let i = $index; track $index)
   {
-  <div class="faq-item my-4 p-3 border rounded">
-    <h3 class="text-primary">{{ i + 1 }} - {{ faqSideTab.title }}</h3>
+  <div class="faq-item p-4 border rounded shadow-sm bg-white mb-5">
+    <h4 class="text-primary mb-2">{{ i + 1 }} - {{ faqSideTab.title }}</h4>
     <p class="text-muted">{{ faqSideTab.content }}</p>
-    <div class="faq-actions my-2">
+
+    <div class="d-flex flex-wrap gap-2 mb-3">
       <button
-        class="btn btn-light"
+        class="btn btn-outline-secondary"
         [routerLink]="['/dashboard/edit-faq-sidetab', faqSideTab.id]"
       >
         Edit Side Tab
       </button>
       <button
-        class="btn btn-danger mx-2"
+        class="btn btn-outline-danger"
         (click)="deleteFaqSidetab(faqSideTab.id || '')"
       >
         Delete Side Tab
       </button>
     </div>
-    @for (faq of sortFaqs(faqSideTab.faQs);let j = $index; track $index) {
-    <div class="faq-question my-3">
-      <h4 class="font-weight-bold">{{ faq.order }} - {{ faq.question }}</h4>
-      <p>{{ faq.answer }}</p>
-      <div class="faq-actions my-2">
+
+    @for (faq of sortFaqs(faqSideTab.faQs); let j = $index; track $index) {
+    <div class="faq-question ps-3 border-start border-3 border-primary mb-4">
+      <h5 class="fw-semibold mb-1">{{ faq.order }} - {{ faq.question }}</h5>
+      <p class="mb-2">{{ faq.answer }}</p>
+      <div class="d-flex flex-wrap gap-2">
         <button
-          class="btn btn-light"
+          class="btn btn-outline-secondary"
           [routerLink]="['/dashboard/edit-faq', faq.id, faqSideTab.id]"
         >
           Edit FAQ
         </button>
-        <button class="btn btn-danger mx-2" (click)="deleteFaq(faq.id || '')">
+        <button
+          class="btn btn-outline-danger"
+          (click)="deleteFaq(faq.id || '')"
+        >
           Delete FAQ
         </button>
       </div>
     </div>
     }
-    <div class="faq-actions my-2">
+
+    <div class="d-flex justify-content-end mt-3">
       <button
-        class="btn btn-light"
+        class="btn btn-outline-primary"
         [routerLink]="['/dashboard/add-faq', faqSideTab.id]"
       >
-        Add FAQs
+        + Add FAQs
       </button>
     </div>
   </div>

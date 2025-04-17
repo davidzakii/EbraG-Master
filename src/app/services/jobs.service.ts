@@ -57,4 +57,7 @@ export class JobsService {
       params: { id },
     });
   }
+  applyJobApplicant(job:any):Observable<Response>{
+    return this.http.post<Response>(`api/JobAppliction/Apply`, job);
+  }
 }

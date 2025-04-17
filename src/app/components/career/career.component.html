@@ -66,6 +66,23 @@
               </ol>
             </li>
           </ul>
+          <button
+            style="
+              border: 0;
+              width: 200px;
+              border-radius: 20px;
+              padding: 2px 0px;
+              margin: auto;
+              display: block;
+            "
+            [ngClass]="
+              darkMode ? 'bg-light text-dark my-3' : 'bg-dark text-light my-3'
+            "
+            type="button"
+            [routerLink]="['/add-career', job.id]"
+          >
+            Apply
+          </button>
         </div>
       </div>
       }

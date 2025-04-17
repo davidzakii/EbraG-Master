@@ -183,7 +183,7 @@ export const routes: Routes = [
           ),
       },
       {
-        path: 'add-career',
+        path: 'add-career/:id',
         loadComponent: () =>
           import('./components/add-career/add-career.component').then(
             (m) => m.AddCareerComponent
