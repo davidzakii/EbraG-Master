@@ -16,6 +16,7 @@ import { JobVM } from '../../../ViewModels/job-vm';
 })
 export class CareersComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
+  showJob: boolean = false;
   jobCategories: JobCategory[] = [];
   jobs: JobVM[] = [];
 
@@ -30,6 +31,7 @@ export class CareersComponent implements OnInit, OnDestroy {
       next: (res) => {
         if (res.isPass) {
           this.jobCategories = res.data;
+          console.log(res.data);
         } else {
           this.toastr.error(res.message);
         }
@@ -41,10 +43,12 @@ export class CareersComponent implements OnInit, OnDestroy {
   }
 
   getJobs(categoryId: string) {
+    console.log(categoryId);
     const sub = this.jobService.getJobs(categoryId).subscribe({
       next: (res) => {
         if (res.isPass) {
           this.jobs = res.data;
+          console.log(this.jobs);
         } else {
           this.toastr.error(res.message);
         }
@@ -54,7 +58,9 @@ export class CareersComponent implements OnInit, OnDestroy {
 
     this.subscription.add(sub);
   }
-
+  hideJobs() {
+    this.jobs = [];
+  }
   deleteJobCategory(id: string) {
     const sub = this.jobService.deleteJobCategory(id).subscribe({
       next: (res) => {
@@ -76,7 +82,7 @@ export class CareersComponent implements OnInit, OnDestroy {
       next: (res) => {
         if (res.isPass) {
           this.toastr.success(res.message);
-          this.getJobCategory();
+          this.getJobs(id);
         } else {
           this.toastr.error(res.message);
         }

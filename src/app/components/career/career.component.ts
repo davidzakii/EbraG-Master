@@ -48,6 +48,7 @@ export class CareerComponent implements OnInit, OnDestroy {
       next: (res) => {
         if (res.isPass) {
           this.jobCategories = res.data;
+          if (this.jobCategories.length > 0) this.showJobs(res.data[0].id);
         } else {
           this.toastr.error(res.message);
         }
@@ -59,7 +60,6 @@ export class CareerComponent implements OnInit, OnDestroy {
     this.subscription.add(sub);
   }
   showJobs(categoryId: string) {
-    console.log(categoryId);
     const sub = this.jobService.getJobs(categoryId).subscribe({
       next: (res) => {
         console.log(res);

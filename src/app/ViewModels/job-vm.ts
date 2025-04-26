@@ -6,5 +6,5 @@ export interface JobVM {
   description: string;
   name: string;
   type: number;
-  requirments: JobRequirement[];
+  requirements: JobRequirement[];
 }

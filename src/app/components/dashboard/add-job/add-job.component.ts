@@ -111,6 +111,8 @@ export class AddJobComponent {
     }
     this.jobForm.value.categoryId = this.jobCategoryId;
     const job = this.jobForm.value as Job;
+    if (+job.type === 1 || +job.type === 2 || +job.type === 3)
+      job.type = +job.type;
     const sub = this.jobService.addJob(job).subscribe({
       next: (res) => {
         if (res.isPass) {

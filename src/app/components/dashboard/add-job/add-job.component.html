@@ -33,7 +33,6 @@
         formControlName="description"
         class="form-control"
         placeholder="Job description here !"
-        required
         style="height: 300px"
       ></textarea>
       <div *ngIf="description?.touched && description?.invalid" class="my-2">
@@ -43,19 +42,21 @@
       </div>
     </div>
     <div class="login-form-control">
-      <input
+      <select
         [ngClass]="
           darkMode
             ? 'bg-dark border-white text-white placeholder-white'
             : 'border-dark placeholder-dark'
         "
-        type="number"
-        min="0"
         name="type"
         formControlName="type"
         class="form-control"
-        placeholder="Job type here!"
-      />
+      >
+        <option value="" disabled selected>Select Job Type</option>
+        <option value="1">Full Time</option>
+        <option value="2">Part Time</option>
+        <option value="3">On Call</option>
+      </select>
       <div *ngIf="type?.touched && type?.invalid" class="my-2">
         <small class="text-danger" *ngIf="type?.errors?.['required']">
           this field is required
