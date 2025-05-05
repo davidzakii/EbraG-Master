@@ -44,7 +44,7 @@ export class JobsService {
   addJob(job: Job): Observable<Response> {
     return this.http.post<Response>(`api/Job/Add`, job);
   }
-  editJob(job: Omit<Job, 'requirments'>): Observable<Response> {
+  editJob(job: Omit<Job, 'requirements'>): Observable<Response> {
     return this.http.put<Response>(`api/Job/Update`, job);
   }
   getJobs(categoryId: string): Observable<Response> {
@@ -57,7 +57,7 @@ export class JobsService {
       params: { id },
     });
   }
-  applyJobApplicant(job:any):Observable<Response>{
+  applyJobApplicant(job: any): Observable<Response> {
     return this.http.post<Response>(`api/JobAppliction/Apply`, job);
   }
 }

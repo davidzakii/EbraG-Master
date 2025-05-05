@@ -66,6 +66,7 @@ export class CareerComponent implements OnInit, OnDestroy {
       next: (res) => {
         if (res.isPass) {
           this.jobs = res.data;
+          console.log(this.jobs);
         } else {
           this.toastr.error(res.message);
         }

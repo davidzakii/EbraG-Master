@@ -25,7 +25,7 @@ export class UpdateJobComponent {
     name: '',
     description: '',
     type: 0,
-    requirments: [
+    requirements: [
       {
         name: '',
         description: '',

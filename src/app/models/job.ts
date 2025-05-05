@@ -4,7 +4,7 @@ export interface Job {
   description: string;
   name: string;
   type: number;
-  requirments: [
+  requirements: [
     {
       name: string;
       description: string;
