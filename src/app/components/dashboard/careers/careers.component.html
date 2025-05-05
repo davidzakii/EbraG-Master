@@ -52,7 +52,7 @@
   @for (jobCategory of jobCategories; track $index) {
   <div class="mb-4 border p-3 rounded shadow-sm">
     <h5 class="mb-3">{{ jobCategory.name }}</h5>
-    @if(jobs.length === 0){
+    @if(!jobs||jobs.length === 0){
     <button
       class="btn btn-outline-primary mb-3"
       (click)="getJobs(jobCategory.id || '')"

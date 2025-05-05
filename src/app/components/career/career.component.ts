@@ -44,6 +44,7 @@ export class CareerComponent implements OnInit, OnDestroy {
     this.subscription.add(sub);
   }
   getJobCategory() {
+    if (this.jobCategories.length > 0) return; // Prevent unnecessary requests
     const sub = this.jobService.getJobCategory().subscribe({
       next: (res) => {
         if (res.isPass) {
@@ -60,13 +61,11 @@ export class CareerComponent implements OnInit, OnDestroy {
     this.subscription.add(sub);
   }
   showJobs(categoryId: string) {
+    if (this.jobs.length > 0 && this.jobs[0].categoryId === categoryId) return; // Prevent unnecessary requests
     const sub = this.jobService.getJobs(categoryId).subscribe({
       next: (res) => {
-        console.log(res);
         if (res.isPass) {
           this.jobs = res.data;
-          this.toastr.success(res.message);
-          this.getJobCategory();
         } else {
           this.toastr.error(res.message);
         }
@@ -74,7 +73,6 @@ export class CareerComponent implements OnInit, OnDestroy {
       error: (err) => this.toastr.error(err.message),
     });
     this.subscription.add(sub);
-    // this.showJob = !this.showJob;
   }
   showAllContent() {
     this.showContent = !this.showContent;
